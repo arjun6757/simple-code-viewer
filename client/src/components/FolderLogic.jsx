@@ -1,5 +1,5 @@
 import { useState } from "react";
-import Spin from "./LoadingAnimation";
+import Spin from "./ClockSpin";
 import Icon from "./Icon";
 
 export default function FolderLogic(props) {
@@ -8,6 +8,7 @@ export default function FolderLogic(props) {
   const [FolderStructure, setFolderStructure] = useState([]);
   const [loading, setLoading] = useState(false);
   const [gettingChildFor, setGettingChildFor] = useState("");
+
 
   const handleFileClick = (url, name) => {
     const ext = String(name).split(".").pop();
