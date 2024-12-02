@@ -3,11 +3,8 @@
 // Function to handle the /repo endpoint
 const getRepoUrl = async (req, res) => {
     const token = process.env.GITHUB_TOKEN;
-    // const owner = process.env.REPO_OWNER;
-    // const repo = 'todoappinreact';
-
-    const owner = 'flowmodor'; const repo = 'flowmodor';
-
+    const owner = process.env.REPO_OWNER;
+    const repo = process.env.REPO_NAME;
 
     // here we want to req github to access repo code
 
@@ -40,8 +37,10 @@ const getDirData = async (req, res) => {
     console.log('im in the getDirData function');
     const token = process.env.GITHUB_TOKEN;
     const owner = process.env.REPO_OWNER;
-    const repo = 'todoappinreact';
+    const repo = process.env.REPO_NAME;
+
     const path = req.params.path;
+    
     const githubUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
     const options = {
         method: "GET",
@@ -59,9 +58,9 @@ const getDirData = async (req, res) => {
 const getQueryData = async (req, res) => {
     console.log('im in the getQueryData function');
     const token = process.env.GITHUB_TOKEN;
-    // const owner = process.env.REPO_OWNER;
-    // const repo = 'todoappinreact';
-    const owner = 'flowmodor'; const repo = 'flowmodor';
+    const owner = process.env.REPO_OWNER;
+    const repo = process.env.REPO_NAME;
+    
     const path = req.query.path;
     console.log(req.query);
     const githubUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
