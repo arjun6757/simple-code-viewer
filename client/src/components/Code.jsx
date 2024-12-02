@@ -58,7 +58,7 @@ export default function Code(props) {
       className={props.sx ? props.sx : "flex flex-col text-white h-screen"}
     >
       {loading ? (
-        <ClockSpin sx2="w-[30px] h-[30px] border-r-[12px] border-t-[12px] border-l-[12px]" />
+        <ClockSpin sx2="w-[30px] h-[30px] border-r-[9px] border-t-[9px] border-l-[9px]" />
       ) : (
         repoData.map((file, index) => (
           file.type==="dir" ? <FolderLogic key={index} index={index} file={file} press={props.press} folderType={"root"} /> :
