@@ -44,7 +44,7 @@ export default function Code(props) {
   return (
     <div
       id="code-tree"
-      className={props.sx ? props.sx : "flex flex-col text-white h-screen"}
+      className="scrollbar-none overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 word-break break-all select-none"
     >
       {loading ? (
         <ClockSpin sx2="w-[30px] h-[30px] border-r-[9px] border-t-[9px] border-l-[9px]" />
@@ -62,7 +62,7 @@ export default function Code(props) {
             <div
               key={index}
               onClick={() => handleClick(file.type, file.url, index, file.name)}
-              className={`p-2 flex gap-2 place-items-center hover:bg-[#242424] rounded-lg cursor-pointer`}
+              className={`p-2 flex gap-2 place-items-center hover:bg-[#f0f0f0] dark:hover:bg-[#242424] rounded-lg cursor-pointer`}
             >
               <Icon name={file.name} type={file.type} />
               <a

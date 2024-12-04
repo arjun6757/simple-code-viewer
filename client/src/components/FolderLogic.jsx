@@ -87,7 +87,7 @@ export default function FolderLogic(props) {
     return (
       <div>
         <div
-          className={`p-2 rounded-lg flex gap-2 place-content-between hover:bg-[#242424] cursor-pointer pr-3`}
+          className={`p-2 rounded-lg flex gap-2 place-content-between hover:bg-[#f0f0f0] dark:hover:bg-[#242424] cursor-pointer pr-3`}
           onClick={() => handlerForClicks(name, path, url, type)}
         >
           <div className="flex gap-2 items-center">
@@ -110,7 +110,7 @@ export default function FolderLogic(props) {
 
             <div
               key={`${file.path}${index}` || `${file.name}${index}`}
-              className={`ml-3 pl-2 border-l-[1px] border-[#555]`}
+              className={`ml-3 pl-2 border-l-[1px] border-[#ddd] dark:border-[#555]`}
             >
               {renderChilds(file.name, file.path, file.type, file.download_url)}
             </div>

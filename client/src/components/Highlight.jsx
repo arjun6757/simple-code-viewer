@@ -1,12 +1,25 @@
 import ClockSpin from "./ClockSpin";
 import hljs from "highlight.js";
-import "highlight.js/styles/intellij-light.css";
-// import "highlight.js/styles/atom-one-dark.css";
-import { useEffect, useRef } from "react";
+// import "highlight.js/styles/intellij-light.css";
+import { useEffect, useRef, useState } from "react";
 
-export default function Highlight({ loading, raw, ext }) {
-  
+export default function Highlight({ loading, raw, ext, night }) {
+  // const [isDark, setIsDark] = useState(night);
   const codeRef = useRef(null);
+
+  useEffect(() => {
+    const loadTheme = () => {
+      const link = document.createElement("link");
+      link.rel = "stylesheet";
+      link.href = night
+        ? "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css"
+        : "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/intellij-light.min.css";
+
+      document.head.appendChild(link);
+    };
+
+    loadTheme();
+  }, [night]);
 
   useEffect(() => {
     if (codeRef.current) {
