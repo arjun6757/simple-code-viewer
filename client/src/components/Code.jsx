@@ -12,7 +12,7 @@ export default function Code(props) {
       setLoading(true);
       try {
         const result = await fetch(
-          "http://localhost:3000/api/code/repo"
+          "https://simple-code-viewer.onrender.com/api/code/repo"
         );
         const data = await result.json();
         setRepoData(data);
