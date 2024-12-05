@@ -8,7 +8,14 @@ export default function App() {
   const [raw, setRaw] = useState("");
   const [loading, setLoading] = useState(false);
   const codeView = useRef(null);
-  const [darkMode, setDarkMode] = useState(false);
+  const [darkMode, setDarkMode] = useState(() => {
+    const savedTheme = localStorage.getItem("theme");
+    if (savedTheme === "dark") {
+      return true;
+    } else {
+      return false;
+    }
+  });
 
   const toggleDarkMode = (dark) => {
     dark ? setDarkMode(true) : setDarkMode(false);
@@ -32,13 +39,13 @@ export default function App() {
     localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]); //whenever darkmode changes it will automatically set it to the root
 
-  useEffect(() => {
-    const savedTheme = localStorage.getItem("theme");
-
-    if (savedTheme === "dark") {
-      setDarkMode(true);
-    }
-  }, []);  //will run when the window loads maybe ?
+  // useEffect(() => {
+  //   const savedTheme = localStorage.getItem("theme");
+  //   console.log('running for theme: ', savedTheme);
+  //   if (String(savedTheme) === "dark") {
+  //     setDarkMode(true);
+  //   }
+  // }, []);  //will run when the window loads maybe ?
 
   const getData = async (url) => {
     setLoading(true);
@@ -64,8 +71,9 @@ export default function App() {
     setLoading(false);
   };
 
-  return (
-    <div className="grid grid-cols-[1fr_4fr] bg-white dark:bg-[#282c34] w-screen h-screen overflow-hidden">
+  return ( 
+    // 1fr_4fr
+    <div className="grid grid-cols-[1fr_2fr] text-sm sm:grid-cols-[1fr_4fr] bg-white dark:bg-[#282c34] w-screen h-screen overflow-hidden">
       <div className="fixed right-8 bottom-5 bg-transparent">
         <Header theme={toggleDarkMode} />
       </div>

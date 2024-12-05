@@ -5,8 +5,9 @@ import { AiOutlineGlobal } from "react-icons/ai";
 
 export default function Header(props) {
   const [hide, setHide] = useState(false);
-  const [darkMode, setDarkMode] = useState(false);
-  // const { theme } = props;
+  const [darkMode, setDarkMode] = useState(() => {
+    localStorage.getItem("theme1") === "dark" ? true : false;
+  });
 
   useEffect(() => {
     props.theme(darkMode);
@@ -14,6 +15,7 @@ export default function Header(props) {
 
   const handleClick = () => {
     setDarkMode(prev=> !prev);
+    localStorage.setItem("theme1", darkMode ? "dark" : "light");
   }
 
   return (

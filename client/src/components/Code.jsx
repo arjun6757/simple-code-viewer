@@ -12,7 +12,7 @@ export default function Code(props) {
       setLoading(true);
       try {
         const result = await fetch(
-          "https://simple-code-viewer.onrender.com/api/code/repo"
+          "http://localhost:3000/api/code/repo"
         );
         const data = await result.json();
         setRepoData(data);
@@ -41,11 +41,34 @@ export default function Code(props) {
     props.press(url, ext);
   };
 
+  const handleDrag = (e) => {
+    e.preventDefault();
+    const codeTree = document.getElementById("code-tree");
+    const dragger = document.getElementById("dragger");
+    const startWidth = codeTree.offsetWidth;
+    const startX = e.clientX;
+
+    const mouseMove = (event) => {
+      const newWidth = startWidth + (event.clientX - startX);
+      codeTree.style.width = `${newWidth}px`;
+    }
+
+    const mouseUp = () => {
+      //after releasing the drag this will be triggered
+      document.removeEventListener('mousemove', mouseMove);
+      document.removeEventListener('mouseup', mouseUp);
+    }
+
+    document.addEventListener('mousemove', mouseMove);  //when cursor is moving
+    document.addEventListener('mouseup', mouseUp);  //when im releasing the dragging
+  }
+
   return (
     <div
       id="code-tree"
-      className="scrollbar-none overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 word-break break-all select-none"
+      className="relative scrollbar-none overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 word-break break-all select-none"
     >
+      <div id="dragger" onMouseDown={handleDrag} className="absolute top-0 right-0 h-full w-2 cursor-ew-resize bg-slate-200" ></div>
       {loading ? (
         <ClockSpin sx2="w-[30px] h-[30px] border-r-[9px] border-t-[9px] border-l-[9px]" />
       ) : (
