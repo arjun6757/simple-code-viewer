@@ -11,9 +11,7 @@ export default function Code(props) {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
-        const result = await fetch(
-          "https://simple-code-viewer.onrender.com/api/code/repo"
-        );
+        const result = await fetch("https://simple-code-viewer.onrender.com/api/code/repo");
         const data = await result.json();
         setRepoData(data);
       } catch (error) {
@@ -41,11 +39,64 @@ export default function Code(props) {
     props.press(url, ext);
   };
 
+  const handleDrag = (e) => {
+    e.preventDefault();
+    const codeTree = document.getElementById("code-tree");
+    const startWidth = codeTree.offsetWidth;
+    const startX = e.clientX;
+
+    const mouseMove = (event) => {
+      const newWidth = startWidth + (event.clientX - startX);
+      codeTree.style.width = `${newWidth}px`;
+    };
+
+    const mouseUp = () => {
+      //after releasing the drag this will be triggered
+      document.removeEventListener("mousemove", mouseMove);
+      document.removeEventListener("mouseup", mouseUp);
+    };
+
+    document.addEventListener("mousemove", mouseMove); //when cursor is moving
+    document.addEventListener("mouseup", mouseUp); //when im releasing the dragging
+  };
+
+  const fixHeightIssue = () => {
+    // help from -> https://stackoverflow.com/questions/7668636/check-with-jquery-if-div-has-overflowing-elements
+    const dragger = document.getElementById("dragger");
+    const codeTree = document.getElementById("code-tree");
+    let totalCodeTree = codeTree.scrollHeight;
+    dragger.style.height = `${totalCodeTree}px`;
+  };
+
+  // const observeCodeTree = () => {
+  //   const initial = codeTree.offsetHeight;
+  //   const codeTree = document.getElementById("code-tree");
+
+  //   if (!codeTree) return;
+
+  //   const observer = new MutationObserver(() => {
+  //     if(codeTree.scrollHeight===initial) 
+  //     fixHeightIssue(); // it will be executed whenever codeTree has a change
+  //   });
+
+  //   //configuration for observing changes codeTree div
+  //   observer.observe(codeTree, {
+  //     childList: true, //watch for addition or removal of childs
+  //     subtree: true, // monitor all descendents of the element
+  //   });
+  // };
+
   return (
     <div
       id="code-tree"
-      className="scrollbar-none overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 word-break break-all select-none"
+      onScroll={fixHeightIssue}
+      className="relative scrollbar-none overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 word-break break-all select-none"
     >
+      <div
+        id="dragger"
+        onMouseDown={handleDrag}
+        className="absolute top-0 right-0 w-1 min-h-full h-auto cursor-ew-resize hover:bg-blue-500"
+      ></div>
       {loading ? (
         <ClockSpin sx2="w-[30px] h-[30px] border-r-[9px] border-t-[9px] border-l-[9px]" />
       ) : (

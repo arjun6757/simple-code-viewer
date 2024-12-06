@@ -46,6 +46,7 @@ export default function FolderLogic(props) {
     if (exist !== -1) {
       FolderStructure[exist].expanded = !FolderStructure[exist].expanded;
       setFolderStructure([...FolderStructure]);
+      document.getElementById("dragger").style.height = `${document.getElementById("code-tree").offsetHeight}px`;
       return;
     }
 
