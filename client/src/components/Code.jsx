@@ -2,6 +2,7 @@ import { useState, useEffect } from "react";
 import ClockSpin from "./ClockSpin";
 import FolderLogic from "./FolderLogic.jsx";
 import Icon from "./Icon";
+import { MdClose } from "react-icons/md";
 
 export default function Code(props) {
   const [repoData, setRepoData] = useState([{}]);
@@ -75,7 +76,7 @@ export default function Code(props) {
   //   if (!codeTree) return;
 
   //   const observer = new MutationObserver(() => {
-  //     if(codeTree.scrollHeight===initial) 
+  //     if(codeTree.scrollHeight===initial)
   //     fixHeightIssue(); // it will be executed whenever codeTree has a change
   //   });
 
@@ -86,15 +87,45 @@ export default function Code(props) {
   //   });
   // };
 
+  const handleTouchDrag = (e) => {
+    e.preventDefault();
+    const codeTree = document.getElementById("code-tree");
+    const startWidth = codeTree.offsetWidth;
+    const startX = e.touches[0].clientX;
+
+    const touchMove = (event) => {
+      const touch = event.touches[0];
+      const newWidth = startWidth + (touch.clientX - startX);
+      console.log(newWidth);
+      codeTree.style.width = `${newWidth}px`;
+    };
+
+    const touchRelease = () => {
+      //after releasing the drag this will be triggered
+      document.removeEventListener("touchmove", touchMove);
+      document.removeEventListener("touchend", touchRelease);
+    };
+
+    document.addEventListener("touchmove", touchMove); //when cursor is moving
+    document.addEventListener("touchend", touchRelease); //when im releasing the dragging
+  };
+
   return (
     <div
       id="code-tree"
       onScroll={fixHeightIssue}
       className="relative scrollbar-none sm:min-w-[18vw] sm:max-w-[50vw] overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-hidden select-none"
     >
+      
+
+      {/* <button className="absolute top-5 right-5 text-3xl">
+        <MdClose />
+      </button> */}
+
       <div
         id="dragger"
         onMouseDown={handleDrag}
+        onTouchStart={handleTouchDrag}
         className="absolute top-0 right-0 w-1 min-h-full h-auto cursor-ew-resize hover:bg-blue-500"
       ></div>
       {loading ? (

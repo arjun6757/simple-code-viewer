@@ -19,18 +19,18 @@ export default function App() {
 
   const toggleDarkMode = (dark) => {
     dark ? setDarkMode(true) : setDarkMode(false);
-  }
+  };
 
   useEffect(() => {
     const html = document.documentElement; //gets a reference to the root node
     if (darkMode) {
       html.classList.add("dark");
-      if(codeView.current) {
+      if (codeView.current) {
         codeView.current.style.scrollbarColor = "#555 transparent";
       }
     } else {
       html.classList.remove("dark");
-      if(codeView.current) {
+      if (codeView.current) {
         codeView.current.style.scrollbarColor = "";
       }
     }
@@ -71,18 +71,20 @@ export default function App() {
     setLoading(false);
   };
 
-  return ( 
+  return (
     // 1fr_4fr grid-cols-[1fr_4fr] mobile:grid-cols-[1fr_2fr]
     <div className="flex bg-white dark:bg-[#282c34] w-screen h-screen overflow-hidden">
       <div className="fixed right-8 bottom-5 bg-transparent">
         <Header theme={toggleDarkMode} />
       </div>
 
-      <Code
-        press={handleFilePress}
-      />
+      <Code press={handleFilePress} />
 
-      <div id="code-view" ref={codeView} className="overflow-y-scroll flex-1 bg-white dark:bg-[#282c34]">
+      <div
+        id="code-view"
+        ref={codeView}
+        className="overflow-y-scroll flex-1 bg-white dark:bg-[#282c34]"
+      >
         <Highlight loading={loading} raw={raw} ext={ext} night={darkMode} />
       </div>
     </div>
