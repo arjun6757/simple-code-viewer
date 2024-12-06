@@ -21,8 +21,8 @@ export default function FolderLogic(props) {
 
     try {
       const url = path
-        ? `https://simple-code-viewer.onrender.com/api/code/repo/query?path=${path}`
-        : `https://simple-code-viewer.onrender.com/api/code/repo/query?path=${name}`;
+        ? `http://localhost:3000/api/code/repo/query?path=${path}`
+        : `http://localhost:3000/api/code/repo/query?path=${name}`;
       const result = await fetch(url);
       const data = await result.json();
       if (data.status === 404) {
@@ -46,6 +46,7 @@ export default function FolderLogic(props) {
     if (exist !== -1) {
       FolderStructure[exist].expanded = !FolderStructure[exist].expanded;
       setFolderStructure([...FolderStructure]);
+      document.getElementById("dragger").style.height = `${document.getElementById("code-tree").offsetHeight}px`;
       return;
     }
 
