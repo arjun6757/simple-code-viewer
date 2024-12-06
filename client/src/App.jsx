@@ -72,8 +72,8 @@ export default function App() {
   };
 
   return ( 
-    // 1fr_4fr
-    <div className="grid grid-cols-[1fr_2fr] text-sm sm:grid-cols-[1fr_4fr] bg-white dark:bg-[#282c34] w-screen h-screen overflow-hidden">
+    // 1fr_4fr grid-cols-[1fr_4fr] mobile:grid-cols-[1fr_2fr]
+    <div className="flex bg-white dark:bg-[#282c34] w-screen h-screen overflow-hidden">
       <div className="fixed right-8 bottom-5 bg-transparent">
         <Header theme={toggleDarkMode} />
       </div>
@@ -82,7 +82,7 @@ export default function App() {
         press={handleFilePress}
       />
 
-      <div id="code-view" ref={codeView} className="overflow-y-scroll bg-white dark:bg-[#282c34]">
+      <div id="code-view" ref={codeView} className="overflow-y-scroll flex-1 bg-white dark:bg-[#282c34]">
         <Highlight loading={loading} raw={raw} ext={ext} night={darkMode} />
       </div>
     </div>

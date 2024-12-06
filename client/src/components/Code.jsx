@@ -11,7 +11,7 @@ export default function Code(props) {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
-        const result = await fetch("https://simple-code-viewer.onrender.com/api/code/repo");
+        const result = await fetch("http://localhost:3000/api/code/repo");
         const data = await result.json();
         setRepoData(data);
       } catch (error) {
@@ -90,7 +90,7 @@ export default function Code(props) {
     <div
       id="code-tree"
       onScroll={fixHeightIssue}
-      className="relative scrollbar-none overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 word-break break-all select-none"
+      className="relative scrollbar-none sm:min-w-[18vw] sm:max-w-[50vw] overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-hidden select-none"
     >
       <div
         id="dragger"
