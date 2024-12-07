@@ -7,7 +7,7 @@ import { useLocalStorage } from "../useLocalStorage";
 
 export default function Header(props) {
   const [hide, setHide] = useState(false);
-  const [darkMode, setDarkMode] = useLocalStorage('dark-mode', false);
+  const [darkMode, setDarkMode] = useLocalStorage('simple-code-viewer--dark-theme', false);
   const [hideSidebar, setHideSidebar] = useState(false);
 
   useEffect(() => {

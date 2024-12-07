@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import ClockSpin from "./ClockSpin";
 import FolderLogic from "./FolderLogic.jsx";
 import Icon from "./Icon";
-import { MdClose } from "react-icons/md";
 
 export default function Code(props) {
   const [repoData, setRepoData] = useState([{}]);
@@ -12,7 +11,7 @@ export default function Code(props) {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
-        const result = await fetch("https://simple-code-viewer.onrender.com/api/code/repo");
+        const result = await fetch("http://localhost:3000/api/code/repo");
         const data = await result.json();
         setRepoData(data);
       } catch (error) {
@@ -68,24 +67,6 @@ export default function Code(props) {
     let totalCodeTree = codeTree.scrollHeight;
     dragger.style.height = `${totalCodeTree}px`;
   };
-
-  // const observeCodeTree = () => {
-  //   const initial = codeTree.offsetHeight;
-  //   const codeTree = document.getElementById("code-tree");
-
-  //   if (!codeTree) return;
-
-  //   const observer = new MutationObserver(() => {
-  //     if(codeTree.scrollHeight===initial)
-  //     fixHeightIssue(); // it will be executed whenever codeTree has a change
-  //   });
-
-  //   //configuration for observing changes codeTree div
-  //   observer.observe(codeTree, {
-  //     childList: true, //watch for addition or removal of childs
-  //     subtree: true, // monitor all descendents of the element
-  //   });
-  // };
 
   const handleTouchDrag = (e) => {
     // e.preventDefault();

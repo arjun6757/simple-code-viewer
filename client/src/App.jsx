@@ -1,7 +1,9 @@
 import { useState, useEffect, useRef } from "react";
 import Code from "./components/Code";
 import Highlight from "./components/Highlight";
-import Header from "./components/Header";
+import Header from "./components/ToggleBar";
+import PinnedRepos from "./components/PinnedRepos";
+import "./index.css"
 
 export default function App() {
   const [ext, setExt] = useState("");
@@ -71,19 +73,26 @@ export default function App() {
 
   return (
     // 1fr_4fr grid-cols-[1fr_4fr] mobile:grid-cols-[1fr_2fr]
-    <div className="flex bg-white dark:bg-[#282c34] w-screen h-screen overflow-hidden">
-      <div className="fixed right-8 bottom-5 bg-transparent">
-        <Header theme={toggleDarkMode} sidebar={handleSidebarToggle} />
+
+    <div className="flex flex-col h-screen">
+      <div className="bg-white dark:bg-[#333] border-b border-[#ddd] dark:border-0 dark:text-[#eee] h-10">
+        <PinnedRepos />
       </div>
 
-      {hideSidebar===false && <Code press={handleFilePress} />}
+      <div className="flex bg-white dark:bg-[#282c34] w-screen overflow-hidden">
+        <div className="fixed right-8 bottom-5 bg-transparent">
+          <Header theme={toggleDarkMode} sidebar={handleSidebarToggle} />
+        </div>
 
-      <div
-        id="code-view"
-        ref={codeView}
-        className="overflow-y-scroll flex-1 bg-white dark:bg-[#282c34]"
-      >
-        <Highlight loading={loading} raw={raw} ext={ext} night={darkMode} />
+        {hideSidebar === false && <Code press={handleFilePress} />}
+
+        <div
+          id="code-view"
+          ref={codeView}
+          className="overflow-y-scroll flex-1 bg-white dark:bg-[#282c34]"
+        >
+          <Highlight loading={loading} raw={raw} ext={ext} night={darkMode} />
+        </div>
       </div>
     </div>
   );

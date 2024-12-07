@@ -21,3 +21,7 @@
   background-color: #242424;
   color: #f0f0f0;
 }
+
+#pinned {
+  font-family: fantasy !important;
+}
