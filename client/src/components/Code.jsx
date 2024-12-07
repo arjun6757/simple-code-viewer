@@ -12,7 +12,7 @@ export default function Code(props) {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
-        const result = await fetch("http://localhost:3000/api/code/repo");
+        const result = await fetch("https://simple-code-viewer.onrender.com/api/code/repo");
         const data = await result.json();
         setRepoData(data);
       } catch (error) {
@@ -114,13 +114,8 @@ export default function Code(props) {
     <div
       id="code-tree"
       onScroll={fixHeightIssue}
-      className="relative scrollbar-none sm:min-w-[18vw] sm:max-w-[50vw] overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-hidden select-none"
+      className="fixed max-w-[80vw] sm:relative scrollbar-none w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-hidden select-none"
     >
-      
-
-      {/* <button className="absolute top-5 right-5 text-3xl">
-        <MdClose />
-      </button> */}
 
       <div
         id="dragger"

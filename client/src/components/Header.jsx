@@ -10,11 +10,19 @@ export default function Header(props) {
   const [darkMode, setDarkMode] = useState(() => {
     localStorage.getItem("theme1") === "dark" ? true : false;
   });
-  const [sidebar, setSidebar] = useState(false);
+  const [hideSidebar, setHideSidebar] = useState(false);
 
   useEffect(() => {
     props.theme(darkMode);
   }, [darkMode, props.theme]);
+
+  useEffect(() => {
+    props.sidebar(hideSidebar);  
+  }, [hideSidebar, props.sidebar])
+
+  const handleToggleSidebar = () => {
+    setHideSidebar(prev=> !prev);
+  }
 
   const handleClick = () => {
     setDarkMode((prev) => !prev);
@@ -24,12 +32,13 @@ export default function Header(props) {
   return (
     <div className="flex flex-col gap-4 items-center transition-transform ease-in-out duration-500">
       <div
-        className={`flex border border-white flex-col items-center gap-4 overflow-hidden transition-all duration-500 ${
-          hide ? "max-h-40 opacity-100" : "max-h-0 opacity-0"
+        className={`flex flex-col items-center gap-4 overflow-hidden transition-all duration-500 ${
+          hide ? " opacity-100" : " opacity-0"
         }`}
       >
         <button
           title={`Collapse`}
+          onClick={handleToggleSidebar}
           className="rounded-full dark:bg-[#333] bg-[#f0f0f0] text-[#555] text-2xl dark:text-[#888] p-2"
         >
           <GoSidebarCollapse />

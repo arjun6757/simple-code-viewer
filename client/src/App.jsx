@@ -6,6 +6,7 @@ import Header from "./components/Header";
 export default function App() {
   const [ext, setExt] = useState("");
   const [raw, setRaw] = useState("");
+  const [hideSidebar, setHideSidebar] = useState(false);
   const [loading, setLoading] = useState(false);
   const codeView = useRef(null);
   const [darkMode, setDarkMode] = useState(() => {
@@ -19,6 +20,10 @@ export default function App() {
 
   const toggleDarkMode = (dark) => {
     dark ? setDarkMode(true) : setDarkMode(false);
+  };
+
+  const handleSidebarToggle = (value) => {
+    setHideSidebar(value);
   };
 
   useEffect(() => {
@@ -75,10 +80,10 @@ export default function App() {
     // 1fr_4fr grid-cols-[1fr_4fr] mobile:grid-cols-[1fr_2fr]
     <div className="flex bg-white dark:bg-[#282c34] w-screen h-screen overflow-hidden">
       <div className="fixed right-8 bottom-5 bg-transparent">
-        <Header theme={toggleDarkMode} />
+        <Header theme={toggleDarkMode} sidebar={handleSidebarToggle} />
       </div>
 
-      <Code press={handleFilePress} />
+      {hideSidebar===false && <Code press={handleFilePress} />}
 
       <div
         id="code-view"
