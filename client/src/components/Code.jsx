@@ -88,7 +88,7 @@ export default function Code(props) {
   // };
 
   const handleTouchDrag = (e) => {
-    e.preventDefault();
+    // e.preventDefault();
     const codeTree = document.getElementById("code-tree");
     const startWidth = codeTree.offsetWidth;
     const startX = e.touches[0].clientX;
@@ -96,7 +96,6 @@ export default function Code(props) {
     const touchMove = (event) => {
       const touch = event.touches[0];
       const newWidth = startWidth + (touch.clientX - startX);
-      console.log(newWidth);
       codeTree.style.width = `${newWidth}px`;
     };
 
@@ -114,7 +113,7 @@ export default function Code(props) {
     <div
       id="code-tree"
       onScroll={fixHeightIssue}
-      className="fixed max-w-[80vw] sm:relative scrollbar-none w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-hidden select-none"
+      className="scrollbar-none fixed min-w-[75vw] max-w-[75vw] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-hidden select-none"
     >
 
       <div

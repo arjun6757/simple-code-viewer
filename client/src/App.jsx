@@ -9,14 +9,7 @@ export default function App() {
   const [hideSidebar, setHideSidebar] = useState(false);
   const [loading, setLoading] = useState(false);
   const codeView = useRef(null);
-  const [darkMode, setDarkMode] = useState(() => {
-    const savedTheme = localStorage.getItem("theme");
-    if (savedTheme === "dark") {
-      return true;
-    } else {
-      return false;
-    }
-  });
+  const [darkMode, setDarkMode] = useState(false);
 
   const toggleDarkMode = (dark) => {
     dark ? setDarkMode(true) : setDarkMode(false);

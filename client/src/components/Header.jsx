@@ -1,15 +1,13 @@
 import React, { useEffect, useState } from "react";
-import { MdDarkMode } from "react-icons/md";
+import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 import { FaAngleDown, FaAngleUp, FaCode } from "react-icons/fa6";
 import { AiOutlineGlobal } from "react-icons/ai";
-import { GoSidebarCollapse } from "react-icons/go";
-import { GoSidebarExpand } from "react-icons/go";
+import { TbLayoutSidebar, TbLayoutSidebarFilled } from "react-icons/tb";
+import { useLocalStorage } from "../useLocalStorage";
 
 export default function Header(props) {
   const [hide, setHide] = useState(false);
-  const [darkMode, setDarkMode] = useState(() => {
-    localStorage.getItem("theme1") === "dark" ? true : false;
-  });
+  const [darkMode, setDarkMode] = useLocalStorage('dark-mode', false);
   const [hideSidebar, setHideSidebar] = useState(false);
 
   useEffect(() => {
@@ -17,16 +15,15 @@ export default function Header(props) {
   }, [darkMode, props.theme]);
 
   useEffect(() => {
-    props.sidebar(hideSidebar);  
-  }, [hideSidebar, props.sidebar])
+    props.sidebar(hideSidebar);
+  }, [hideSidebar, props.sidebar]);
 
   const handleToggleSidebar = () => {
-    setHideSidebar(prev=> !prev);
-  }
+    setHideSidebar((prev) => !prev);
+  };
 
   const handleClick = () => {
     setDarkMode((prev) => !prev);
-    localStorage.setItem("theme1", darkMode ? "dark" : "light");
   };
 
   return (
@@ -37,19 +34,26 @@ export default function Header(props) {
         }`}
       >
         <button
-          title={`Collapse`}
+          title={hideSidebar ? "Open Sidebar" : "Close Sidebar"}
           onClick={handleToggleSidebar}
           className="rounded-full dark:bg-[#333] bg-[#f0f0f0] text-[#555] text-2xl dark:text-[#888] p-2"
         >
-          <GoSidebarCollapse />
-          {/* <GoSidebarExpand /> */}
+          {hideSidebar ? (
+            <TbLayoutSidebar className="rounded-full" />
+          ) : (
+            <TbLayoutSidebarFilled className="rounded-full" />
+          )}
         </button>
         <button
-          title="Toggle"
+          title="Toggle Darkmode"
           onClick={handleClick}
           className={`rounded-full dark:bg-[#333] bg-[#f0f0f0] text-[#555] text-2xl dark:text-[#888] p-2`}
         >
-          <MdDarkMode className="rounded-full" />
+          {darkMode ? (
+            <MdDarkMode className="rounded-full" />
+          ) : (
+            <MdOutlineDarkMode className="rounded-full" />
+          )}
         </button>
         <button
           title="Code"
@@ -65,13 +69,14 @@ export default function Header(props) {
         </button>
       </div>
       <button
+        title={hide ? 'Collapse' : 'Expand'}
         onClick={() => setHide(!hide)}
         className="rounded-full dark:bg-[#333] bg-[#f0f0f0] text-2xl text-[#555] dark:text-[#888] p-2"
       >
         {hide ? (
-          <FaAngleDown title="Hide" className="rounded-full" />
+          <FaAngleDown className="rounded-full" />
         ) : (
-          <FaAngleUp title="Show" className="rounded-full" />
+          <FaAngleUp className="rounded-full" />
         )}
       </button>
     </div>
