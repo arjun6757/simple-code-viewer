@@ -1,7 +1,17 @@
 import React, { useEffect, useState } from "react";
+import { FaGithub } from "react-icons/fa";
+import { RxHamburgerMenu } from "react-icons/rx";
 
-export default function PinnedRepos() {
+export default function PinnedRepos(props) {
   const [pinnedRepos, setPinnedRepos] = useState([]);
+  const [hamburgerClick, setHamburgerClick] = useState(false);
+  const handleHamburgerClick = () => {
+    setHamburgerClick((prev) => !prev);
+  };
+
+  const handleRepoClick = (name, url) => {
+    props.handleRepoClick(name, url);
+  }
 
   useEffect(() => {
     const getPinnedData = async () => {
@@ -24,14 +34,37 @@ export default function PinnedRepos() {
   }, []); //load once
 
   return (
-    <div id="pinned" className="grid grid-cols-6 text-center h-full">
-      {pinnedRepos.map((item, index) => {
-        return (
-        <div key={index} className="hover:bg-[#f0f0f0] cursor-pointer dark:hover:bg-[#242424] font-sans flex justify-center items-center h-full border-r border-[#ddd] dark:border-[#242424]">
-            <a href={item.node.url}>{item.node.name}</a>
-        </div>
-    );
-      })}
+    <div>
+      <button className="sm:hidden" onClick={handleHamburgerClick}>
+        <RxHamburgerMenu className="text-2xl" />
+      </button>
+
+      <div
+        id="pinned"
+        className={`${
+          hamburgerClick ? "flex" : "hidden"
+        } sm:flex flex-col sm:flex-row h-full`}
+      >
+        {pinnedRepos.map((item, index) => {
+          return (
+            <div
+              onClick={() => handleRepoClick(item.node.name, item.node.url)}
+              key={index}
+              style={{ fontFamily: "Noto Sans" }}
+              className={`font-sans sm:rounded hover:bg-[#f0f0f0] p-1 sm:p-2 cursor-pointer dark:hover:bg-[#242424] flex gap-2 sm:justify-center items-center h-full`}
+            >
+              <div className="">
+                <a href={item.node.url}>
+                  <FaGithub />
+                </a>
+              </div>
+              <a onClick={(e) => e.preventDefault()} href={item.node.url}>
+                {item.node.name}
+              </a>
+            </div>
+          );
+        })}
+      </div>
     </div>
   );
 }

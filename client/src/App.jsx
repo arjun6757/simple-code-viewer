@@ -1,7 +1,7 @@
 import { useState, useEffect, useRef } from "react";
 import Code from "./components/Code";
 import Highlight from "./components/Highlight";
-import Header from "./components/ToggleBar";
+import ToggleBar from "./components/ToggleBar";
 import PinnedRepos from "./components/PinnedRepos";
 import "./index.css"
 
@@ -39,13 +39,9 @@ export default function App() {
     localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]); //whenever darkmode changes it will automatically set it to the root
 
-  // useEffect(() => {
-  //   const savedTheme = localStorage.getItem("theme");
-  //   console.log('running for theme: ', savedTheme);
-  //   if (String(savedTheme) === "dark") {
-  //     setDarkMode(true);
-  //   }
-  // }, []);  //will run when the window loads maybe ?
+  const getRepoData = async (name, url) => {
+    
+  }
 
   const getData = async (url) => {
     setLoading(true);
@@ -75,13 +71,13 @@ export default function App() {
     // 1fr_4fr grid-cols-[1fr_4fr] mobile:grid-cols-[1fr_2fr]
 
     <div className="flex flex-col h-screen">
-      <div className="bg-white dark:bg-[#333] border-b border-[#ddd] dark:border-0 dark:text-[#eee] h-10">
-        <PinnedRepos />
+      <div className="p-2 bg-white dark:bg-[#333] border-b border-[#ddd] dark:border-[#3a3939] dark:text-[#eee]">
+        <PinnedRepos handleRepoClick={()=> getRepoData(name, url)} />
       </div>
 
-      <div className="flex bg-white dark:bg-[#282c34] w-screen overflow-hidden">
+      <div className="flex bg-white dark:bg-[#282c34] w-screen h-full overflow-hidden">
         <div className="fixed right-8 bottom-5 bg-transparent">
-          <Header theme={toggleDarkMode} sidebar={handleSidebarToggle} />
+          <ToggleBar theme={toggleDarkMode} sidebar={handleSidebarToggle} />
         </div>
 
         {hideSidebar === false && <Code press={handleFilePress} />}

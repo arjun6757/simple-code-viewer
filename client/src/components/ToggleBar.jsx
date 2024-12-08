@@ -5,7 +5,7 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import { TbLayoutSidebar, TbLayoutSidebarFilled } from "react-icons/tb";
 import { useLocalStorage } from "../useLocalStorage";
 
-export default function Header(props) {
+export default function ToggleBar(props) {
   const [hide, setHide] = useState(false);
   const [darkMode, setDarkMode] = useLocalStorage('simple-code-viewer--dark-theme', false);
   const [hideSidebar, setHideSidebar] = useState(false);
