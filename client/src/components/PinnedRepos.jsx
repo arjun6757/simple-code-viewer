@@ -35,7 +35,7 @@ export default function PinnedRepos(props) {
 
   return (
     <div>
-      <button className="sm:hidden" onClick={handleHamburgerClick}>
+      <button className="hover:bg-[#f0f0f0] dark:hover:bg-[#171717] p-1 rounded-lg lg:hidden" onClick={handleHamburgerClick}>
         <RxHamburgerMenu className="text-2xl" />
       </button>
 
@@ -43,7 +43,7 @@ export default function PinnedRepos(props) {
         id="pinned"
         className={`${
           hamburgerClick ? "flex" : "hidden"
-        } sm:flex flex-col sm:flex-row h-full`}
+        } lg:flex flex-col lg:flex-row h-full`}
       >
         {pinnedRepos.map((item, index) => {
           return (
@@ -51,7 +51,7 @@ export default function PinnedRepos(props) {
               onClick={() => handleRepoClick(item.node.name, item.node.url)}
               key={index}
               style={{ fontFamily: "Noto Sans" }}
-              className={`font-sans sm:rounded hover:bg-[#f0f0f0] p-1 sm:p-2 cursor-pointer dark:hover:bg-[#242424] flex gap-2 sm:justify-center items-center h-full`}
+              className={`font-sans sm:rounded hover:bg-[#f0f0f0] p-1 sm:p-2 cursor-pointer dark:hover:bg-[#242424] flex gap-2 lg:justify-center items-center h-full`}
             >
               <div className="">
                 <a href={item.node.url}>

@@ -27,10 +27,10 @@ export default function ToggleBar(props) {
   };
 
   return (
-    <div className="flex flex-col gap-4 items-center transition-transform ease-in-out duration-500">
+    <div className="flex flex-col gap-4 items-center transition-transform ease-in-out duration-500 w-14">
       <div
-        className={`flex flex-col items-center gap-4 overflow-hidden transition-all duration-500 ${
-          hide ? " opacity-100" : " opacity-0"
+        className={`flex flex-col items-center gap-4 overflow-hidden transition-all duration-500 w-full p-1 ${
+          hide ? " opacity-100" : " opacity-0 hidden"
         }`}
       >
         <button
