@@ -126,4 +126,36 @@ const getPinnedRepos = async (req, res) => {
     }
 }
 
-export { getRepoUrl, getDirData, getQueryData, getPinnedRepos };
+const getSelectedRepoData = async (req, res) => {
+    const token = process.env.GITHUB_TOKEN;
+    const owner = process.env.REPO_OWNER;
+    const repo = req.params.selected_repo;
+
+
+    // here we want to req github to access repo code
+    const githubUrl = `https://api.github.com/repos/${owner}/${repo}/contents`;
+    const options = {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        }
+    }
+
+    const result = await fetch(githubUrl, options);
+    const data = await result.json();
+    console.log(data);
+    // res.send(data);
+
+    const files = data.map((file) => ({
+        name: file.name,
+        type: file.type,
+        url: file.download_url
+    }));
+
+    console.log(files);
+
+    return res.json(files);
+}
+
+export { getRepoUrl, getDirData, getQueryData, getPinnedRepos, getSelectedRepoData };

@@ -12,6 +12,7 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const codeView = useRef(null);
   const [darkMode, setDarkMode] = useState(false);
+  const [selectedRepo, setSelectedRepo] = useState("");
 
   const toggleDarkMode = (dark) => {
     dark ? setDarkMode(true) : setDarkMode(false);
@@ -39,8 +40,9 @@ export default function App() {
     localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]); //whenever darkmode changes it will automatically set it to the root
 
-  const getRepoData = async (name, url) => {
-    
+  const getRepoData = (name) => {
+    console.log('getrepodata: ', name)
+    setSelectedRepo(name);
   }
 
   const getData = async (url) => {
@@ -72,7 +74,7 @@ export default function App() {
 
     <div className="flex flex-col h-screen">
       <div className="p-2 bg-white dark:bg-[#333] border-b border-[#ddd] dark:border-[#3a3939] dark:text-[#eee]">
-        <PinnedRepos handleRepoClick={()=> getRepoData(name, url)} />
+        <PinnedRepos handleRepoClick={getRepoData} />
       </div>
 
       <div className="flex bg-white dark:bg-[#282c34] w-screen h-full overflow-hidden">
@@ -80,7 +82,7 @@ export default function App() {
           <ToggleBar theme={toggleDarkMode} sidebar={handleSidebarToggle} />
         </div>
 
-        {hideSidebar === false && <Code press={handleFilePress} />}
+        {hideSidebar === false && <Code press={handleFilePress} reposelect={selectedRepo} />}
 
         <div
           id="code-view"

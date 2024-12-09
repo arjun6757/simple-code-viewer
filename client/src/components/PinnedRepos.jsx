@@ -9,8 +9,8 @@ export default function PinnedRepos(props) {
     setHamburgerClick((prev) => !prev);
   };
 
-  const handleRepoClick = (name, url) => {
-    props.handleRepoClick(name, url);
+  const handleRepoClick = (name) => {
+    props.handleRepoClick(name);
   }
 
   useEffect(() => {
@@ -48,7 +48,7 @@ export default function PinnedRepos(props) {
         {pinnedRepos.map((item, index) => {
           return (
             <div
-              onClick={() => handleRepoClick(item.node.name, item.node.url)}
+              onClick={() => handleRepoClick(item.node.name)}
               key={index}
               style={{ fontFamily: "Noto Sans" }}
               className={`font-sans sm:rounded hover:bg-[#f0f0f0] p-1 sm:p-2 cursor-pointer dark:hover:bg-[#242424] flex gap-2 lg:justify-center items-center h-full`}

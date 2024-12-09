@@ -2,10 +2,32 @@ import { useState, useEffect } from "react";
 import ClockSpin from "./ClockSpin";
 import FolderLogic from "./FolderLogic.jsx";
 import Icon from "./Icon";
-
+// import { useLocalStorage } from "../useLocalStorage.js";
 export default function Code(props) {
   const [repoData, setRepoData] = useState([{}]);
   const [loading, setLoading] = useState(false);
+
+  useEffect(() => {
+    const fetchRepoData = async () => {
+      setLoading(true);
+      try {
+        const selectedRepo = props.reposelect;
+        const result = await fetch(
+          `http://localhost:3000/api/code/repo/select/${selectedRepo}`
+        );
+        const data = await result.json();
+        setRepoData(data);
+      } catch (error) {
+        console.error("Error fetching repo data:", error);
+        setRepoData([{}]);
+      } finally {
+        setLoading(false); // Set loading to false regardless of success or error
+      }
+    };
+
+    if (props.reposelect === "") return;
+    fetchRepoData();
+  }, [props.reposelect]);
 
   useEffect(() => {
     const fetchRepoData = async () => {
@@ -22,7 +44,11 @@ export default function Code(props) {
       }
     };
 
+    // if(repoData.length > 0) {
+    //   return;
+    // } else {
     fetchRepoData(); // Call the fetch function when component mounts
+    // }
   }, []); // Empty dependency array to run only once
 
   const hasDot = (name) => {
@@ -96,7 +122,6 @@ export default function Code(props) {
       onScroll={fixHeightIssue}
       className="scrollbar-none fixed min-w-[75vw] max-w-[75vw] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-hidden select-none"
     >
-
       <div
         id="dragger"
         onMouseDown={handleDrag}
