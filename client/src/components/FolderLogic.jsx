@@ -41,6 +41,7 @@ export default function FolderLogic(props) {
   };
 
   const handleFoldersClick = async (name, path) => {
+    console.log(name, path);
     const exist = findById(path, name);
 
     if (exist !== -1) {
@@ -55,6 +56,7 @@ export default function FolderLogic(props) {
   };
 
   const handleFolderStructure = async (name, path) => {
+    console.log('in handlefolderstructure', name, path)
     if (path) {
       //meaning it is definitely a child
       const data = await getChilds(name, path);

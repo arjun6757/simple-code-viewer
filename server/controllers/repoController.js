@@ -1,6 +1,9 @@
 // controllers/repoController.js
 
 // Function to handle the /repo endpoint
+
+let clickedRepo = "";
+
 const getRepoUrl = async (req, res) => {
     const token = process.env.GITHUB_TOKEN;
     const owner = process.env.REPO_OWNER;
@@ -58,7 +61,7 @@ const getQueryData = async (req, res) => {
     console.log('im in the getQueryData function');
     const token = process.env.GITHUB_TOKEN;
     const owner = process.env.REPO_OWNER;
-    const repo = process.env.REPO_NAME;
+    const repo = clickedRepo === "" ? process.env.REPO_NAME : clickedRepo;
 
     const path = req.query.path;
     console.log(req.query);
@@ -130,7 +133,7 @@ const getSelectedRepoData = async (req, res) => {
     const token = process.env.GITHUB_TOKEN;
     const owner = process.env.REPO_OWNER;
     const repo = req.params.selected_repo;
-
+    clickedRepo = repo;
 
     // here we want to req github to access repo code
     const githubUrl = `https://api.github.com/repos/${owner}/${repo}/contents`;
