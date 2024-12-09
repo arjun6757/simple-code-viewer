@@ -82,7 +82,7 @@ export default function App() {
           <ToggleBar theme={toggleDarkMode} sidebar={handleSidebarToggle} />
         </div>
 
-        {hideSidebar === false && <Code press={handleFilePress} reposelect={selectedRepo} />}
+        <Code hidesidebar={hideSidebar} press={handleFilePress} reposelect={selectedRepo} />
 
         <div
           id="code-view"

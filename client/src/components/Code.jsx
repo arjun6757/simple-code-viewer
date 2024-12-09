@@ -22,7 +22,7 @@ export default function Code(props) {
         setRepoData([{}]);
       } finally {
         setLoading(false); // Set loading to false regardless of success or error
-        console.log(repoData);
+        // console.log(repoData);
       }
     };
 
@@ -118,10 +118,11 @@ export default function Code(props) {
   };
 
   return (
+    props.hidesidebar === false &&
     <div
       id="code-tree"
       onScroll={fixHeightIssue}
-      className="scrollbar-none fixed min-w-[75vw] max-w-[75vw] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-hidden select-none"
+      className="mb-1 scrollbar-none fixed min-w-[75vw] max-w-[75vw] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-hidden select-none"
     >
       <div
         id="dragger"
