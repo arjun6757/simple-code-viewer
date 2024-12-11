@@ -5,9 +5,9 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import { TbLayoutSidebar, TbLayoutSidebarFilled } from "react-icons/tb";
 import { useLocalStorage } from "../useLocalStorage";
 
-export default function Header(props) {
+export default function ToggleBar(props) {
   const [hide, setHide] = useState(false);
-  const [darkMode, setDarkMode] = useLocalStorage('dark-mode', false);
+  const [darkMode, setDarkMode] = useLocalStorage('simple-code-viewer--dark-theme', false);
   const [hideSidebar, setHideSidebar] = useState(false);
 
   useEffect(() => {
@@ -27,10 +27,10 @@ export default function Header(props) {
   };
 
   return (
-    <div className="flex flex-col gap-4 items-center transition-transform ease-in-out duration-500">
+    <div className="flex flex-col gap-4 items-center transition-transform ease-in-out duration-500 w-14">
       <div
-        className={`flex flex-col items-center gap-4 overflow-hidden transition-all duration-500 ${
-          hide ? " opacity-100" : " opacity-0"
+        className={`flex flex-col items-center gap-4 overflow-hidden transition-all duration-500 w-full p-1 ${
+          hide ? " opacity-100" : " opacity-0 hidden"
         }`}
       >
         <button

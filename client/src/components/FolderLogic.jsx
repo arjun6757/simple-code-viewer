@@ -21,8 +21,8 @@ export default function FolderLogic(props) {
 
     try {
       const url = path
-        ? `https://simple-code-viewer.onrender.com/api/code/repo/query?path=${path}`
-        : `https://simple-code-viewer.onrender.com/api/code/repo/query?path=${name}`;
+        ? `http://localhost:3000/api/code/repo/query?path=${path}`
+        : `http://localhost:3000/api/code/repo/query?path=${name}`;
       const result = await fetch(url);
       const data = await result.json();
       if (data.status === 404) {
@@ -41,6 +41,7 @@ export default function FolderLogic(props) {
   };
 
   const handleFoldersClick = async (name, path) => {
+    // console.log(name, path);
     const exist = findById(path, name);
 
     if (exist !== -1) {
@@ -55,6 +56,7 @@ export default function FolderLogic(props) {
   };
 
   const handleFolderStructure = async (name, path) => {
+    // console.log('in handlefolderstructure', name, path)
     if (path) {
       //meaning it is definitely a child
       const data = await getChilds(name, path);

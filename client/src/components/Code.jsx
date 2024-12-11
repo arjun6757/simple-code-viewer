@@ -2,8 +2,7 @@ import { useState, useEffect } from "react";
 import ClockSpin from "./ClockSpin";
 import FolderLogic from "./FolderLogic.jsx";
 import Icon from "./Icon";
-import { MdClose } from "react-icons/md";
-
+// import { useLocalStorage } from "../useLocalStorage.js";
 export default function Code(props) {
   const [repoData, setRepoData] = useState([{}]);
   const [loading, setLoading] = useState(false);
@@ -12,7 +11,30 @@ export default function Code(props) {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
-        const result = await fetch("https://simple-code-viewer.onrender.com/api/code/repo");
+        const selectedRepo = props.reposelect;
+        const result = await fetch(
+          `http://localhost:3000/api/code/repo/select/${selectedRepo}`
+        );
+        const data = await result.json();
+        setRepoData(data);
+      } catch (error) {
+        console.error("Error fetching repo data:", error);
+        setRepoData([{}]);
+      } finally {
+        setLoading(false); // Set loading to false regardless of success or error
+        // console.log(repoData);
+      }
+    };
+
+    if (props.reposelect === "") return;
+    fetchRepoData();
+  }, [props.reposelect]);
+
+  useEffect(() => {
+    const fetchRepoData = async () => {
+      setLoading(true);
+      try {
+        const result = await fetch("http://localhost:3000/api/code/repo");
         const data = await result.json();
         setRepoData(data);
       } catch (error) {
@@ -23,7 +45,11 @@ export default function Code(props) {
       }
     };
 
+    // if(repoData.length > 0) {
+    //   return;
+    // } else {
     fetchRepoData(); // Call the fetch function when component mounts
+    // }
   }, []); // Empty dependency array to run only once
 
   const hasDot = (name) => {
@@ -69,24 +95,6 @@ export default function Code(props) {
     dragger.style.height = `${totalCodeTree}px`;
   };
 
-  // const observeCodeTree = () => {
-  //   const initial = codeTree.offsetHeight;
-  //   const codeTree = document.getElementById("code-tree");
-
-  //   if (!codeTree) return;
-
-  //   const observer = new MutationObserver(() => {
-  //     if(codeTree.scrollHeight===initial)
-  //     fixHeightIssue(); // it will be executed whenever codeTree has a change
-  //   });
-
-  //   //configuration for observing changes codeTree div
-  //   observer.observe(codeTree, {
-  //     childList: true, //watch for addition or removal of childs
-  //     subtree: true, // monitor all descendents of the element
-  //   });
-  // };
-
   const handleTouchDrag = (e) => {
     // e.preventDefault();
     const codeTree = document.getElementById("code-tree");
@@ -110,12 +118,12 @@ export default function Code(props) {
   };
 
   return (
+    props.hidesidebar === false &&
     <div
       id="code-tree"
       onScroll={fixHeightIssue}
-      className="scrollbar-none fixed min-w-[75vw] max-w-[75vw] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-hidden select-none"
+      className="mb-1 scrollbar-none fixed min-w-[75vw] max-w-[75vw] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-hidden select-none"
     >
-
       <div
         id="dragger"
         onMouseDown={handleDrag}
@@ -126,6 +134,7 @@ export default function Code(props) {
         <ClockSpin sx2="w-[30px] h-[30px] border-r-[9px] border-t-[9px] border-l-[9px]" />
       ) : (
         repoData.map((file, index) =>
+          // console.log(file),
           file.type === "dir" ? (
             <FolderLogic
               key={index}

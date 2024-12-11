@@ -29,7 +29,7 @@ app.use((req, res, next) => {
   }
   
   next();
-})
+});
 
 app.use('/api', api);
 // all routes defined on api.js will be prefixed with /api => /api/code/repo
