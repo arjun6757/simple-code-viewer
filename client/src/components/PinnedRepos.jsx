@@ -19,6 +19,8 @@ export default function PinnedRepos(props) {
         const response = await fetch(
           "http://localhost:3000/api/code/repo/usr/pinned"
         );
+
+        // const response2 = await fetch()
         const responseData = await response.json();
         const edges = responseData.data.user.pinnedItems.edges;
         setPinnedRepos(edges);

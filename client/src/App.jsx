@@ -3,7 +3,8 @@ import Code from "./components/Code";
 import Highlight from "./components/Highlight";
 import ToggleBar from "./components/ToggleBar";
 import PinnedRepos from "./components/PinnedRepos";
-import "./index.css"
+import LivePreview from "./components/LivePreview";
+import "./index.css";
 
 export default function App() {
   const [ext, setExt] = useState("");
@@ -13,6 +14,7 @@ export default function App() {
   const codeView = useRef(null);
   const [darkMode, setDarkMode] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState("");
+  const [liveDemo, setLiveDemo] = useState(false);
 
   const toggleDarkMode = (dark) => {
     dark ? setDarkMode(true) : setDarkMode(false);
@@ -41,9 +43,9 @@ export default function App() {
   }, [darkMode]); //whenever darkmode changes it will automatically set it to the root
 
   const getRepoData = (name) => {
-    console.log('getrepodata: ', name)
+    console.log("getrepodata: ", name);
     setSelectedRepo(name);
-  }
+  };
 
   const getData = async (url) => {
     setLoading(true);
@@ -69,20 +71,34 @@ export default function App() {
     setLoading(false);
   };
 
+  const handleLiveDemo = (truth) => {
+    truth ? setLiveDemo(true) : setLiveDemo(false);
+  };
+
   return (
     // 1fr_4fr grid-cols-[1fr_4fr] mobile:grid-cols-[1fr_2fr]
 
     <div className="flex flex-col h-screen">
+      {liveDemo && <LivePreview />}
+
       <div className="p-2 bg-white dark:bg-[#333] border-b border-[#ddd] dark:border-[#3a3939] dark:text-[#eee]">
         <PinnedRepos handleRepoClick={getRepoData} />
       </div>
 
       <div className="flex bg-white dark:bg-[#282c34] w-screen h-full overflow-hidden">
         <div className="fixed right-8 bottom-5 bg-transparent">
-          <ToggleBar theme={toggleDarkMode} sidebar={handleSidebarToggle} />
+          <ToggleBar
+            theme={toggleDarkMode}
+            sidebar={handleSidebarToggle}
+            livedemo={handleLiveDemo}
+          />
         </div>
 
-        <Code hidesidebar={hideSidebar} press={handleFilePress} reposelect={selectedRepo} />
+        <Code
+          hidesidebar={hideSidebar}
+          press={handleFilePress}
+          reposelect={selectedRepo}
+        />
 
         <div
           id="code-view"

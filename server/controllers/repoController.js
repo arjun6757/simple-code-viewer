@@ -62,7 +62,7 @@ const getQueryData = async (req, res) => {
     const token = process.env.GITHUB_TOKEN;
     const owner = process.env.REPO_OWNER;
     const repo = clickedRepo === "" ? process.env.REPO_NAME : clickedRepo;
-
+    // need to get homepage url too
     const path = req.query.path;
     console.log(req.query);
     const githubUrl = `https://api.github.com/repos/${owner}/${repo}/contents/${path}`;
@@ -146,7 +146,9 @@ const getSelectedRepoData = async (req, res) => {
     }
 
     const result = await fetch(githubUrl, options);
+    const result1 = await fetch(`https://api.github.com/repos/${owner}/${repo}`, options);
     const data = await result.json();
+    const data1 = await result1.json()
     console.log(data);
     // res.send(data);
 
@@ -157,6 +159,8 @@ const getSelectedRepoData = async (req, res) => {
     }));
 
     console.log(files);
+
+    files.push({type: "url", homepage_url: data1.homepage});
 
     return res.json(files);
 }
