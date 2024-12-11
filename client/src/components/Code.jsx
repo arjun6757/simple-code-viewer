@@ -34,7 +34,7 @@ export default function Code(props) {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
-        const result = await fetch("http://localhost:3000/api/code/repo");
+        const result = await fetch("https://simple-code-viewer.onrender.com/api/code/repo");
         const data = await result.json();
         setRepoData(data);
       } catch (error) {
