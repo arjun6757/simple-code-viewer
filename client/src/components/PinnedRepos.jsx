@@ -17,7 +17,7 @@ export default function PinnedRepos(props) {
     const getPinnedData = async () => {
       try {
         const response = await fetch(
-          "http://localhost:3000/api/code/repo/usr/pinned"
+          "https://simple-code-viewer.onrender.com/api/code/repo/usr/pinned"
         );
 
         // const response2 = await fetch()

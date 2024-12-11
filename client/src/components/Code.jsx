@@ -13,7 +13,7 @@ export default function Code(props) {
       try {
         const selectedRepo = props.reposelect;
         const result = await fetch(
-          `http://localhost:3000/api/code/repo/select/${selectedRepo}`
+          `https://simple-code-view.onrender.com/api/code/repo/select/${selectedRepo}`
         );
         const data = await result.json();
         setRepoData(data);
@@ -34,7 +34,7 @@ export default function Code(props) {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
-        const result = await fetch("http://localhost:3000/api/code/repo");
+        const result = await fetch("https://simple-code-view.onrender.com/api/code/repo");
         const data = await result.json();
         setRepoData(data);
       } catch (error) {
@@ -84,7 +84,7 @@ export default function Code(props) {
   };
 
   const fixHeightIssue = () => {
-    // help from -> https://stackoverflow.com/questions/7668636/check-with-jquery-if-div-has-overflowing-elements
+    // help from -> httpss://stackoverflow.com/questions/7668636/check-with-jquery-if-div-has-overflowing-elements
     const dragger = document.getElementById("dragger");
     const codeTree = document.getElementById("code-tree");
     let totalCodeTree = codeTree.scrollHeight;
