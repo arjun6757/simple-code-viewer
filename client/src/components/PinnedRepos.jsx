@@ -42,44 +42,48 @@ export default function PinnedRepos(props) {
   }, []); //load once
 
   return (
-    <div>
-      <button
-        className="hover:bg-[#f0f0f0] dark:hover:bg-[#171717] p-1 rounded-lg lg:hidden"
-        onClick={handleHamburgerClick}
-      >
-        <RxHamburgerMenu className="text-2xl" />
-      </button>
-
-      {loading && <ClockSpin />}
-
-      {loading === false && (
-        <div
-          id="pinned"
-          className={`${
-            hamburgerClick ? "flex" : "hidden"
-          } lg:flex flex-col lg:flex-row h-full`}
+    pinnedRepos.length > 0 ? (
+      <div>
+        <button
+          className="hover:bg-[#f0f0f0] dark:hover:bg-[#171717] p-1 rounded-lg lg:hidden"
+          onClick={handleHamburgerClick}
         >
-          {pinnedRepos.map((item, index) => {
-            return (
-              <div
-                onClick={() => handleRepoClick(item.node.name)}
-                key={index}
-                style={{ fontFamily: "Noto Sans" }}
-                className={`font-sans sm:rounded hover:bg-[#f0f0f0] p-1 sm:p-2 cursor-pointer dark:hover:bg-[#242424] flex gap-2 lg:justify-center items-center h-full`}
-              >
-                <div className="">
-                  <a href={item.node.url}>
-                    <FaGithub />
+          <RxHamburgerMenu className="text-2xl" />
+        </button>
+
+        {loading && <ClockSpin />}
+
+        {loading === false && (
+          <div
+            id="pinned"
+            className={`${
+              hamburgerClick ? "flex" : "hidden"
+            } lg:flex flex-col lg:flex-row h-full`}
+          >
+            {pinnedRepos.map((item, index) => {
+              return (
+                <div
+                  onClick={() => handleRepoClick(item.node.name)}
+                  key={index}
+                  style={{ fontFamily: "Noto Sans" }}
+                  className={`font-sans sm:rounded hover:bg-[#f0f0f0] p-1 sm:p-2 cursor-pointer dark:hover:bg-[#242424] flex gap-2 lg:justify-center items-center h-full`}
+                >
+                  <div className="">
+                    <a href={item.node.url}>
+                      <FaGithub />
+                    </a>
+                  </div>
+                  <a onClick={(e) => e.preventDefault()} href={item.node.url}>
+                    {item.node.name}
                   </a>
                 </div>
-                <a onClick={(e) => e.preventDefault()} href={item.node.url}>
-                  {item.node.name}
-                </a>
-              </div>
-            );
-          })}
-        </div>
-      )}
-    </div>
+              );
+            })}
+          </div>
+        )}
+      </div>
+    ) : (
+      <p className="text-center">No pinned items found :(</p>
+    )
   );
 }

@@ -4,6 +4,7 @@ import Highlight from "./components/Highlight";
 import ToggleBar from "./components/ToggleBar";
 import PinnedRepos from "./components/PinnedRepos";
 import LivePreview from "./components/LivePreview";
+import ClockSpin from "./components/ClockSpin";
 
 export default function App() {
   const [ext, setExt] = useState("");
@@ -80,7 +81,6 @@ export default function App() {
 
   useEffect(() => {
     const fetch_homepage = async () => {
-      setLoading(true);
       try {
         const result = await fetch(
           "http://localhost:3000/api/code/repo/get/homepage_url"
@@ -90,12 +90,12 @@ export default function App() {
         console.log("homepage_url: ", homepage);
       } catch (error) {
         console.error("error fetching homepage url for the repo", error);
-      } finally {
-        setLoading(false);
       }
     };
-
-    fetch_homepage();
+    
+    if(liveDemo) {
+      fetch_homepage();
+    }
   }, [liveDemo])
 
   return (
