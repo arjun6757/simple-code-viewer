@@ -4,7 +4,6 @@ import Highlight from "./components/Highlight";
 import ToggleBar from "./components/ToggleBar";
 import PinnedRepos from "./components/PinnedRepos";
 import LivePreview from "./components/LivePreview";
-import "./index.css";
 
 export default function App() {
   const [ext, setExt] = useState("");
@@ -15,6 +14,7 @@ export default function App() {
   const [darkMode, setDarkMode] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState("");
   const [liveDemo, setLiveDemo] = useState(false);
+  const [homepage, setHomepage] = useState("");
 
   const toggleDarkMode = (dark) => {
     dark ? setDarkMode(true) : setDarkMode(false);
@@ -27,19 +27,22 @@ export default function App() {
   useEffect(() => {
     const html = document.documentElement; //gets a reference to the root node
     if (darkMode) {
+      // html.style.colorScheme ="dark";
       html.classList.add("dark");
-      if (codeView.current) {
-        codeView.current.style.scrollbarColor = "#555 transparent";
-      }
+      html.style.colorScheme = "dark";  
+      //colorScheme is gonna change the scrollbar color automatically if you don't know
+      // if (codeView.current) {
+      //   codeView.current.style.scrollbarColor = "#555 transparent";
+      // }
     } else {
       html.classList.remove("dark");
-      if (codeView.current) {
-        codeView.current.style.scrollbarColor = "";
-      }
+      html.style.colorScheme = "light";
+      // if (codeView.current) {
+      //   codeView.current.style.scrollbarColor = "";
+      // }
     }
 
     //save the user's preference
-    localStorage.setItem("theme", darkMode ? "dark" : "light");
   }, [darkMode]); //whenever darkmode changes it will automatically set it to the root
 
   const getRepoData = (name) => {
@@ -75,11 +78,32 @@ export default function App() {
     truth ? setLiveDemo(true) : setLiveDemo(false);
   };
 
+  useEffect(() => {
+    const fetch_homepage = async () => {
+      setLoading(true);
+      try {
+        const result = await fetch(
+          "http://localhost:3000/api/code/repo/get/homepage_url"
+        );
+        const data = await result.json();
+        setHomepage(data.homepage_url);
+        console.log("homepage_url: ", homepage);
+      } catch (error) {
+        console.error("error fetching homepage url for the repo", error);
+      } finally {
+        setLoading(false);
+      }
+    };
+
+    fetch_homepage();
+  }, [liveDemo])
+
   return (
     // 1fr_4fr grid-cols-[1fr_4fr] mobile:grid-cols-[1fr_2fr]
 
     <div className="flex flex-col h-screen">
-      {liveDemo && <LivePreview />}
+
+      {liveDemo && <LivePreview src={homepage} />}
 
       <div className="p-2 bg-white dark:bg-[#333] border-b border-[#ddd] dark:border-[#3a3939] dark:text-[#eee]">
         <PinnedRepos handleRepoClick={getRepoData} />

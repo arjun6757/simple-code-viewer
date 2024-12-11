@@ -9,9 +9,13 @@
   font-size: 16px !important;
 } */
 
-#code-view:hover {
+/* :root { auto changes the color of the scrollbar */
+  /* color-scheme: dark; */
+/* } */
+
+/* #code-view:hover {
   scrollbar-color: #777 transparent;
-}
+} */
 
 .hljs {
   font-family: "Fira Code", "Consolas", "Courier New", monospace;
@@ -22,6 +26,12 @@
   color: #f0f0f0;
 }
 
-#pinned {
-  font-family: fantasy !important;
+/* .hover-scrollbar {
+  scrollbar-color: #777 transparent;
 }
+
+.dark-scrollbar {
+  scrollbar-color: #555 transparent;
+} */
+
+/* fking scrollbar issue for nightmode ---> https://stackoverflow.com/questions/65940522/how-do-i-switch-to-chromes-dark-scrollbar-like-github-does */

@@ -3,11 +3,13 @@
 // Function to handle the /repo endpoint
 
 let clickedRepo = "";
+let defaultRepo = "";
 
 const getRepoUrl = async (req, res) => {
     const token = process.env.GITHUB_TOKEN;
     const owner = process.env.REPO_OWNER;
     const repo = process.env.REPO_NAME;
+    defaultRepo = repo;
 
     // here we want to req github to access repo code
 
@@ -160,9 +162,28 @@ const getSelectedRepoData = async (req, res) => {
 
     console.log(files);
 
-    files.push({type: "url", homepage_url: data1.homepage});
+    files.push({ type: "url", homepage_url: data1.homepage });
 
     return res.json(files);
 }
 
-export { getRepoUrl, getDirData, getQueryData, getPinnedRepos, getSelectedRepoData };
+const getHomePageURL = async (req, res) => {
+    const token = process.env.GITHUB_TOKEN;
+    const owner = process.env.REPO_OWNER;
+    const repo = clickedRepo==="" ? defaultRepo : clickedRepo;
+
+    const options = {
+        method: "GET",
+        headers: {
+            Authorization: `Bearer ${token}`,
+            "Content-Type": "application/json",
+        }
+    }
+
+    const result = await fetch(`https://api.github.com/repos/${owner}/${repo}`, options);
+    const data = await result.json();
+
+    res.json({homepage_url: data.homepage})
+}
+
+export { getRepoUrl, getDirData, getQueryData, getPinnedRepos, getSelectedRepoData, getHomePageURL };

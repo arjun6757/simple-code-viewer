@@ -13,7 +13,7 @@ export default function Code(props) {
       try {
         const selectedRepo = props.reposelect;
         const result = await fetch(
-          `https://simple-code-view.onrender.com/api/code/repo/select/${selectedRepo}`
+          `http://localhost:3000/api/code/repo/select/${selectedRepo}`
         );
         const data = await result.json();
         setRepoData(data);
@@ -34,7 +34,7 @@ export default function Code(props) {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
-        const result = await fetch("https://simple-code-view.onrender.com/api/code/repo");
+        const result = await fetch("http://localhost:3000/api/code/repo");
         const data = await result.json();
         setRepoData(data);
       } catch (error) {
@@ -118,13 +118,13 @@ export default function Code(props) {
       <div
         id="code-tree"
         onScroll={fixHeightIssue}
-        className="mb-1 scrollbar-none fixed min-w-[75vw] max-w-[75vw] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] overflow-y-scroll flex flex-col h-screen bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-hidden select-none"
+        className="fixed min-w-[75vw] max-w-[75vw] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] overflow-y-scroll flex flex-col h-full bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-x-hidden select-none"
       >
         <div
           id="dragger"
           onMouseDown={handleDrag}
           onTouchStart={handleTouchDrag}
-          className="absolute top-0 right-0 w-1 min-h-full h-auto cursor-ew-resize hover:bg-blue-500"
+          className="absolute top-0 right-0 w-1 min-h-full opacity-0 h-auto cursor-ew-resize hover:bg-blue-500 hover:opacity-100 transition-opacity delay-300"
         ></div>
         {loading ? (
           <ClockSpin sx2="w-[30px] h-[30px] border-r-[9px] border-t-[9px] border-l-[9px]" />
