@@ -18,7 +18,7 @@ export default function FolderLogic(props) {
   const getChilds = async (name, path) => {
     setLoading(true);
     setGettingChildFor(path ? path : name);
-
+    // add this ?
     try {
       const url = path
         ? `https://simple-code-viewer.onrender.com/api/code/repo/query?path=${path}`
