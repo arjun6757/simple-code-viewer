@@ -9,10 +9,15 @@ export default function ToggleBar(props) {
   const [hide, setHide] = useState(false);
   const [darkMode, setDarkMode] = useLocalStorage('simple-code-viewer--dark-theme', false);
   const [hideSidebar, setHideSidebar] = useState(false);
+  const [LivePreview, setLivePreview] = useState(false);
 
   useEffect(() => {
     props.theme(darkMode);
   }, [darkMode, props.theme]);
+
+  useEffect(() => {
+    props.livedemo(LivePreview);
+  }, [LivePreview, props.livedemo]);
 
   useEffect(() => {
     props.sidebar(hideSidebar);
@@ -62,6 +67,7 @@ export default function ToggleBar(props) {
           <FaCode className="rounded-full" />
         </button>
         <button
+        onClick={()=> setLivePreview(prev=> !prev)}
           title="Live Demo"
           className="rounded-full dark:bg-[#333] bg-[#f0f0f0] text-[#555] text-2xl dark:text-[#888] p-2"
         >
