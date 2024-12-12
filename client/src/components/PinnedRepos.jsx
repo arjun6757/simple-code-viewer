@@ -21,10 +21,9 @@ export default function PinnedRepos(props) {
       setLoading(true);
       try {
         const response = await fetch(
-          "https://simple-code-viewer.onrender.com/api/code/repo/usr/pinned"
+          "http://localhost:3000/api/code/repo/usr/pinned"
         );
-
-        // const response2 = await fetch()
+        
         const responseData = await response.json();
         const edges = responseData.data.user.pinnedItems.edges;
         setPinnedRepos(edges);
@@ -83,7 +82,7 @@ export default function PinnedRepos(props) {
         )}
       </div>
     ) : (
-      <p className="text-center">No pinned items found :(</p>
+      <p className="text-center">No pinned items found!</p>
     )
   );
 }
