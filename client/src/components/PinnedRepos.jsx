@@ -7,12 +7,14 @@ export default function PinnedRepos(props) {
   const [pinnedRepos, setPinnedRepos] = useState([]);
   const [hamburgerClick, setHamburgerClick] = useState(false);
   const [loading, setLoading] = useState(false);
+  const [clicked, setClicked] = useState("");
 
   const handleHamburgerClick = () => {
     setHamburgerClick((prev) => !prev);
   };
 
   const handleRepoClick = (name) => {
+    setClicked(name);
     props.handleRepoClick(name);
   };
 
@@ -65,7 +67,7 @@ export default function PinnedRepos(props) {
                   onClick={() => handleRepoClick(item.node.name)}
                   key={index}
                   style={{ fontFamily: "Noto Sans" }}
-                  className={`font-sans sm:rounded hover:bg-[#f0f0f0] p-1 sm:p-2 cursor-pointer dark:hover:bg-[#242424] flex gap-2 lg:justify-center items-center h-full`}
+                  className={`${clicked === item.node.name ? "bg-[#f0f0f0] dark:bg-[#242424]" : ""} select-none font-sans sm:rounded hover:bg-[#f0f0f0] p-1 sm:p-2 cursor-pointer dark:hover:bg-[#242424] flex gap-2 lg:justify-center items-center h-full`}
                 >
                   <div className="">
                     <a href={item.node.url}>
