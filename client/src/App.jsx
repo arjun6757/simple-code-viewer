@@ -4,7 +4,7 @@ import Highlight from "./components/Highlight";
 import ToggleBar from "./components/ToggleBar";
 import PinnedRepos from "./components/PinnedRepos";
 import LivePreview from "./components/LivePreview";
-import ClockSpin from "./components/ClockSpin";
+// import ClockSpin from "./components/ClockSpin";
 
 export default function App() {
   const [ext, setExt] = useState("");
@@ -31,20 +31,12 @@ export default function App() {
       // html.style.colorScheme ="dark";
       html.classList.add("dark");
       html.style.colorScheme = "dark";  
-      //colorScheme is gonna change the scrollbar color automatically if you don't know
-      // if (codeView.current) {
-      //   codeView.current.style.scrollbarColor = "#555 transparent";
-      // }
     } else {
       html.classList.remove("dark");
       html.style.colorScheme = "light";
-      // if (codeView.current) {
-      //   codeView.current.style.scrollbarColor = "";
-      // }
     }
 
-    //save the user's preference
-  }, [darkMode]); //whenever darkmode changes it will automatically set it to the root
+  }, [darkMode]); 
 
   const getRepoData = (name) => {
     console.log("getrepodata: ", name);
@@ -83,7 +75,7 @@ export default function App() {
     const fetch_homepage = async () => {
       try {
         const result = await fetch(
-          "http://localhost:3000/api/code/repo/get/homepage_url"
+          "https://simple-code-viewer.onrender.com/api/code/repo/get/homepage_url"
         );
         const data = await result.json();
         setHomepage(data.homepage_url);
@@ -99,8 +91,6 @@ export default function App() {
   }, [liveDemo])
 
   return (
-    // 1fr_4fr grid-cols-[1fr_4fr] mobile:grid-cols-[1fr_2fr]
-
     <div className="flex flex-col h-screen">
 
       {liveDemo && <LivePreview src={homepage} />}
