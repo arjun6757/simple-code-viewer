@@ -61,7 +61,6 @@ const getDirData = async (req, res) => {
 }
 
 const getQueryData = async (req, res) => {
-    console.log('im in the getQueryData function');
     const token = process.env.GITHUB_TOKEN;
     const owner = process.env.REPO_OWNER;
     const repo = clickedRepo === "" ? process.env.REPO_NAME : clickedRepo;
@@ -116,8 +115,6 @@ const getSelectedRepoData = async (req, res) => {
         type: file.type,
         url: file.download_url
     }));
-
-    console.log(files);
 
     return res.json(files);
 }
