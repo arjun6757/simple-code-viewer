@@ -9,7 +9,7 @@ export default function LivePreview(props) {
 
   return (
     live &&
-    <div className="fixed left-0 flex justify-center items-center w-[430px] border-r border-[#ddd] dark:border-[#555] h-screen z-10">
+    <div className="z-10 fixed w-[80vw] sm:left-0 flex justify-center items-center sm:w-[430px] border-r border-[#ddd] dark:border-[#555] h-screen">
       {frame}
     </div>
   );
