@@ -1,9 +1,7 @@
 import React from "react";
 
 import { SiReact, SiBrandfolder, SiVite } from "@icons-pack/react-simple-icons";
-import { CiFolderOn } from "react-icons/ci";
-import { FcFolder } from "react-icons/fc";
-import { FaCss3Alt, FaFile, FaHtml5, FaJs, FaMarkdown } from "react-icons/fa6";
+import { FaCss3Alt, FaHtml5, FaJs, FaMarkdown } from "react-icons/fa6";
 import { LuFileJson } from "react-icons/lu";
 import { TbBrandCpp, TbSvg } from "react-icons/tb";
 import { RiTailwindCssFill } from "react-icons/ri";
@@ -25,7 +23,6 @@ export default function Icon(props) {
   };
 
   const getIcon = (name, type) => {
-    // console.log(name, type);
 
     if (type === "dir") {
       return <AiFillFolder className="text-yellow-500 text-2xl" />;

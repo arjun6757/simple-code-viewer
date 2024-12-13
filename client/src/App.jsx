@@ -1,10 +1,9 @@
 import { useState, useEffect, useRef } from "react";
-import Code from "./components/Code";
+import Sidebar from "./components/Sidebar";
 import Highlight from "./components/Highlight";
 import ToggleBar from "./components/ToggleBar";
 import PinnedRepos from "./components/PinnedRepos";
 import LivePreview from "./components/LivePreview";
-// import ClockSpin from "./components/ClockSpin";
 
 export default function App() {
   const [ext, setExt] = useState("");
@@ -28,18 +27,15 @@ export default function App() {
   useEffect(() => {
     const html = document.documentElement; //gets a reference to the root node
     if (darkMode) {
-      // html.style.colorScheme ="dark";
       html.classList.add("dark");
-      html.style.colorScheme = "dark";  
+      html.style.colorScheme = "dark"; // one line fix for scrollbar issue
     } else {
       html.classList.remove("dark");
       html.style.colorScheme = "light";
     }
-
-  }, [darkMode]); 
+  }, [darkMode]);
 
   const getRepoData = (name) => {
-    console.log("getrepodata: ", name);
     setSelectedRepo(name);
   };
 
@@ -79,36 +75,24 @@ export default function App() {
         );
         const data = await result.json();
         setHomepage(data.homepage_url);
-        console.log("homepage_url: ", homepage);
       } catch (error) {
         console.error("error fetching homepage url for the repo", error);
       }
     };
-    
-    if(liveDemo) {
+
+    if (liveDemo) {
       fetch_homepage();
     }
-  }, [liveDemo])
+  }, [liveDemo]);
 
   return (
     <div className="flex flex-col h-screen">
-
-      {liveDemo && <LivePreview src={homepage} />}
-
       <div className="p-2 bg-white dark:bg-[#333] border-b border-[#ddd] dark:border-[#3a3939] dark:text-[#eee]">
         <PinnedRepos handleRepoClick={getRepoData} />
       </div>
 
       <div className="flex bg-white dark:bg-[#282c34] w-screen h-full overflow-hidden">
-        <div className="fixed right-8 bottom-5 bg-transparent">
-          <ToggleBar
-            theme={toggleDarkMode}
-            sidebar={handleSidebarToggle}
-            livedemo={handleLiveDemo}
-          />
-        </div>
-
-        <Code
+        <Sidebar
           hidesidebar={hideSidebar}
           press={handleFilePress}
           reposelect={selectedRepo}
@@ -122,6 +106,14 @@ export default function App() {
           <Highlight loading={loading} raw={raw} ext={ext} night={darkMode} />
         </div>
       </div>
+
+      <ToggleBar
+        theme={toggleDarkMode}
+        sidebar={handleSidebarToggle}
+        livedemo={handleLiveDemo}
+      />
+
+      <LivePreview src={homepage} live={liveDemo} />
     </div>
   );
 }
