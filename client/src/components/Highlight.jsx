@@ -1,10 +1,8 @@
 import ClockSpin from "./ClockSpin";
 import hljs from "highlight.js";
-// import "highlight.js/styles/intellij-light.css";
-import { useEffect, useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 
 export default function Highlight({ loading, raw, ext, night }) {
-  // const [isDark, setIsDark] = useState(night);
   const codeRef = useRef(null);
 
   useEffect(() => {

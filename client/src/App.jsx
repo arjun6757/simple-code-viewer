@@ -28,7 +28,7 @@ export default function App() {
     const html = document.documentElement; //gets a reference to the root node
     if (darkMode) {
       html.classList.add("dark");
-      html.style.colorScheme = "dark";  // one line fix for scrollbar issue 
+      html.style.colorScheme = "dark"; // one line fix for scrollbar issue
     } else {
       html.classList.remove("dark");
       html.style.colorScheme = "light";
@@ -89,14 +89,11 @@ export default function App() {
 
   return (
     <div className="flex flex-col h-screen">
-      {liveDemo && <LivePreview src={homepage} />}
-
       <div className="p-2 bg-white dark:bg-[#333] border-b border-[#ddd] dark:border-[#3a3939] dark:text-[#eee]">
         <PinnedRepos handleRepoClick={getRepoData} />
       </div>
 
       <div className="flex bg-white dark:bg-[#282c34] w-screen h-full overflow-hidden">
-
         <Sidebar
           hidesidebar={hideSidebar}
           press={handleFilePress}
@@ -110,13 +107,15 @@ export default function App() {
         >
           <Highlight loading={loading} raw={raw} ext={ext} night={darkMode} />
         </div>
-
-        <ToggleBar
-          theme={toggleDarkMode}
-          sidebar={handleSidebarToggle}
-          livedemo={handleLiveDemo}
-        />
       </div>
+
+      <ToggleBar
+        theme={toggleDarkMode}
+        sidebar={handleSidebarToggle}
+        livedemo={handleLiveDemo}
+      />
+
+      <LivePreview src={homepage} live={liveDemo} />
     </div>
   );
 }
