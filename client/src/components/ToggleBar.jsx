@@ -65,13 +65,6 @@ export default function ToggleBar(props) {
           )}
         </button>
         <button
-          title="Code"
-          className="rounded-full dark:bg-[#333] bg-[#f0f0f0] text-[#555] text-2xl dark:text-[#888] p-2"
-          tabIndex={hide ? 0 : -1}
-        >
-          <FaCode className="rounded-full" />
-        </button>
-        <button
         onClick={()=> setLivePreview(prev=> !prev)}
           title="Live Demo"
           className="rounded-full dark:bg-[#333] bg-[#f0f0f0] text-[#555] text-2xl dark:text-[#888] p-2"
