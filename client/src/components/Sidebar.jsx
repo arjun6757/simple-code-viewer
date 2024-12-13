@@ -33,7 +33,9 @@ export default function Sidebar(props) {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
-        const result = await fetch("https://simple-code-viewer.onrender.com/api/code/repo");
+        const result = await fetch(
+          "https://simple-code-viewer.onrender.com/api/code/repo"
+        );
         const data = await result.json();
         setRepoData(data);
       } catch (error) {
@@ -116,8 +118,8 @@ export default function Sidebar(props) {
     <div
       id="code-tree"
       onScroll={fixHeightIssue}
-      className={`${hidesidebar ? "flex" : "hidden" /*the logic is shitty but it works*/} ${
-        hidesidebar ? "sm:hidden" : "sm:flex"
+      className={`${
+        hidesidebar ? "hidden" : "flex"
       } fixed min-w-[75vw] max-w-[75vw] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] overflow-y-scroll flex-col h-full bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-x-hidden select-none`}
     >
       <div
