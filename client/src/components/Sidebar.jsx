@@ -22,7 +22,6 @@ export default function Sidebar(props) {
         setRepoData([{}]);
       } finally {
         setLoading(false); // Set loading to false regardless of success or error
-        // console.log(repoData);
       }
     };
 
@@ -131,7 +130,6 @@ export default function Sidebar(props) {
         <ClockSpin sx2="w-[30px] h-[30px] border-r-[9px] border-t-[9px] border-l-[9px]" />
       ) : (
         repoData.map((file, index) =>
-          // console.log(file),
           file.type === "dir" ? (
             <FolderLogic
               key={index}

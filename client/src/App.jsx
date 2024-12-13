@@ -36,7 +36,6 @@ export default function App() {
   }, [darkMode]);
 
   const getRepoData = (name) => {
-    console.log("getrepodata: ", name);
     setSelectedRepo(name);
   };
 
@@ -76,7 +75,6 @@ export default function App() {
         );
         const data = await result.json();
         setHomepage(data.homepage_url);
-        console.log("homepage_url: ", homepage);
       } catch (error) {
         console.error("error fetching homepage url for the repo", error);
       }

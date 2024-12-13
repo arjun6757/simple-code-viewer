@@ -1,5 +1,4 @@
 import React, { useEffect, useState, useRef } from "react";
-import ClockSpin from "./ClockSpin";
 
 export default function LivePreview(props) {
   const { live, src } = props;
