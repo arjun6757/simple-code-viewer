@@ -23,7 +23,7 @@ export default function PinnedRepos(props) {
       setLoading(true);
       try {
         const response = await fetch(
-          "http://localhost:3000/api/code/repo/usr/pinned"
+          "https://simple-code-viewer.onrender.com/api/code/repo/usr/pinned"
         );
 
         const responseData = await response.json();
@@ -70,7 +70,7 @@ export default function PinnedRepos(props) {
                   clicked === item.node.name
                     ? "bg-[#f0f0f0] dark:bg-[#242424]"
                     : ""
-                } select-none font-sans sm:rounded hover:bg-[#f0f0f0] p-1 sm:p-2 cursor-pointer dark:hover:bg-[#242424] flex gap-2 lg:justify-center items-center h-full`}
+                } select-none font-sans sm:rounded hover:bg-[#f0f0f0] p-1 pl-12 lg:p-2 cursor-pointer dark:hover:bg-[#242424] flex gap-2 lg:justify-center items-center h-full`}
               >
                 <div className="">
                   <a href={item.node.url}>
