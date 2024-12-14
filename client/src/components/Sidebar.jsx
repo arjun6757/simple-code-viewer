@@ -17,9 +17,11 @@ export default function Sidebar(props) {
         );
         const data = await result.json();
         setRepoData(data);
+        props.success(true);
       } catch (error) {
         console.error("Error fetching repo data:", error);
         setRepoData([{}]);
+        props.success(false);
       } finally {
         setLoading(false); // Set loading to false regardless of success or error
       }
@@ -33,9 +35,7 @@ export default function Sidebar(props) {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
-        const result = await fetch(
-          "https://simple-code-viewer.onrender.com/api/code/repo"
-        );
+        const result = await fetch("https://simple-code-viewer.onrender.com/api/code/repo");
         const data = await result.json();
         setRepoData(data);
       } catch (error) {
@@ -114,6 +114,8 @@ export default function Sidebar(props) {
     document.addEventListener("touchend", touchRelease); //when im releasing the dragging
   };
 
+  
+
   return (
     <div
       id="code-tree"
@@ -121,7 +123,7 @@ export default function Sidebar(props) {
       className={`${
         hidesidebar ? "hidden" : "flex"
       } fixed min-w-[75vw] max-w-[75vw] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] overflow-y-scroll flex-col h-full bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-x-hidden select-none`}
-    >
+    >  
       <div
         id="dragger"
         onMouseDown={handleDrag}
