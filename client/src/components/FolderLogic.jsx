@@ -21,8 +21,8 @@ export default function FolderLogic(props) {
     // add this ?
     try {
       const url = path
-        ? `https://simple-code-viewer.onrender.com/api/code/repo/query?path=${path}`
-        : `https://simple-code-viewer.onrender.com/api/code/repo/query?path=${name}`;
+        ? `http://localhost:3000/api/code/repo/query?path=${path}`
+        : `http://localhost:3000/api/code/repo/query?path=${name}`;
       const result = await fetch(url);
       const data = await result.json();
       if (data.status === 404) {

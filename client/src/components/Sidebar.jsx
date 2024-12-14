@@ -2,24 +2,29 @@ import { useState, useEffect } from "react";
 import ClockSpin from "./ClockSpin.jsx";
 import FolderLogic from "./FolderLogic.jsx";
 import Icon from "./Icon.jsx";
+import { MdOutlineDone } from "react-icons/md";
 
 export default function Sidebar(props) {
   const [repoData, setRepoData] = useState([{}]);
   const [loading, setLoading] = useState(false);
   const { hidesidebar } = props;
+  const [success, setSuccess] = useState(false);
   useEffect(() => {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
         const selectedRepo = props.reposelect;
         const result = await fetch(
-          `https://simple-code-viewer.onrender.com/api/code/repo/select/${selectedRepo}`
+          `http://localhost:3000/api/code/repo/select/${selectedRepo}`
         );
         const data = await result.json();
         setRepoData(data);
+        setSuccess(true);
+        displayAlert();
       } catch (error) {
         console.error("Error fetching repo data:", error);
         setRepoData([{}]);
+        setSuccess(false);
       } finally {
         setLoading(false); // Set loading to false regardless of success or error
       }
@@ -33,9 +38,7 @@ export default function Sidebar(props) {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
-        const result = await fetch(
-          "https://simple-code-viewer.onrender.com/api/code/repo"
-        );
+        const result = await fetch("http://localhost:3000/api/code/repo");
         const data = await result.json();
         setRepoData(data);
       } catch (error) {
@@ -114,6 +117,21 @@ export default function Sidebar(props) {
     document.addEventListener("touchend", touchRelease); //when im releasing the dragging
   };
 
+  const repoFetchedAlert = (
+    <div className="fixed capitalize text-sm p-2 bottom-10 left-1/2 transform -translate-x-1/2 rounded-md text-[#333] dark:text-[#f9f9f9] bg-[#f0f0f0] dark:bg-[#242424] border border-[#ddd] dark:border-[#444]">
+      <p className="flex gap-2 justify-center items-center">
+        <MdOutlineDone className="text-green-500 rounded-full text-xl" /> repo
+        fetched successfully!
+      </p>
+    </div>
+  );
+
+  const displayAlert = () => {
+    setTimeout(() => {
+      setSuccess(false);
+    }, 2000);
+  };
+
   return (
     <div
       id="code-tree"
@@ -121,7 +139,8 @@ export default function Sidebar(props) {
       className={`${
         hidesidebar ? "hidden" : "flex"
       } fixed min-w-[75vw] max-w-[75vw] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] overflow-y-scroll flex-col h-full bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-x-hidden select-none`}
-    >
+    >  
+    {success ? repoFetchedAlert : null}
       <div
         id="dragger"
         onMouseDown={handleDrag}
