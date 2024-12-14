@@ -88,7 +88,7 @@ export default function App() {
   }, [liveDemo]);
 
   const repoFetchedAlert = (
-    <div className="fixed z-50 capitalize text-sm p-2 bottom-10 left-1/2 transform -translate-x-1/2 rounded-md text-[#333] dark:text-[#f9f9f9] bg-[#f0f0f0] dark:bg-[#242424] border border-[#ddd] dark:border-[#444]">
+    <div className="fixed z-50 capitalize text-[11px] sm:text-sm p-2 bottom-10 left-1/2 transform -translate-x-1/2 rounded-md text-[#333] dark:text-[#f9f9f9] bg-[#f0f0f0] dark:bg-[#242424] border border-[#ddd] dark:border-[#444]">
       <p className="flex gap-2 justify-center items-center">
         <MdOutlineDone className="text-green-500 rounded-full text-xl" /> repo
         fetched successfully!
