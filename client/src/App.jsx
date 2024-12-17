@@ -73,7 +73,7 @@ export default function App() {
     const fetch_homepage = async () => {
       try {
         const result = await fetch(
-          "http://localhost:3000/api/code/repo/get/homepage_url"
+          "https://simple-code-viewer.onrender.com/api/code/repo/get/homepage_url"
         );
         const data = await result.json();
         setHomepage(data.homepage_url);
