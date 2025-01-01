@@ -23,7 +23,7 @@ export default function PinnedRepos(props) {
       setLoading(true);
       try {
         const response = await fetch(
-          "https://simple-code-viewer.onrender.com/api/code/repo/usr/pinned"
+          "http://localhost:3000/api/code/repo/usr/pinned",
         );
 
         const responseData = await response.json();
@@ -32,7 +32,7 @@ export default function PinnedRepos(props) {
       } catch (error) {
         console.error(
           "Error while getting pinned repo data from the server",
-          error
+          error,
         );
       } finally {
         setLoading(false);

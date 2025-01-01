@@ -9,7 +9,6 @@ export default function FolderLogic(props) {
   const [loading, setLoading] = useState(false);
   const [gettingChildFor, setGettingChildFor] = useState("");
 
-
   const handleFileClick = (url, name) => {
     const ext = String(name).split(".").pop();
     props.press(url, ext);
@@ -21,14 +20,14 @@ export default function FolderLogic(props) {
     // add this ?
     try {
       const url = path
-        ? `https://simple-code-viewer.onrender.com/api/code/repo/query?path=${path}`
-        : `https://simple-code-viewer.onrender.com/api/code/repo/query?path=${name}`;
+        ? `http://localhost:3000/api/code/repo/query?path=${path}`
+        : `http://localhost:3000/api/code/repo/query?path=${name}`;
       const result = await fetch(url);
       const data = await result.json();
       if (data.status === 404) {
         console.error(data.message);
         alert(
-          "error! either the requested resource was not found! or the server encountered an error."
+          "error! either the requested resource was not found! or the server encountered an error.",
         );
       }
       return data;
@@ -46,7 +45,8 @@ export default function FolderLogic(props) {
     if (exist !== -1) {
       FolderStructure[exist].expanded = !FolderStructure[exist].expanded;
       setFolderStructure([...FolderStructure]);
-      document.getElementById("dragger").style.height = `${document.getElementById("code-tree").offsetHeight}px`;
+      document.getElementById("dragger").style.height =
+        `${document.getElementById("code-tree").offsetHeight}px`;
       return;
     }
 
@@ -123,7 +123,7 @@ export default function FolderLogic(props) {
   const findById = (path, name) => {
     const str = path ? `root/${path}` : `root/${name}`;
     const idx = FolderStructure.findIndex(
-      (properties) => properties.id === str
+      (properties) => properties.id === str,
     );
     return idx;
   };

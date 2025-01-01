@@ -13,7 +13,7 @@ export default function Sidebar(props) {
       try {
         const selectedRepo = props.reposelect;
         const result = await fetch(
-          `https://simple-code-viewer.onrender.com/api/code/repo/select/${selectedRepo}`
+          `http://localhost:3000/api/code/repo/select/${selectedRepo}`,
         );
         const data = await result.json();
         setRepoData(data);
@@ -35,7 +35,7 @@ export default function Sidebar(props) {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
-        const result = await fetch("https://simple-code-viewer.onrender.com/api/code/repo");
+        const result = await fetch("http://localhost:3000/api/code/repo");
         const data = await result.json();
         setRepoData(data);
       } catch (error) {
@@ -84,14 +84,6 @@ export default function Sidebar(props) {
     document.addEventListener("mouseup", mouseUp); //when im releasing the dragging
   };
 
-  const fixHeightIssue = () => {
-    // help from -> httpss://stackoverflow.com/questions/7668636/check-with-jquery-if-div-has-overflowing-elements
-    const dragger = document.getElementById("dragger");
-    const codeTree = document.getElementById("code-tree");
-    let totalCodeTree = codeTree.scrollHeight;
-    dragger.style.height = `${totalCodeTree}px`;
-  };
-
   const handleTouchDrag = (e) => {
     // e.preventDefault();
     const codeTree = document.getElementById("code-tree");
@@ -114,52 +106,54 @@ export default function Sidebar(props) {
     document.addEventListener("touchend", touchRelease); //when im releasing the dragging
   };
 
-  
-
   return (
     <div
       id="code-tree"
-      onScroll={fixHeightIssue}
       className={`${
         hidesidebar ? "hidden" : "flex"
-      } fixed min-w-[75vw] max-w-[75vw] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] overflow-y-scroll flex-col h-full bg-white dark:bg-[#171717] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans p-4 overflow-x-hidden select-none`}
-    >  
+      } fixed min-w-[75vw] max-w-[75vw] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[calc(20vw-16px)] sm:max-w-[50vw] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans select-none`}
+    >
       <div
         id="dragger"
         onMouseDown={handleDrag}
         onTouchStart={handleTouchDrag}
-        className="absolute top-0 right-0 w-1 min-h-full opacity-0 h-auto cursor-ew-resize hover:bg-blue-500 hover:opacity-100 transition-opacity delay-300"
+        className="absolute top-0 right-0 w-1 min-h-full opacity-0 z-10 bg-blue-500 h-auto cursor-ew-resize hover:bg-blue-500 hover:opacity-100 transition-opacity delay-300"
       ></div>
-      {loading ? (
-        <ClockSpin sx2="w-[30px] h-[30px] border-r-[9px] border-t-[9px] border-l-[9px]" />
-      ) : (
-        repoData.map((file, index) =>
-          file.type === "dir" ? (
-            <FolderLogic
-              key={index}
-              index={index}
-              file={file}
-              press={props.press}
-              folderType={"root"}
-            />
-          ) : file.type === "url" ? null : (
-            <div
-              key={index}
-              onClick={() => handleClick(file.type, file.url, index, file.name)}
-              className={`p-2 flex gap-2 place-items-center hover:bg-[#f0f0f0] dark:hover:bg-[#242424] rounded-lg cursor-pointer`}
-            >
-              <Icon name={file.name} type={file.type} />
-              <a
-                onClick={(e) => e.preventDefault()}
-                href={file.url}
-                referrerPolicy="no-referrer"
+
+      <div className="overflow-scroll w-full p-4 bg-white dark:bg-[#171717] overflow-x-hidden">
+        {loading ? (
+          <ClockSpin sx2="w-[30px] h-[30px] border-r-[9px] border-t-[9px] border-l-[9px]" />
+        ) : (
+          repoData.map((file, index) =>
+            file.type === "dir" ? (
+              <FolderLogic
+                key={index}
+                index={index}
+                file={file}
+                press={props.press}
+                folderType={"root"}
+              />
+            ) : file.type === "url" ? null : (
+              <div
+                key={index}
+                onClick={() =>
+                  handleClick(file.type, file.url, index, file.name)
+                }
+                className={`p-2 flex gap-2 place-items-center hover:bg-[#f0f0f0] dark:hover:bg-[#242424] rounded-lg cursor-pointer`}
               >
-                {file.name}
-              </a>
-            </div>
+                <Icon name={file.name} type={file.type} />
+                <a
+                  onClick={(e) => e.preventDefault()}
+                  href={file.url}
+                  referrerPolicy="no-referrer"
+                >
+                  {file.name}
+                </a>
+              </div>
+            ),
           )
-        )
-      )}
+        )}
+      </div>
     </div>
   );
 }

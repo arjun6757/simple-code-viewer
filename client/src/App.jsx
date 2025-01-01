@@ -73,7 +73,7 @@ export default function App() {
     const fetch_homepage = async () => {
       try {
         const result = await fetch(
-          "http://localhost:3000/api/code/repo/get/homepage_url"
+          "http://localhost:3000/api/code/repo/get/homepage_url",
         );
         const data = await result.json();
         setHomepage(data.homepage_url);
@@ -88,7 +88,9 @@ export default function App() {
   }, [liveDemo]);
 
   const repoFetchedAlert = (
-    <div className="fixed z-50 capitalize text-[11px] sm:text-sm p-2 bottom-10 left-1/2 transform -translate-x-1/2 rounded-md text-[#333] dark:text-[#f9f9f9] bg-[#f0f0f0] dark:bg-[#242424] border border-[#ddd] dark:border-[#444]">
+    <div
+      className={`fixed z-50 capitalize text-[11px] sm:text-sm p-2 bottom-10 left-1/2 transform -translate-x-1/2 rounded-md text-[#333] dark:text-[#f9f9f9] bg-[#f0f0f0] dark:bg-[#242424] border border-[#ddd] dark:border-[#444] ${success ? "translate-y-0" : "translate-y-[400%]"} transition-transform delay-500`}
+    >
       <p className="flex gap-2 justify-center items-center">
         <MdOutlineDone className="text-green-500 rounded-full text-xl" /> repo
         fetched successfully!
@@ -101,27 +103,25 @@ export default function App() {
       setTimeout(() => {
         setSuccess(false);
       }, 2000);
-    };  
+    };
 
-    if(!success) return;
+    if (!success) return;
     displayAlert();
   }, [success]);
-  
 
   const onSuccessfullFetch = (boolean) => {
     setSuccess(boolean);
-  }
+  };
 
   return (
-    <div className="flex flex-col h-screen">
-
-      {success ? repoFetchedAlert : null}
+    <div className={`flex flex-col h-screen`}>
+      {repoFetchedAlert}
 
       <div className="p-2 bg-white dark:bg-[#333] border-b border-[#ddd] dark:border-[#3a3939] dark:text-[#eee]">
         <PinnedRepos handleRepoClick={getRepoData} />
       </div>
 
-      <div className="flex bg-white dark:bg-[#282c34] w-screen h-full overflow-hidden">
+      <div className="flex bg-white dark:bg-[#282c34] w-screen h-full overflow-hidden gap-4">
         <Sidebar
           hidesidebar={hideSidebar}
           press={handleFilePress}
