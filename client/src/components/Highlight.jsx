@@ -5,6 +5,8 @@ import { useEffect, useRef } from "react";
 export default function Highlight({ loading, raw, ext, night }) {
   const codeRef = useRef(null);
 
+  const time = new Date().getFullYear();
+
   useEffect(() => {
     const loadTheme = () => {
       const link = document.createElement("link");
