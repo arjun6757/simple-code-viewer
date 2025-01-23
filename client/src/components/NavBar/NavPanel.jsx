@@ -4,16 +4,11 @@ import {
   SidebarItemGroup,
   SidebarItems,
   SidebarItem,
-  Tooltip,
 } from "flowbite-react";
-import {
-  HomeIcon,
-  MagnifyingGlassIcon,
-  CogIcon,
-  BookmarkIcon
-} from "@heroicons/react/24/outline";
 
-export default function SidebarComponent() {
+import { Files, Search, PinIcon, Settings } from "lucide-react";
+
+export default function NavPanel() {
   return (
     <Sidebar
       collapsed="true"
@@ -23,27 +18,31 @@ export default function SidebarComponent() {
       <SidebarItems className="w-full">
         <SidebarItemGroup className="flex justify-center sm:flex-col gap-4 sm:gap-2 border-0">
           <SidebarItem
-            icon={HomeIcon}
-            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424] text-gray-700 dark:gray-300"
+            icon={() => <Files className="text-gray-600 dark:text-gray-300" />}
+            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424]"
           >
             <span className="sr-only">Home</span>
           </SidebarItem>
 
           <SidebarItem
-            icon={MagnifyingGlassIcon}
-            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424] text-gray-700 dark:gray-300"
+            icon={() => <Search className="text-gray-600 dark:text-gray-300" />}
+            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424]"
           >
             <span className="sr-only">Search</span>
           </SidebarItem>
           <SidebarItem
-            icon={BookmarkIcon}
-            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424] text-gray-700 dark:gray-300"
+            icon={() => (
+              <PinIcon className="text-gray-600 dark:text-gray-300" />
+            )}
+            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424]"
           >
             <span className="sr-only">Pinned</span>
           </SidebarItem>
           <SidebarItem
-            icon={CogIcon}
-            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424] text-gray-700 dark:gray-300"
+            icon={() => (
+              <Settings className="text-gray-600 dark:text-gray-300" />
+            )}
+            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424]"
           >
             <span className="sr-only">Settings</span>
           </SidebarItem>

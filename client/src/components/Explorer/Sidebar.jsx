@@ -112,7 +112,7 @@ export default function Sidebar(props) {
       id="code-tree"
       className={`${
         hidesidebar ? "hidden" : "flex"
-      } fixed min-w-[75vw] max-w-[75vw] bg-white dark:bg-[#171717] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] border-r-[1px] border-[#ddd] dark:border-[#555] text-black dark:text-white font-sans select-none`}
+      } fixed min-w-[75vw] max-w-[75vw] bg-white dark:bg-[#171717] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[30vw] border-r-[1px] border-[#ddd] dark:border-[#555] text-black dark:text-white font-sans select-none`}
     >
       <div
         id="dragger"

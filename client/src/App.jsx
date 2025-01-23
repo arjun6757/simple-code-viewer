@@ -1,12 +1,11 @@
 import { useState, useEffect, useRef } from "react";
-import Sidebar from "./components/LeftPanel/Sidebar";
+import Sidebar from "./components/Explorer/Sidebar.jsx";
 import Highlight from "./components/Highlight";
 import ToggleBar from "./components/ToggleBar";
-// import { ChakraProvider } from "@chakra-ui/react";
-// import PinnedRepos from "./components/PinnedRepos";
 import LivePreview from "./components/LivePreview";
 import { MdOutlineDone } from "react-icons/md";
-import Panel from "./components/RightPanel/Panel.jsx";
+import NavPanel from "./components/NavBar/NavPanel.jsx";
+import Modal from "./components/ModalComponent.jsx";
 
 export default function App() {
   const [ext, setExt] = useState("");
@@ -54,7 +53,6 @@ export default function App() {
       console.log("Error fetching data:", error);
       return `Error: ${error.message}`;
     } finally {
-      setLoading(false);
     }
   };
 
@@ -118,16 +116,19 @@ export default function App() {
   };
 
   return (
-    <div className={`flex flex-col h-screen`}>
+    <div className={`flex flex-col h-screen relative`}>
       {repoFetchedAlert}
 
-      <div className="flex overflow-hidden w-screen">
-        <Panel />
+      <div className="absolute left-0 top-0">
+        <Modal />
+      </div>
 
-        <div 
-        // className="flex bg-white dark:bg-[#282c34] w-full h-full gap-4"
-        className="flex bg-white dark:bg-[#191919] w-full h-full gap-4 border-white"     
-        >
+      <div className="flex overflow-hidden w-screen h-screen">
+        <div>
+          <NavPanel />
+        </div>
+
+        <div className="flex bg-white overflow-hidden flex-1 dark:bg-[#191919] h-full gap-4">
           <Sidebar
             hidesidebar={hideSidebar}
             press={handleFilePress}
@@ -138,7 +139,6 @@ export default function App() {
           <div
             id="code-view"
             ref={codeView}
-            // className="overflow-y-scroll scrollbar-thin flex-1 bg-white dark:bg-[#282c34]"
             className="overflow-y-scroll scrollbar-thin flex-1 bg-white dark:bg-[#191919]"
           >
             <Highlight loading={loading} raw={raw} ext={ext} night={darkMode} />

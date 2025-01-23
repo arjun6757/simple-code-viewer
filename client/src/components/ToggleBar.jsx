@@ -48,7 +48,7 @@ export default function ToggleBar(props) {
         <button
           title={hideSidebar ? "Open Sidebar" : "Close Sidebar"}
           onClick={handleToggleSidebar}
-          className="rounded-full dark:bg-[#333] bg-[#f0f0f0] text-[#555] text-2xl dark:text-[#888] p-2"
+          className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2"
           tabIndex={hide ? 0 : -1}
         >
           {hideSidebar ? (
@@ -60,7 +60,7 @@ export default function ToggleBar(props) {
         <button
           title="Toggle Darkmode"
           onClick={handleClick}
-          className={`rounded-full dark:bg-[#333] bg-[#f0f0f0] text-[#555] text-2xl dark:text-[#888] p-2`}
+          className={`rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2`}
           tabIndex={hide ? 0 : -1}
         >
           {darkMode ? (
@@ -72,7 +72,7 @@ export default function ToggleBar(props) {
         <button
           onClick={() => setLivePreview((prev) => !prev)}
           title="Live Demo"
-          className="rounded-full dark:bg-[#333] bg-[#f0f0f0] text-[#555] text-2xl dark:text-[#888] p-2"
+          className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2"
           tabIndex={hide ? 0 : -1}
         >
           <AiOutlineGlobal className="rounded-full" />
@@ -81,7 +81,7 @@ export default function ToggleBar(props) {
       <button
         title={hide ? "Collapse" : "Expand"}
         onClick={() => setHide(!hide)}
-        className="rounded-full dark:bg-[#333] bg-[#f0f0f0] text-2xl text-[#555] dark:text-[#888] p-2"
+        className="rounded-full dark:bg-[#222] bg-gray-200 text-xl text-[#555] dark:text-[#888] p-2"
       >
         {hide ? (
           <FaAngleDown className="rounded-full" />
