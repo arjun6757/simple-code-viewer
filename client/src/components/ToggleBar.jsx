@@ -7,7 +7,10 @@ import { useLocalStorage } from "../useLocalStorage";
 
 export default function ToggleBar(props) {
   const [hide, setHide] = useState(false);
-  const [darkMode, setDarkMode] = useLocalStorage('simple-code-viewer--dark-theme', false);
+  const [darkMode, setDarkMode] = useLocalStorage(
+    "simple-code-viewer--dark-theme",
+    false,
+  );
   const [hideSidebar, setHideSidebar] = useState(false);
   const [LivePreview, setLivePreview] = useState(false);
 
@@ -35,7 +38,9 @@ export default function ToggleBar(props) {
     <div className="fixed right-5 bottom-5 sm:right-8 sm:bottom-5 bg-transparent flex flex-col gap-4 items-center transition-transform ease-in-out duration-500 w-14">
       <div
         className={`flex flex-col items-center gap-4 transition-opacity duration-500 w-full p-1 ${
-          hide ? " opacity-100 pointer-events-auto" : " opacity-0 pointer-events-none"
+          hide
+            ? " opacity-100 pointer-events-auto"
+            : " opacity-0 pointer-events-none"
         }`}
         aria-hidden={!hide}
         tabIndex={hide ? 0 : -1}
@@ -65,7 +70,7 @@ export default function ToggleBar(props) {
           )}
         </button>
         <button
-        onClick={()=> setLivePreview(prev=> !prev)}
+          onClick={() => setLivePreview((prev) => !prev)}
           title="Live Demo"
           className="rounded-full dark:bg-[#333] bg-[#f0f0f0] text-[#555] text-2xl dark:text-[#888] p-2"
           tabIndex={hide ? 0 : -1}
@@ -74,7 +79,7 @@ export default function ToggleBar(props) {
         </button>
       </div>
       <button
-        title={hide ? 'Collapse' : 'Expand'}
+        title={hide ? "Collapse" : "Expand"}
         onClick={() => setHide(!hide)}
         className="rounded-full dark:bg-[#333] bg-[#f0f0f0] text-2xl text-[#555] dark:text-[#888] p-2"
       >

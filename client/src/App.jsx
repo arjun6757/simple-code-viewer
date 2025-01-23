@@ -1,10 +1,12 @@
 import { useState, useEffect, useRef } from "react";
-import Sidebar from "./components/Sidebar";
+import Sidebar from "./components/LeftPanel/Sidebar";
 import Highlight from "./components/Highlight";
 import ToggleBar from "./components/ToggleBar";
-import PinnedRepos from "./components/PinnedRepos";
+// import { ChakraProvider } from "@chakra-ui/react";
+// import PinnedRepos from "./components/PinnedRepos";
 import LivePreview from "./components/LivePreview";
 import { MdOutlineDone } from "react-icons/md";
+import Panel from "./components/RightPanel/Panel.jsx";
 
 export default function App() {
   const [ext, setExt] = useState("");
@@ -37,9 +39,9 @@ export default function App() {
     }
   }, [darkMode]);
 
-  const getRepoData = (name) => {
-    setSelectedRepo(name);
-  };
+  // const getRepoData = (name) => {
+  //   setSelectedRepo(name);
+  // };
 
   const getData = async (url) => {
     setLoading(true);
@@ -73,7 +75,7 @@ export default function App() {
     const fetch_homepage = async () => {
       try {
         const result = await fetch(
-          "https://simple-code-viewer.onrender.com/api/code/repo/get/homepage_url"
+          "http://localhost:3000/api/code/repo/get/homepage_url"
         );
         const data = await result.json();
         setHomepage(data.homepage_url);
@@ -89,7 +91,9 @@ export default function App() {
 
   const repoFetchedAlert = (
     <div
-      className={`fixed z-50 capitalize text-[11px] sm:text-sm p-2 bottom-10 left-1/2 transform -translate-x-1/2 rounded-md text-[#333] dark:text-[#f9f9f9] bg-[#f0f0f0] dark:bg-[#242424] border border-[#ddd] dark:border-[#444] ${success ? "translate-y-0" : "translate-y-[400%]"} transition-transform delay-500`}
+      className={`fixed z-50 capitalize text-[11px] sm:text-sm p-2 bottom-10 left-1/2 transform -translate-x-1/2 rounded-md text-[#333] dark:text-[#f9f9f9] bg-[#f0f0f0] dark:bg-[#242424] border border-[#ddd] dark:border-[#444] ${
+        success ? "translate-y-0" : "translate-y-[400%]"
+      } transition-transform delay-500`}
     >
       <p className="flex gap-2 justify-center items-center">
         <MdOutlineDone className="text-green-500 rounded-full text-xl" /> repo
@@ -117,24 +121,28 @@ export default function App() {
     <div className={`flex flex-col h-screen`}>
       {repoFetchedAlert}
 
-      <div className="p-2 bg-white dark:bg-[#333] border-b border-[#ddd] dark:border-[#3a3939] dark:text-[#eee]">
-        <PinnedRepos handleRepoClick={getRepoData} />
-      </div>
+      <div className="flex overflow-hidden w-screen">
+        <Panel />
 
-      <div className="flex bg-white dark:bg-[#282c34] w-screen h-full overflow-hidden gap-4">
-        <Sidebar
-          hidesidebar={hideSidebar}
-          press={handleFilePress}
-          reposelect={selectedRepo}
-          success={onSuccessfullFetch}
-        />
-
-        <div
-          id="code-view"
-          ref={codeView}
-          className="overflow-y-scroll flex-1 bg-white dark:bg-[#282c34]"
+        <div 
+        // className="flex bg-white dark:bg-[#282c34] w-full h-full gap-4"
+        className="flex bg-white dark:bg-[#191919] w-full h-full gap-4 border-white"     
         >
-          <Highlight loading={loading} raw={raw} ext={ext} night={darkMode} />
+          <Sidebar
+            hidesidebar={hideSidebar}
+            press={handleFilePress}
+            reposelect={selectedRepo}
+            success={onSuccessfullFetch}
+          />
+
+          <div
+            id="code-view"
+            ref={codeView}
+            // className="overflow-y-scroll scrollbar-thin flex-1 bg-white dark:bg-[#282c34]"
+            className="overflow-y-scroll scrollbar-thin flex-1 bg-white dark:bg-[#191919]"
+          >
+            <Highlight loading={loading} raw={raw} ext={ext} night={darkMode} />
+          </div>
         </div>
       </div>
 

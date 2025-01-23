@@ -1,4 +1,4 @@
-import ClockSpin from "./ClockSpin";
+import ClockSpin from "./Spinner/ClockSpin";
 import hljs from "highlight.js";
 import { useEffect, useRef } from "react";
 
@@ -12,7 +12,8 @@ export default function Highlight({ loading, raw, ext, night }) {
       const link = document.createElement("link");
       link.rel = "stylesheet";
       link.href = night
-        ? "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css"
+        ? "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/base16/circus.min.css"
+        // "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css"
         : "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/intellij-light.min.css";
 
       document.head.appendChild(link);
@@ -50,7 +51,7 @@ export default function Highlight({ loading, raw, ext, night }) {
 
   const highlighted = (
     <pre className={`language-${extension(ext)}`}>
-      <code ref={codeRef} className={`language-${extension(ext)}`}>
+      <code ref={codeRef} className={`language-${extension(ext)} scrollbar-thin text-sm font-code`}>
         {raw}
       </code>
     </pre>

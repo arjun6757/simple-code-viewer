@@ -1,7 +1,8 @@
 import { useState, useEffect } from "react";
-import ClockSpin from "./ClockSpin.jsx";
+import ClockSpin from "../Spinner/ClockSpin.jsx";
 import FolderLogic from "./FolderLogic.jsx";
-import Icon from "./Icon.jsx";
+import Icon from "../Icon.jsx";
+// import RepoSelector from "./RepoSelector.jsx";
 
 export default function Sidebar(props) {
   const [repoData, setRepoData] = useState([{}]);
@@ -13,7 +14,7 @@ export default function Sidebar(props) {
       try {
         const selectedRepo = props.reposelect;
         const result = await fetch(
-          `https://simple-code-viewer.onrender.com/api/code/repo/select/${selectedRepo}`,
+          `http://localhost:3000/api/code/repo/select/${selectedRepo}`,
         );
         const data = await result.json();
         setRepoData(data);
@@ -35,7 +36,7 @@ export default function Sidebar(props) {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
-        const result = await fetch("https://simple-code-viewer.onrender.com/api/code/repo");
+        const result = await fetch("http://localhost:3000/api/code/repo");
         const data = await result.json();
         setRepoData(data);
       } catch (error) {
@@ -111,16 +112,20 @@ export default function Sidebar(props) {
       id="code-tree"
       className={`${
         hidesidebar ? "hidden" : "flex"
-      } fixed min-w-[75vw] max-w-[75vw] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[calc(20vw-16px)] sm:max-w-[50vw] border-r-[1px] border-[#ddd] dark:border-0 text-black dark:text-white font-sans select-none`}
+      } fixed min-w-[75vw] max-w-[75vw] bg-white dark:bg-[#171717] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[50vw] border-r-[1px] border-[#ddd] dark:border-[#555] text-black dark:text-white font-sans select-none`}
     >
       <div
         id="dragger"
         onMouseDown={handleDrag}
         onTouchStart={handleTouchDrag}
-        className="absolute top-0 right-0 w-1 min-h-full opacity-0 z-10 bg-blue-500 h-auto cursor-ew-resize hover:bg-blue-500 hover:opacity-100 transition-opacity delay-300"
+        className="absolute top-0 right-0 w-1 min-h-full opacity-0 z-10 h-auto cursor-ew-resize hover:bg-[#888] hover:opacity-100 transition-opacity delay-300"
       ></div>
 
-      <div className="overflow-scroll w-full p-4 bg-white dark:bg-[#171717] overflow-x-hidden">
+      <div className="overflow-scroll w-full p-4 overflow-x-hidden scrollbar-thin">
+        {/*<div className="bg-[#333]">*/}
+        {/*<RepoSelector />*/}
+        {/*</div>*/}
+
         {loading ? (
           <ClockSpin sx2="w-[30px] h-[30px] border-r-[9px] border-t-[9px] border-l-[9px]" />
         ) : (

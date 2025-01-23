@@ -1,6 +1,6 @@
-import express from 'express';
-import api from './routes/api.js';
-import dotenv from 'dotenv';
+import express from "express";
+import api from "./routes/api.js";
+import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
 
 dotenv.config();
@@ -21,17 +21,18 @@ app.use(limiter);
 
 app.use((req, res, next) => {
   const allowedOrigin = process.env.FRONTEND_URL;
-  res.setHeader('Access-Control-Allow-Origin', allowedOrigin);  // allow all origins for now
-  res.setHeader('Access-Control-Allow-Methods', 'GET'); //only get req
-  
-   if (req.method === 'OPTIONS') {
+  // const allowedOrigin = "http://localhost:5174";
+  res.setHeader("Access-Control-Allow-Origin", allowedOrigin); // allow all origins for now
+  res.setHeader("Access-Control-Allow-Methods", "GET"); //only get req
+
+  if (req.method === "OPTIONS") {
     return res.status(200).end();
   }
-  
+
   next();
 });
 
-app.use('/api', api);
+app.use("/api", api);
 // all routes defined on api.js will be prefixed with /api => /api/code/repo
 
 app.listen(port, () => {

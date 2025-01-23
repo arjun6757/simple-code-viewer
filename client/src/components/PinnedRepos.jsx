@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react";
 import { FaGithub } from "react-icons/fa";
 import { RxHamburgerMenu } from "react-icons/rx";
-import ClockSpin from "./ClockSpin";
+import ClockSpin from "./Spinner/ClockSpin";
 
 export default function PinnedRepos(props) {
   const [pinnedRepos, setPinnedRepos] = useState([]);
@@ -23,7 +23,7 @@ export default function PinnedRepos(props) {
       setLoading(true);
       try {
         const response = await fetch(
-          "https://simple-code-viewer.onrender.com/api/code/repo/usr/pinned",
+          "http://localhost:3000/api/code/repo/usr/pinned",
         );
 
         const responseData = await response.json();

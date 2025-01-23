@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Spin from "./ClockSpin";
-import Icon from "./Icon";
+import Spin from "../Spinner/ClockSpin";
+import Icon from "../Icon";
 
 export default function FolderLogic(props) {
   const { name, path, type } = props.file;
@@ -20,8 +20,8 @@ export default function FolderLogic(props) {
     // add this ?
     try {
       const url = path
-        ? `https://simple-code-viewer.onrender.com/api/code/repo/query?path=${path}`
-        : `https://simple-code-viewer.onrender.com/api/code/repo/query?path=${name}`;
+        ? `http://localhost:3000/api/code/repo/query?path=${path}`
+        : `http://localhost:3000/api/code/repo/query?path=${name}`;
       const result = await fetch(url);
       const data = await result.json();
       if (data.status === 404) {
