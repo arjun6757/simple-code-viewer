@@ -1,11 +1,12 @@
 /** @type {import('tailwindcss').Config} */
 import scrollbar from "tailwind-scrollbar";
-import flowbite from "flowbite/plugin";
+import flowbite from "flowbite-react/tailwind";
 export default {
   darkMode: "class",
   content: [
     "./index.html",
     "./src/**/*.{js,ts,jsx,tsx}",
+    flowbite.content(),
   ],
   theme: {
     extend: {
@@ -16,6 +17,6 @@ export default {
   },
   plugins: [
     scrollbar,
-    flowbite,
+    flowbite.plugin(),
   ],
 }

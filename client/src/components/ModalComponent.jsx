@@ -7,7 +7,7 @@ export default function Component() {
 
   return (
     <>
-      <Button onClick={() => setOpenModal(true)}>Toggle modal</Button>
+      {/* <Button onClick={() => setOpenModal(true)}>Toggle modal</Button> */}
       <Modal show={openModal} onClose={() => setOpenModal(false)}>
         <Modal.Header>Terms of Service</Modal.Header>
         <Modal.Body>

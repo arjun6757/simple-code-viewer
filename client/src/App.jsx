@@ -119,7 +119,7 @@ export default function App() {
     <div className={`flex flex-col h-screen relative`}>
       {repoFetchedAlert}
 
-      <div className="absolute left-0 top-0">
+      <div className="">
         <Modal />
       </div>
 

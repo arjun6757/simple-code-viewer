@@ -21,7 +21,6 @@ app.use(limiter);
 
 app.use((req, res, next) => {
   const allowedOrigin = process.env.FRONTEND_URL;
-  // const allowedOrigin = "http://localhost:5174";
   res.setHeader("Access-Control-Allow-Origin", allowedOrigin); // allow all origins for now
   res.setHeader("Access-Control-Allow-Methods", "GET"); //only get req
 
