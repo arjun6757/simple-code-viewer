@@ -5,38 +5,36 @@ import ToggleBar from "./components/ToggleBar";
 import LivePreview from "./components/LivePreview";
 import { MdOutlineDone } from "react-icons/md";
 import NavPanel from "./components/NavBar/NavPanel.jsx";
-import SettingsModal from "./components/SettingsModal.jsx";
+import SearchModal from "./components/SearchModal.jsx";
 import useExplorer from "./components/hooks/useExplorer.js";
 import useSettings from "./components/hooks/useSettings.js";
+import useTheme from "./components/hooks/useTheme.js";
+import useTogglebar from "./components/hooks/useTogglebar.js";
 
 export default function App() {
   const [ext, setExt] = useState("");
   const [raw, setRaw] = useState("");
   const [loading, setLoading] = useState(false);
   const codeView = useRef(null);
-  const [darkMode, setDarkMode] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState("");
   const [liveDemo, setLiveDemo] = useState(false);
   const [homepage, setHomepage] = useState("");
   const [success, setSuccess] = useState(false);
-
+  const { toggleTogglebar, isTogglebarEnabled } = useTogglebar();
   const { toggleExplorer, isExplorerOpen } = useExplorer();
   const { toggleSettings, isSettingsOpen } = useSettings();
-
-  const toggleDarkMode = (dark) => {
-    dark ? setDarkMode(true) : setDarkMode(false);
-  };
+  const { toggleTheme, isDark } = useTheme();
 
   useEffect(() => {
     const html = document.documentElement; //gets a reference to the root node
-    if (darkMode) {
+    if (isDark) {
       html.classList.add("dark");
       html.style.colorScheme = "dark"; // one line fix for scrollbar issue
     } else {
       html.classList.remove("dark");
       html.style.colorScheme = "light";
     }
-  }, [darkMode]);
+  }, [isDark]);
 
   const getData = async (url) => {
     setLoading(true);
@@ -49,6 +47,7 @@ export default function App() {
       console.log("Error fetching data:", error);
       return `Error: ${error.message}`;
     } finally {
+      setLoading(false);
     }
   };
 
@@ -69,7 +68,7 @@ export default function App() {
     const fetch_homepage = async () => {
       try {
         const result = await fetch(
-          "http://localhost:3000/api/code/repo/get/homepage_url",
+          "http://localhost:3000/api/code/repo/get/homepage_url"
         );
         const data = await result.json();
         setHomepage(data.homepage_url);
@@ -115,7 +114,7 @@ export default function App() {
     <div className={`flex flex-col h-screen relative`}>
       {repoFetchedAlert}
 
-      <SettingsModal
+      <SearchModal
         isSettingsOpen={isSettingsOpen}
         toggleSettings={toggleSettings}
       />
@@ -141,16 +140,18 @@ export default function App() {
             ref={codeView}
             className="overflow-y-scroll scrollbar-thin flex-1 bg-white dark:bg-[#191919]"
           >
-            <Highlight loading={loading} raw={raw} ext={ext} night={darkMode} />
+            <Highlight loading={loading} raw={raw} ext={ext} night={isDark} />
           </div>
         </div>
       </div>
 
-      <ToggleBar
-        theme={toggleDarkMode}
-        livedemo={handleLiveDemo}
-        toggleExplorer={toggleExplorer}
-      />
+      {isTogglebarEnabled===false && (
+        <ToggleBar
+          toggleTheme={toggleTheme}
+          livedemo={handleLiveDemo}
+          toggleExplorer={toggleExplorer}
+        />
+      )}
 
       <LivePreview src={homepage} live={liveDemo} />
     </div>

@@ -1,5 +1,4 @@
 import {
-  Button,
   Modal,
   ModalHeader,
   ModalBody,
@@ -11,7 +10,7 @@ import { Search } from "lucide-react";
 
 import { useState } from "react";
 
-export default function Component(props) {
+export default function SearchComponent(props) {
   const { isSettingsOpen, toggleSettings } = props;
   const [query, setQuery] = useState("");
 
@@ -20,19 +19,20 @@ export default function Component(props) {
   const styles = {
     header: "!p-2 dark:border-[#333]",
     body: "!p-4 font-inter text-gray-600 dark:text-gray-400 text-sm leading-relaxed",
-    footer: "!p-4 font-inter text-gray-600 dark:text-gray-400 text-sm dark:border-[#333]"
-  }
+    footer:
+      "!p-4 font-inter text-gray-600 dark:text-gray-400 text-sm dark:border-[#333]",
+  };
 
   return (
     <Modal
-    theme={{
-      root: {
-        base: "dark:!bg-[#171717] dark:!bg-opacity-70 backdrop-blur-sm"
-      },
-      content: {
-        inner: "bg-white dark:!bg-[#222] rounded-lg"
-      }
-    }}
+      theme={{
+        root: {
+          base: "dark:!bg-[#171717] dark:!bg-opacity-70 backdrop-blur-sm",
+        },
+        content: {
+          inner: "bg-white dark:!bg-[#222] rounded-lg",
+        },
+      }}
       dismissible
       size="xl"
       show={isSettingsOpen}
@@ -64,17 +64,16 @@ export default function Component(props) {
         ></TextInput>
       </ModalHeader>
 
-      <ModalBody
-      className={styles.body}
-      >
-        Lorem ipsum dolor sit amet, consectetur adipisicing elit. Fugit dolore,
-        nisi aliquid perferendis, asperiores exercitationem iusto consequuntur
-        id voluptatibus similique ex nulla molestias odio deleniti!
+      <ModalBody className={styles.body}>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum quidem,
+        magnam quae voluptatem assumenda aspernatur, iusto est sed ipsam unde
+        sint rerum odit dignissimos tempore, itaque minus cupiditate eum
+        distinctio.
       </ModalBody>
 
-      <ModalFooter 
-      className={styles.footer}
-      >Type to search commands</ModalFooter>
+      <ModalFooter className={styles.footer}>
+        Created with flowbite if you are wondering.
+      </ModalFooter>
     </Modal>
   );
 }
