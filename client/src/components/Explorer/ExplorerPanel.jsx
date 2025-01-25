@@ -2,7 +2,6 @@ import { useState, useEffect } from "react";
 import ClockSpin from "../Spinner/ClockSpin.jsx";
 import FolderLogic from "./FolderLogic.jsx";
 import Icon from "../Icon.jsx";
-import useExplorer from "../hooks/useExplorer.js";
 
 export default function Sidebar(props) {
   const [repoData, setRepoData] = useState([{}]);

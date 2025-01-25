@@ -1,4 +1,3 @@
-import { useEffect } from "react";
 import {
   Sidebar,
   SidebarItemGroup,
@@ -6,13 +5,10 @@ import {
   SidebarItem,
 } from "flowbite-react";
 
-import useExplorer from "../hooks/useExplorer.js";
-
 import { Files, Search, PinIcon, Settings } from "lucide-react";
 
 export default function NavPanel(props) {
-  // const { toggleExplorer, isExplorerOpen } = useExplorer();
-  const { toggleExplorer, isExplorerOpen } = props;
+  const { toggleExplorer, toggleSettings } = props;
 
   return (
     <Sidebar
@@ -58,8 +54,9 @@ export default function NavPanel(props) {
             Pinned
           </SidebarItem>
           <SidebarItem
+            as="button"
             tabIndex={4}
-            href="/settings"
+            onClick={() => toggleSettings()}
             icon={() => (
               <Settings className="text-gray-600 dark:text-gray-300" />
             )}

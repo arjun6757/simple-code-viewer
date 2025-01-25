@@ -5,8 +5,9 @@ import ToggleBar from "./components/ToggleBar";
 import LivePreview from "./components/LivePreview";
 import { MdOutlineDone } from "react-icons/md";
 import NavPanel from "./components/NavBar/NavPanel.jsx";
-import Modal from "./components/ModalComponent.jsx";
+import SettingsModal from "./components/SettingsModal.jsx";
 import useExplorer from "./components/hooks/useExplorer.js";
+import useSettings from "./components/hooks/useSettings.js";
 
 export default function App() {
   const [ext, setExt] = useState("");
@@ -20,6 +21,7 @@ export default function App() {
   const [success, setSuccess] = useState(false);
 
   const { toggleExplorer, isExplorerOpen } = useExplorer();
+  const { toggleSettings, isSettingsOpen } = useSettings();
 
   const toggleDarkMode = (dark) => {
     dark ? setDarkMode(true) : setDarkMode(false);
@@ -35,10 +37,6 @@ export default function App() {
       html.style.colorScheme = "light";
     }
   }, [darkMode]);
-
-  // const getRepoData = (name) => {
-  //   setSelectedRepo(name);
-  // };
 
   const getData = async (url) => {
     setLoading(true);
@@ -117,15 +115,16 @@ export default function App() {
     <div className={`flex flex-col h-screen relative`}>
       {repoFetchedAlert}
 
-      <div className="">
-        <Modal />
-      </div>
+      <SettingsModal
+        isSettingsOpen={isSettingsOpen}
+        toggleSettings={toggleSettings}
+      />
 
       <div className="flex overflow-hidden w-screen h-screen">
         <div>
           <NavPanel
             toggleExplorer={toggleExplorer}
-            isExplorerOpen={isExplorerOpen}
+            toggleSettings={toggleSettings}
           />
         </div>
 
