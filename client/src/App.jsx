@@ -145,7 +145,7 @@ export default function App() {
         </div>
       </div>
 
-      {isTogglebarEnabled===false && (
+      {isTogglebarEnabled && (
         <ToggleBar
           toggleTheme={toggleTheme}
           livedemo={handleLiveDemo}
