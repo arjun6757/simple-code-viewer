@@ -1,15 +1,15 @@
-import 
+// import
 
-const navigationActions = {
-    toggleExplorer: () => {
+// const navigationActions = {
+//     toggleExplorer: () => {
 
-    },
-    togglePinnedDialog: () => {
+//     },
+//     togglePinnedDialog: () => {
 
-    },
-    toggleSearchDialog: () => {
+//     },
+//     toggleSearchDialog: () => {
 
-    },
-};
+//     },
+// };
 
-export default navigationActions;
+// export default navigationActions;

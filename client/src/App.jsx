@@ -6,11 +6,11 @@ import LivePreview from "./components/LivePreview";
 import { MdOutlineDone } from "react-icons/md";
 import NavPanel from "./components/NavBar/NavPanel.jsx";
 import Modal from "./components/ModalComponent.jsx";
+import useExplorer from "./components/hooks/useExplorer.js";
 
 export default function App() {
   const [ext, setExt] = useState("");
   const [raw, setRaw] = useState("");
-  const [hideSidebar, setHideSidebar] = useState(false);
   const [loading, setLoading] = useState(false);
   const codeView = useRef(null);
   const [darkMode, setDarkMode] = useState(false);
@@ -18,6 +18,8 @@ export default function App() {
   const [liveDemo, setLiveDemo] = useState(false);
   const [homepage, setHomepage] = useState("");
   const [success, setSuccess] = useState(false);
+
+  const { toggleExplorer, isExplorerOpen } = useExplorer();
 
   const toggleDarkMode = (dark) => {
     dark ? setDarkMode(true) : setDarkMode(false);
@@ -73,7 +75,7 @@ export default function App() {
     const fetch_homepage = async () => {
       try {
         const result = await fetch(
-          "http://localhost:3000/api/code/repo/get/homepage_url"
+          "http://localhost:3000/api/code/repo/get/homepage_url",
         );
         const data = await result.json();
         setHomepage(data.homepage_url);
@@ -125,15 +127,18 @@ export default function App() {
 
       <div className="flex overflow-hidden w-screen h-screen">
         <div>
-          <NavPanel />
+          <NavPanel
+            toggleExplorer={toggleExplorer}
+            isExplorerOpen={isExplorerOpen}
+          />
         </div>
 
         <div className="flex bg-white overflow-hidden flex-1 dark:bg-[#191919] h-full gap-4">
           <Sidebar
-            hidesidebar={hideSidebar}
             press={handleFilePress}
             reposelect={selectedRepo}
             success={onSuccessfullFetch}
+            isExplorerOpen={isExplorerOpen}
           />
 
           <div
@@ -148,8 +153,8 @@ export default function App() {
 
       <ToggleBar
         theme={toggleDarkMode}
-        sidebar={handleSidebarToggle}
         livedemo={handleLiveDemo}
+        toggleExplorer={toggleExplorer}
       />
 
       <LivePreview src={homepage} live={liveDemo} />

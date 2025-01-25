@@ -11,8 +11,8 @@ export default function ToggleBar(props) {
     "simple-code-viewer--dark-theme",
     false,
   );
-  const [hideSidebar, setHideSidebar] = useState(false);
   const [LivePreview, setLivePreview] = useState(false);
+  const { toggleExplorer } = props;
 
   useEffect(() => {
     props.theme(darkMode);
@@ -21,14 +21,6 @@ export default function ToggleBar(props) {
   useEffect(() => {
     props.livedemo(LivePreview);
   }, [LivePreview, props.livedemo]);
-
-  useEffect(() => {
-    props.sidebar(hideSidebar);
-  }, [hideSidebar, props.sidebar]);
-
-  const handleToggleSidebar = () => {
-    setHideSidebar((prev) => !prev);
-  };
 
   const handleClick = () => {
     setDarkMode((prev) => !prev);
@@ -46,16 +38,12 @@ export default function ToggleBar(props) {
         tabIndex={hide ? 0 : -1}
       >
         <button
-          title={hideSidebar ? "Open Sidebar" : "Close Sidebar"}
-          onClick={handleToggleSidebar}
+          title="Toggle Explorer"
+          onClick={() => toggleExplorer()}
           className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2"
           tabIndex={hide ? 0 : -1}
         >
-          {hideSidebar ? (
-            <TbLayoutSidebar className="rounded-full" />
-          ) : (
-            <TbLayoutSidebarFilled className="rounded-full" />
-          )}
+          <TbLayoutSidebar className="rounded-full" />
         </button>
         <button
           title="Toggle Darkmode"

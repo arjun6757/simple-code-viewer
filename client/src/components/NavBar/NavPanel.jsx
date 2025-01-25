@@ -1,4 +1,4 @@
-import React from "react";
+import { useEffect } from "react";
 import {
   Sidebar,
   SidebarItemGroup,
@@ -6,13 +6,13 @@ import {
   SidebarItem,
 } from "flowbite-react";
 
-// import { useNavActions } from "../actions/NavActions.js";
+import useExplorer from "../hooks/useExplorer.js";
 
 import { Files, Search, PinIcon, Settings } from "lucide-react";
 
-export default function NavPanel() {
-
-  // const { toggleExplorer }
+export default function NavPanel(props) {
+  // const { toggleExplorer, isExplorerOpen } = useExplorer();
+  const { toggleExplorer, isExplorerOpen } = props;
 
   return (
     <Sidebar
@@ -28,6 +28,8 @@ export default function NavPanel() {
       <SidebarItems className="w-full">
         <SidebarItemGroup className="flex justify-center sm:flex-col gap-4 sm:gap-2 border-0">
           <SidebarItem
+            as="button"
+            tabIndex={1}
             onClick={() => toggleExplorer()}
             icon={() => <Files className="text-gray-600 dark:text-gray-300" />}
             className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424]"
@@ -36,14 +38,18 @@ export default function NavPanel() {
           </SidebarItem>
 
           <SidebarItem
-            onClick={()=> toggleSearchDialog()}
+            as="button"
+            tabIndex={2}
+            onClick={() => toggleSearchDialog()}
             icon={() => <Search className="text-gray-600 dark:text-gray-300" />}
             className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424]"
           >
             Search
           </SidebarItem>
           <SidebarItem
-            onClick={()=> togglePinnedDialog()}
+            as="button"
+            tabIndex={3}
+            onClick={() => togglePinnedDialog()}
             icon={() => (
               <PinIcon className="text-gray-600 dark:text-gray-300" />
             )}
@@ -52,6 +58,7 @@ export default function NavPanel() {
             Pinned
           </SidebarItem>
           <SidebarItem
+            tabIndex={4}
             href="/settings"
             icon={() => (
               <Settings className="text-gray-600 dark:text-gray-300" />

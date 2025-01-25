@@ -1,12 +1,12 @@
 import { useState } from "react";
 
 export default function useExplorer() {
-    const [showExplorer, setShowExplorer] = useState(true);
+    const [isExplorerOpen, setIsExplorerOpen] = useState(true);
 
     return {
-        isOpen: showExplorer,
-        openExplorer: () => setShowExplorer(true),
-        closeExplorer: () => setShowExplorer(false),
-        toggleExplorer: setShowExplorer(prev => !prev)
-    }
+        isExplorerOpen,
+        openExplorer: () => setIsExplorerOpen(true),
+        closeExplorer: () => setIsExplorerOpen(false),
+        toggleExplorer: () => setIsExplorerOpen((prev) => !prev),
+    };
 }
