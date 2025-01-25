@@ -1,5 +1,5 @@
 import { useState, useEffect, useRef } from "react";
-import Sidebar from "./components/Explorer/Sidebar.jsx";
+import ExplorerPanel from "./components/Explorer/ExplorerPanel.jsx";
 import Highlight from "./components/Highlight";
 import ToggleBar from "./components/ToggleBar";
 import LivePreview from "./components/LivePreview";
@@ -23,10 +23,6 @@ export default function App() {
 
   const toggleDarkMode = (dark) => {
     dark ? setDarkMode(true) : setDarkMode(false);
-  };
-
-  const handleSidebarToggle = (value) => {
-    setHideSidebar(value);
   };
 
   useEffect(() => {
@@ -134,7 +130,7 @@ export default function App() {
         </div>
 
         <div className="flex bg-white overflow-hidden flex-1 dark:bg-[#191919] h-full gap-4">
-          <Sidebar
+          <ExplorerPanel
             press={handleFilePress}
             reposelect={selectedRepo}
             success={onSuccessfullFetch}
