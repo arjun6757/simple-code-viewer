@@ -9,6 +9,7 @@ import {
 import { Search } from "lucide-react";
 
 import { useState } from "react";
+import PinnedRepos from "./PinnedRepos";
 
 export default function SearchComponent(props) {
   const { isModalOpen, toggleModal } = props;
@@ -23,16 +24,18 @@ export default function SearchComponent(props) {
       "!p-4 font-inter text-gray-600 dark:text-gray-400 text-sm dark:border-[#333]",
   };
 
+  // position="top-center"
+  // inner: mt-10",
+
+
   return (
     <Modal
-    // position="top-center"
       theme={{
         root: {
           base: "dark:!bg-[#171717] dark:!bg-opacity-70 backdrop-blur-sm",
         },
         content: {
           inner: "bg-white dark:!bg-[#222] rounded-lg",
-          // mt-10",
         },
       }}
       dismissible
@@ -67,14 +70,7 @@ export default function SearchComponent(props) {
       </ModalHeader>
 
       <ModalBody className={styles.body}>
-        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum quidem,
-        magnam quae voluptatem assumenda aspernatur, iusto est sed ipsam unde
-        sint rerum odit dignissimos tempore, itaque minus cupiditate eum
-        distinctio. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
-        Earum quidem, magnam quae voluptatem assumenda aspernatur, iusto est sed
-        ipsam unde sint rerum odit dignissimos tempore, itaque minus cupiditate
-        voluptatem assumenda aspernatur, iusto est sed ipsam unde sint rerum
-        odit dignissimos tempore, itaque minus cupiditate eum distinctio.
+          <PinnedRepos />
       </ModalBody>
 
       <ModalFooter className={styles.footer}>

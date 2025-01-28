@@ -10,8 +10,6 @@ import { Files, Search, PinIcon, Settings } from "lucide-react";
 export default function NavPanel(props) {
   const { isExplorerOpen, toggleExplorer, toggleModal } = props;
 
-  const style = {};
-
   return (
     <Sidebar
       theme={{

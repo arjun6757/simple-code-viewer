@@ -11,6 +11,7 @@ import useModal from "./components/hooks/useModal.js";
 import useTheme from "./components/hooks/useTheme.js";
 import useTogglebar from "./components/hooks/useTogglebar.js";
 import useFrame from "./components/hooks/useFrame.js";
+import PinnedRepos from "./components/PinnedRepos.jsx";
 
 export default function App() {
   const [ext, setExt] = useState("");
