@@ -8,7 +8,9 @@ import {
 import { Files, Search, PinIcon, Settings } from "lucide-react";
 
 export default function NavPanel(props) {
-  const { toggleExplorer, toggleSettings } = props;
+  const { isExplorerOpen, toggleExplorer, toggleModal } = props;
+
+  const style = {};
 
   return (
     <Sidebar
@@ -28,7 +30,10 @@ export default function NavPanel(props) {
             tabIndex={1}
             onClick={() => toggleExplorer()}
             icon={() => <Files className="text-gray-600 dark:text-gray-300" />}
-            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424]"
+            className={`${
+              isExplorerOpen &&
+              "border-l-2 border-blue-500 rounded-none rounded-r-lg"
+            } cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424]`}
           >
             Explorer
           </SidebarItem>
@@ -36,7 +41,7 @@ export default function NavPanel(props) {
           <SidebarItem
             as="button"
             tabIndex={2}
-            onClick={() => toggleSearchDialog()}
+            onClick={() => toggleModal()}
             icon={() => <Search className="text-gray-600 dark:text-gray-300" />}
             className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424]"
           >
@@ -45,7 +50,7 @@ export default function NavPanel(props) {
           <SidebarItem
             as="button"
             tabIndex={3}
-            onClick={() => togglePinnedDialog()}
+            onClick={() => toggleModal()}
             icon={() => (
               <PinIcon className="text-gray-600 dark:text-gray-300" />
             )}
@@ -56,7 +61,7 @@ export default function NavPanel(props) {
           <SidebarItem
             as="button"
             tabIndex={4}
-            onClick={() => toggleSettings()}
+            onClick={() => toggleModal()}
             icon={() => (
               <Settings className="text-gray-600 dark:text-gray-300" />
             )}

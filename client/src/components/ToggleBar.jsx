@@ -1,17 +1,17 @@
-import React, { useEffect, useState } from "react";
-import { MdDarkMode } from "react-icons/md";
+import { useState } from "react";
+import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import { AiOutlineGlobal } from "react-icons/ai";
-import { TbLayoutSidebarFilled } from "react-icons/tb";
+import { TbLayoutSidebarFilled, TbLayoutSidebar } from "react-icons/tb";
 
-export default function ToggleBar(props) {
+export default function ToggleBar({
+  isDark,
+  toggleExplorer,
+  toggleTheme,
+  isExplorerOpen,
+  toggleIsLive,
+}) {
   const [hide, setHide] = useState(false);
-  const [LivePreview, setLivePreview] = useState(false);
-  const { toggleExplorer, toggleTheme } = props;
-
-  useEffect(() => {
-    props.livedemo(LivePreview);
-  }, [LivePreview, props.livedemo]);
 
   return (
     <div className="fixed right-5 bottom-5 sm:right-8 sm:bottom-5 bg-transparent flex flex-col gap-4 items-center transition-transform ease-in-out duration-500 w-14">
@@ -30,7 +30,11 @@ export default function ToggleBar(props) {
           className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2"
           tabIndex={hide ? 0 : -1}
         >
-          <TbLayoutSidebarFilled className="rounded-full" />
+          {isExplorerOpen ? (
+            <TbLayoutSidebarFilled className="rounded-full" />
+          ) : (
+            <TbLayoutSidebar className="rounded-full" />
+          )}
         </button>
         <button
           title="Toggle Darkmode"
@@ -38,11 +42,15 @@ export default function ToggleBar(props) {
           className={`rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2`}
           tabIndex={hide ? 0 : -1}
         >
-          <MdDarkMode className="rounded-full" />
+          {isDark ? (
+            <MdDarkMode className="rounded-full" />
+          ) : (
+            <MdOutlineDarkMode className="rounded-full" />
+          )}
         </button>
         <button
-          onClick={() => setLivePreview((prev) => !prev)}
-          title="Live Demo"
+          onClick={() => toggleIsLive()}
+          title="Iframe"
           className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2"
           tabIndex={hide ? 0 : -1}
         >
@@ -51,7 +59,7 @@ export default function ToggleBar(props) {
       </div>
       <button
         title={hide ? "Collapse" : "Expand"}
-        onClick={() => setHide(!hide)}
+        onClick={() => setHide((prev) => !prev)}
         className="rounded-full dark:bg-[#222] bg-gray-200 text-xl text-[#555] dark:text-[#888] p-2"
       >
         {hide ? (

@@ -11,7 +11,7 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 
 export default function SearchComponent(props) {
-  const { isSettingsOpen, toggleSettings } = props;
+  const { isModalOpen, toggleModal } = props;
   const [query, setQuery] = useState("");
 
   const handleSearch = () => {};
@@ -25,18 +25,20 @@ export default function SearchComponent(props) {
 
   return (
     <Modal
+    // position="top-center"
       theme={{
         root: {
           base: "dark:!bg-[#171717] dark:!bg-opacity-70 backdrop-blur-sm",
         },
         content: {
           inner: "bg-white dark:!bg-[#222] rounded-lg",
+          // mt-10",
         },
       }}
       dismissible
-      size="xl"
-      show={isSettingsOpen}
-      onClose={() => toggleSettings()}
+      size="2xl"
+      show={isModalOpen}
+      onClose={() => toggleModal()}
     >
       <ModalHeader
         theme={{
@@ -68,7 +70,11 @@ export default function SearchComponent(props) {
         Lorem ipsum dolor, sit amet consectetur adipisicing elit. Earum quidem,
         magnam quae voluptatem assumenda aspernatur, iusto est sed ipsam unde
         sint rerum odit dignissimos tempore, itaque minus cupiditate eum
-        distinctio.
+        distinctio. Lorem ipsum dolor, sit amet consectetur adipisicing elit.
+        Earum quidem, magnam quae voluptatem assumenda aspernatur, iusto est sed
+        ipsam unde sint rerum odit dignissimos tempore, itaque minus cupiditate
+        voluptatem assumenda aspernatur, iusto est sed ipsam unde sint rerum
+        odit dignissimos tempore, itaque minus cupiditate eum distinctio.
       </ModalBody>
 
       <ModalFooter className={styles.footer}>

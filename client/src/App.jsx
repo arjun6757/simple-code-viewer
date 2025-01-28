@@ -7,9 +7,10 @@ import { MdOutlineDone } from "react-icons/md";
 import NavPanel from "./components/NavBar/NavPanel.jsx";
 import SearchModal from "./components/SearchModal.jsx";
 import useExplorer from "./components/hooks/useExplorer.js";
-import useSettings from "./components/hooks/useSettings.js";
+import useModal from "./components/hooks/useModal.js";
 import useTheme from "./components/hooks/useTheme.js";
 import useTogglebar from "./components/hooks/useTogglebar.js";
+import useFrame from "./components/hooks/useFrame.js";
 
 export default function App() {
   const [ext, setExt] = useState("");
@@ -17,13 +18,12 @@ export default function App() {
   const [loading, setLoading] = useState(false);
   const codeView = useRef(null);
   const [selectedRepo, setSelectedRepo] = useState("");
-  const [liveDemo, setLiveDemo] = useState(false);
-  const [homepage, setHomepage] = useState("");
   const [success, setSuccess] = useState(false);
   const { toggleTogglebar, isTogglebarEnabled } = useTogglebar();
   const { toggleExplorer, isExplorerOpen } = useExplorer();
-  const { toggleSettings, isSettingsOpen } = useSettings();
+  const { toggleModal, isModalOpen } = useModal();
   const { toggleTheme, isDark } = useTheme();
+  const { toggleIsLive, isLive } = useFrame();
 
   useEffect(() => {
     const html = document.documentElement; //gets a reference to the root node
@@ -60,28 +60,6 @@ export default function App() {
     setLoading(false);
   };
 
-  const handleLiveDemo = (truth) => {
-    truth ? setLiveDemo(true) : setLiveDemo(false);
-  };
-
-  useEffect(() => {
-    const fetch_homepage = async () => {
-      try {
-        const result = await fetch(
-          "http://localhost:3000/api/code/repo/get/homepage_url"
-        );
-        const data = await result.json();
-        setHomepage(data.homepage_url);
-      } catch (error) {
-        console.error("error fetching homepage url for the repo", error);
-      }
-    };
-
-    if (liveDemo) {
-      fetch_homepage();
-    }
-  }, [liveDemo]);
-
   const repoFetchedAlert = (
     <div
       className={`fixed z-50 capitalize text-[11px] sm:text-sm p-2 bottom-10 left-1/2 transform -translate-x-1/2 rounded-md text-[#333] dark:text-[#f9f9f9] bg-[#f0f0f0] dark:bg-[#242424] border border-[#ddd] dark:border-[#444] ${
@@ -114,16 +92,14 @@ export default function App() {
     <div className={`flex flex-col h-screen relative`}>
       {repoFetchedAlert}
 
-      <SearchModal
-        isSettingsOpen={isSettingsOpen}
-        toggleSettings={toggleSettings}
-      />
+      <SearchModal isModalOpen={isModalOpen} toggleModal={toggleModal} />
 
       <div className="flex overflow-hidden w-screen h-screen">
         <div>
           <NavPanel
+            isExplorerOpen={isExplorerOpen}
             toggleExplorer={toggleExplorer}
-            toggleSettings={toggleSettings}
+            toggleModal={toggleModal}
           />
         </div>
 
@@ -148,12 +124,14 @@ export default function App() {
       {isTogglebarEnabled && (
         <ToggleBar
           toggleTheme={toggleTheme}
-          livedemo={handleLiveDemo}
           toggleExplorer={toggleExplorer}
+          toggleIsLive={toggleIsLive}
+          isExplorerOpen={isExplorerOpen}
+          isDark={isDark}
         />
       )}
 
-      <LivePreview src={homepage} live={liveDemo} />
+      <LivePreview live={isLive} toggleIsLive={toggleIsLive} />
     </div>
   );
 }

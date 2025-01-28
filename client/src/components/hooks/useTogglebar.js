@@ -2,7 +2,7 @@ import { useLocalStorage } from "../../useLocalStorage";
 
 export default function useTogglebar() {
 
-    const [isTogglebarEnabled, setIsTogglebarEnabled] = useLocalStorage('simple-code-viewer-wants-togglebar', false);
+    const [isTogglebarEnabled, setIsTogglebarEnabled] = useLocalStorage('simple-code-viewer-wants-togglebar', true);
 
     return {
         isTogglebarEnabled,

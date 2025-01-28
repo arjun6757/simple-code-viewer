@@ -4,11 +4,11 @@ export default function useSearchResult() {
     const [searchResult, setSearchResult] = useState();
     const [query, setQuery] = useState("");
     const [mode, setMode] = useState({
-        searchAll: { enabled: false },
-        searchPinned: { enabled: false },
-        searchSettings: { enabled: false }
+        activeMode: "",
+        searchAll: { enabled: false, data: [] },
+        searchPinned: { enabled: false, data: [] },
+        searchSettings: { enabled: false, data: [] },
     });
-
     const [isLoading, setIsLoading] = useState(false);
 
     useEffect(() => {
@@ -25,19 +25,43 @@ export default function useSearchResult() {
             // here i want to search for anything that i can do by just clicking or usign hooks that are easy to call
         }
 
-
         const { searchAll, searchPinned, searchSettings } = mode;
         if (searchAll.enabled) fetchSearchAll();
         if (searchPinned.enabled) fetchSearchPinned();
         if (searchSettings.enabled) fetchSearchSettings();
+    }, [mode]);
 
-    }, [mode])
+    const switchMode = (specifiedKey) => {
+        setMode((prev) => {
+            const updatedMode = { ...prev };
+
+            Object.keys(updatedMode).forEach((key) => {
+                if (updatedMode[key].enabled) {
+                    updatedMode[key].enabled = false;
+                }
+            });
+
+            updatedMode[specifiedKey].enabled = true;
+            updatedMode.activeMode = specifiedKey;
+            return updatedMode;
+        });
+    };
+
+    const setData = (specifiedKey, data) => {
+        setMode((prev) => ({
+            ...prev,
+            [specifiedKey]: {
+                ...prev[specifiedKey], //keep other value same for that key
+                data: [...data], //keep previous value intact and copy new data
+            },
+        }));
+    };
 
     return {
         isLoading,
         setMode,
         query,
         setQuery,
-        searchResult
-    }
+        searchResult,
+    };
 }
