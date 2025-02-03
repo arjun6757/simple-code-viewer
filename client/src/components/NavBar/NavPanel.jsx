@@ -25,7 +25,6 @@ export default function NavPanel(props) {
         <SidebarItemGroup className="flex justify-center sm:flex-col gap-4 sm:gap-2 border-0">
           <SidebarItem
             as="button"
-            tabIndex={1}
             onClick={() => toggleExplorer()}
             icon={() => <Files className="text-gray-600 dark:text-gray-300" />}
             className={`${
@@ -38,7 +37,6 @@ export default function NavPanel(props) {
 
           <SidebarItem
             as="button"
-            tabIndex={2}
             onClick={() => toggleModal()}
             icon={() => <Search className="text-gray-600 dark:text-gray-300" />}
             className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424]"
@@ -47,7 +45,6 @@ export default function NavPanel(props) {
           </SidebarItem>
           <SidebarItem
             as="button"
-            tabIndex={3}
             onClick={() => toggleModal()}
             icon={() => (
               <PinIcon className="text-gray-600 dark:text-gray-300" />
@@ -58,7 +55,6 @@ export default function NavPanel(props) {
           </SidebarItem>
           <SidebarItem
             as="button"
-            tabIndex={4}
             onClick={() => toggleModal()}
             icon={() => (
               <Settings className="text-gray-600 dark:text-gray-300" />

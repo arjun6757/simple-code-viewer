@@ -4,6 +4,11 @@ import flowbite from "flowbite-react/tailwind";
 export default {
   darkMode: "class",
   content: ["./index.html", "./src/**/*.{js,ts,jsx,tsx}", flowbite.content()],
+  safelist: [
+    "selected",
+    "bg-black",
+    // Add any other classes you dynamically add here
+  ],
   theme: {
     extend: {
       fontFamily: {

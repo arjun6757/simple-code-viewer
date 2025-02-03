@@ -5,7 +5,7 @@ import ToggleBar from "./components/ToggleBar";
 import LivePreview from "./components/LivePreview";
 import { MdOutlineDone } from "react-icons/md";
 import NavPanel from "./components/NavBar/NavPanel.jsx";
-import SearchModal from "./components/SearchModal.jsx";
+import SearchModal from "./components/Modal/SearchModal.jsx";
 import useExplorer from "./components/hooks/useExplorer.js";
 import useModal from "./components/hooks/useModal.js";
 import useTheme from "./components/hooks/useTheme.js";

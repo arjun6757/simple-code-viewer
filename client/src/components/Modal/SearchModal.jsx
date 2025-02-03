@@ -7,15 +7,33 @@ import {
 } from "flowbite-react";
 
 import { Search } from "lucide-react";
+import { useState, useEffect } from "react";
+import ModalItems from "./ModalItems";
 
-import { useState } from "react";
-import PinnedRepos from "./PinnedRepos";
-
-export default function SearchComponent(props) {
-  const { isModalOpen, toggleModal } = props;
+export default function SearchComponent({ isModalOpen, toggleModal }) {
   const [query, setQuery] = useState("");
+  // const [selectedIndex, setSelectedIndex] = useState(0);
+  // const [itemsLength, setItemsLength] = useState(0);
 
-  const handleSearch = () => {};
+  // const handleKeyDown = (e) => {
+  //   if (e.key === "ArrowUp") {
+  //     setSelectedIndex((prev) => prev - 1);
+  //   } else if (e.key === "ArrowDown") {
+  //     setSelectedIndex((prev) => prev + 1);
+  //   }
+  // };
+
+  // const handleLength = (value) => {
+  //   setItemsLength(value);
+  // };
+
+  // useEffect(() => {
+  //   console.log(selectedIndex);
+  // }, [selectedIndex]);
+
+  // useEffect(() => {
+  //   console.log("length: ", itemsLength);
+  // }, [itemsLength]);
 
   const styles = {
     header: "!p-2 dark:border-[#333]",
@@ -24,10 +42,6 @@ export default function SearchComponent(props) {
       "!p-4 font-inter text-gray-600 dark:text-gray-400 text-sm dark:border-[#333]",
   };
 
-  // position="top-center"
-  // inner: mt-10",
-
-
   return (
     <Modal
       theme={{
@@ -35,7 +49,7 @@ export default function SearchComponent(props) {
           base: "dark:!bg-[#171717] dark:!bg-opacity-70 backdrop-blur-sm",
         },
         content: {
-          inner: "bg-white dark:!bg-[#222] rounded-lg",
+          inner: "bg-white dark:!bg-[#222] !rounded-lg !transition-transform",
         },
       }}
       dismissible
@@ -55,6 +69,7 @@ export default function SearchComponent(props) {
         <TextInput
           icon={Search}
           type="text"
+          // onKeyDown={handleKeyDown}
           placeholder="Search commands"
           autoFocus
           value={query}
@@ -70,7 +85,7 @@ export default function SearchComponent(props) {
       </ModalHeader>
 
       <ModalBody className={styles.body}>
-          <PinnedRepos />
+        <ModalItems query={query} />
       </ModalBody>
 
       <ModalFooter className={styles.footer}>

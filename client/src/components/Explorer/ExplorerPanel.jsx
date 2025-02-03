@@ -121,7 +121,7 @@ export default function Sidebar(props) {
         id="dragger"
         onMouseDown={handleDrag}
         onTouchStart={handleTouchDrag}
-        className="absolute top-0 right-0 w-1 min-h-full opacity-0 z-10 h-auto cursor-ew-resize hover:bg-[#888] hover:opacity-100 transition-opacity delay-300"
+        className="absolute top-0 right-0 w-1 min-h-full opacity-0 h-auto cursor-ew-resize hover:bg-[#888] hover:opacity-100 transition-opacity delay-300"
       ></div>
 
       <div className="overflow-scroll w-full p-4 overflow-x-hidden scrollbar-thin">
@@ -134,6 +134,7 @@ export default function Sidebar(props) {
         ) : (
           repoData.map((file, index) =>
             file.type === "dir" ? (
+              // reminder have to use li and ul combo here to fix the tab to navigate behaviour
               <FolderLogic
                 key={index}
                 index={index}
