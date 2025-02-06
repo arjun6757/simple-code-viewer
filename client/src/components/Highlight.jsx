@@ -1,4 +1,6 @@
 import ClockSpin from "./Spinner/ClockSpin";
+import { Loader } from "./Spinner/Loader";
+import { PulsingDots } from "./Spinner/PulsingDots";
 import hljs from "highlight.js";
 import { useEffect, useRef } from "react";
 export default function Highlight({ loading, raw, ext, night }) {
@@ -27,8 +29,14 @@ export default function Highlight({ loading, raw, ext, night }) {
     }
   }, [raw]);
 
+  // const spinner = (
+  //   <ClockSpin sx2="h-[5rem] w-[5rem] border-t-[2rem] border-l-[2rem] border-b-[2rem]" />
+  // );
+
   const spinner = (
-    <ClockSpin sx2="h-[5rem] w-[5rem] border-t-[2rem] border-l-[2rem] border-b-[2rem]" />
+    <div className="w-full h-full flex justify-center">
+      <Loader size="lg" />
+    </div>
   );
 
   const emoji = (
@@ -52,7 +60,9 @@ export default function Highlight({ loading, raw, ext, night }) {
     <pre className={`language-${extension(ext)}`}>
       <code
         ref={codeRef}
-        className={`language-${extension(ext)} scrollbar-thin text-sm font-code`}
+        className={`language-${extension(
+          ext
+        )} scrollbar-thin text-sm font-code`}
       >
         {raw}
       </code>

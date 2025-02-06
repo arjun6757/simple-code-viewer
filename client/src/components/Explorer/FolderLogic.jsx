@@ -1,6 +1,7 @@
 import { useState } from "react";
 import Spin from "../Spinner/ClockSpin";
 import Icon from "../Icon";
+import { Loader } from "../Spinner/Loader";
 
 export default function FolderLogic(props) {
   const { name, path, type } = props.file;
@@ -80,6 +81,12 @@ export default function FolderLogic(props) {
     }
   };
 
+  const spinner = (
+    <div className="w-fit h-full flex items-center">
+      <Loader size="sm" />
+    </div>
+  );
+
   const clock = (
     <Spin sx2="border-r-[6px] border-t-[6px] border-l-[6px] h-[20px] w-[20px]" />
   );
@@ -99,7 +106,7 @@ export default function FolderLogic(props) {
           <div className={`pt-1`}>
             {loading &&
               (gettingChildFor === path || gettingChildFor === name) &&
-              clock}
+              spinner}
           </div>
         </div>
 

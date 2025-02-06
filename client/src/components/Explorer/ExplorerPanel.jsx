@@ -1,13 +1,11 @@
-import { useState, useEffect } from "react";
-import ClockSpin from "../Spinner/ClockSpin.jsx";
+import { useState, useEffect } from "react";;
 import FolderLogic from "./FolderLogic.jsx";
 import Icon from "../Icon.jsx";
+import { Loader } from "../Spinner/Loader.jsx";
 
 export default function Sidebar(props) {
   const [repoData, setRepoData] = useState([{}]);
   const [loading, setLoading] = useState(false);
-
-  const { hidesidebar } = props;
   const { isExplorerOpen } = props;
 
   useEffect(() => {
@@ -16,7 +14,7 @@ export default function Sidebar(props) {
       try {
         const selectedRepo = props.reposelect;
         const result = await fetch(
-          `http://localhost:3000/api/code/repo/select/${selectedRepo}`,
+          `http://localhost:3000/api/code/repo/select/${selectedRepo}`
         );
         const data = await result.json();
         setRepoData(data);
@@ -109,11 +107,19 @@ export default function Sidebar(props) {
     document.addEventListener("touchend", touchRelease); //when im releasing the dragging
   };
 
+  const spinner = (
+    <div className="w-full h-full flex justify-center">
+    <Loader size="md" />
+  </div>
+  );
+
+  // prev spinner --> // <ClockSpin sx2="w-[30px] h-[30px] border-r-[9px] border-t-[9px] border-l-[9px]" />
+          
+
   return (
     <div
       id="code-tree"
       className={`
-      // ${hidesidebar ? "hidden" : "flex"}
       ${isExplorerOpen ? "flex" : "hidden"}
        fixed min-w-[75vw] max-w-[75vw] bg-white dark:bg-[#171717] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[30vw] border-r-[1px] border-[#ddd] dark:border-[#555] text-black dark:text-white font-sans select-none `}
     >
@@ -121,17 +127,11 @@ export default function Sidebar(props) {
         id="dragger"
         onMouseDown={handleDrag}
         onTouchStart={handleTouchDrag}
-        className="absolute top-0 right-0 w-1 min-h-full opacity-0 h-auto cursor-ew-resize hover:bg-[#888] hover:opacity-100 transition-opacity delay-300"
+        className="absolute top-0 right-0 w-[2px] min-h-full opacity-0 h-auto cursor-ew-resize hover:bg-gray-500 hover:opacity-100 transition-opacity delay-300"
       ></div>
 
       <div className="overflow-scroll w-full p-4 overflow-x-hidden scrollbar-thin">
-        {/*<div className="bg-[#333]">*/}
-        {/*<RepoSelector />*/}
-        {/*</div>*/}
-
-        {loading ? (
-          <ClockSpin sx2="w-[30px] h-[30px] border-r-[9px] border-t-[9px] border-l-[9px]" />
-        ) : (
+        {loading ? spinner : (
           repoData.map((file, index) =>
             file.type === "dir" ? (
               // reminder have to use li and ul combo here to fix the tab to navigate behaviour
@@ -159,7 +159,7 @@ export default function Sidebar(props) {
                   {file.name}
                 </a>
               </div>
-            ),
+            )
           )
         )}
       </div>

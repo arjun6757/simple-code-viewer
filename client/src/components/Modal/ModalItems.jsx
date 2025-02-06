@@ -1,6 +1,6 @@
 import usePinnedRepos from "../hooks/usePinnedRepos";
+import { Loader } from "../Spinner/Loader";
 import ModalItem from "./ModalItem";
-import { Spinner } from "flowbite-react";
 import { useEffect } from "react";
 
 export default function ModalItems({ query, selectedIndex, length }) {
@@ -15,9 +15,9 @@ export default function ModalItems({ query, selectedIndex, length }) {
       item.node.name.toLowerCase().includes(query.toLowerCase())
     ) || [];
 
-  const loader = (
+  const spinner = (
     <div className="flex flex-col justify-center items-center w-full h-full">
-      <Spinner />
+      <Loader size="md" />
     </div>
   );
   
@@ -25,9 +25,7 @@ export default function ModalItems({ query, selectedIndex, length }) {
     length(filterItems.length)
   }, [filterItems.length])
 
-  return loading ? (
-    loader
-  ) : (
+  return loading ? spinner : (
     <ul className="flex flex-col gap-2 w-full">
       {filterItems.map((item, index) => (
         <li
