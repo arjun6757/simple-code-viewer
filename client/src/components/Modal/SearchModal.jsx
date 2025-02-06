@@ -7,33 +7,25 @@ import {
 } from "flowbite-react";
 
 import { Search } from "lucide-react";
-import { useState, useEffect } from "react";
+import { useState } from "react";
 import ModalItems from "./ModalItems";
 
 export default function SearchComponent({ isModalOpen, toggleModal }) {
   const [query, setQuery] = useState("");
-  // const [selectedIndex, setSelectedIndex] = useState(0);
-  // const [itemsLength, setItemsLength] = useState(0);
+  const [selectedIndex, setSelectedIndex] = useState(0);
+  const [itemsLength, setItemsLength] = useState(0);
 
-  // const handleKeyDown = (e) => {
-  //   if (e.key === "ArrowUp") {
-  //     setSelectedIndex((prev) => prev - 1);
-  //   } else if (e.key === "ArrowDown") {
-  //     setSelectedIndex((prev) => prev + 1);
-  //   }
-  // };
-
-  // const handleLength = (value) => {
-  //   setItemsLength(value);
-  // };
-
-  // useEffect(() => {
-  //   console.log(selectedIndex);
-  // }, [selectedIndex]);
-
-  // useEffect(() => {
-  //   console.log("length: ", itemsLength);
-  // }, [itemsLength]);
+  const handleKeyDown = (e) => {
+    if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      setSelectedIndex((prev) => {
+        if (e.key === "ArrowDown") {
+          return (prev + 1) % itemsLength;
+        } else if (e.key === "ArrowUp") {
+          return (prev - 1 + itemsLength) % itemsLength;
+        }
+      });
+    }
+  };
 
   const styles = {
     header: "!p-2 dark:border-[#333]",
@@ -69,7 +61,7 @@ export default function SearchComponent({ isModalOpen, toggleModal }) {
         <TextInput
           icon={Search}
           type="text"
-          // onKeyDown={handleKeyDown}
+          onKeyDown={handleKeyDown}
           placeholder="Search commands"
           autoFocus
           value={query}
@@ -85,7 +77,7 @@ export default function SearchComponent({ isModalOpen, toggleModal }) {
       </ModalHeader>
 
       <ModalBody className={styles.body}>
-        <ModalItems query={query} />
+        <ModalItems query={query} length={(value) => setItemsLength(value)} selectedIndex={selectedIndex} />
       </ModalBody>
 
       <ModalFooter className={styles.footer}>
