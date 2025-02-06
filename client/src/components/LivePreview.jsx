@@ -1,6 +1,6 @@
 import React, { useEffect, useState, useRef } from "react";
 import useFetch from "../components/hooks/useFetch.js";
-import { Spinner } from "flowbite-react";
+import { Loader } from "./Spinner/Loader.jsx";
 
 export default function LivePreview({ live, toggleIsLive }) {
   if (!live) return;
@@ -13,7 +13,7 @@ export default function LivePreview({ live, toggleIsLive }) {
     return <p className="text-center text-xl">{error.message}</p>;
   }
 
-  const loadingAnimation = <Spinner />;
+  const spinner = <Loader size="md" />
 
   const frame = (
     <iframe
@@ -27,7 +27,7 @@ export default function LivePreview({ live, toggleIsLive }) {
   const framePanel = (
     <div onClick={() => toggleIsLive()} className="w-screen h-screen fixed backdrop-blur-sm">
       <div className="bg-[#222] z-10 relative w-[80vw] flex justify-center items-center sm:w-[430px] border-r border-[#ddd] dark:border-[#555] h-screen">
-        {loading ? loadingAnimation : frame}
+        {loading ? spinner : frame}
       </div>
     </div>
   );
