@@ -17,7 +17,7 @@
 
 [data-testid="flowbite-tooltip"],
 [data-testid="flowbite-tooltip-arrow"] {
-  @apply !bg-[#333] !text-gray-100 select-none;
+  @apply !bg-[#171717] !text-gray-100 select-none;
 }
 
 .dark [data-testid="flowbite-tooltip"], .dark [data-testid="flowbite-tooltip-arrow"] {

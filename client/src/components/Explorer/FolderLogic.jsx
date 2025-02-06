@@ -103,7 +103,7 @@ export default function FolderLogic(props) {
             {name}
           </div>
 
-          <div className={`pt-1`}>
+          <div>
             {loading &&
               (gettingChildFor === path || gettingChildFor === name) &&
               spinner}
