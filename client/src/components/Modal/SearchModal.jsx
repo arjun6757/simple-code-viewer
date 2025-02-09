@@ -10,7 +10,11 @@ import { Search } from "lucide-react";
 import { useState } from "react";
 import ModalItems from "./ModalItems";
 
-export default function SearchComponent({ isModalOpen, toggleModal, repoSelected }) {
+export default function SearchComponent({
+  isModalOpen,
+  toggleModal,
+  repoSelected,
+}) {
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [itemsLength, setItemsLength] = useState(0);
@@ -20,10 +24,12 @@ export default function SearchComponent({ isModalOpen, toggleModal, repoSelected
     query: { enabled: false },
   });
 
+  const [items, setItems] = useState(null);
+
   const handleRepoPress = (name) => {
-    toggleModal()
+    toggleModal();
     repoSelected(name);
-  }
+  };
 
   const handleKeyDown = (e) => {
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
@@ -34,6 +40,13 @@ export default function SearchComponent({ isModalOpen, toggleModal, repoSelected
           return (prev - 1 + itemsLength) % itemsLength;
         }
       });
+    }
+
+    if (e.key === "Enter" && items) {
+      e.preventDefault()
+      const name = items[selectedIndex].node.name;
+      toggleModal();
+      repoSelected(name);
     }
   };
 
@@ -92,6 +105,7 @@ export default function SearchComponent({ isModalOpen, toggleModal, repoSelected
           length={(value) => setItemsLength(value)}
           selectedIndex={selectedIndex}
           repoPress={handleRepoPress}
+          items={(items) => setItems(items)}
         />
       </ModalBody>
 

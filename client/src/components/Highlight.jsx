@@ -39,7 +39,7 @@ export default function Highlight({ loading, raw, ext, night }) {
 
   const emoji = (
     <div className="select-none font-code gap-3 text-[#888] flex flex-col h-screen place-content-center items-center">
-      <div className="text-2xl flex gap-3">View with ease in {projectName}</div>
+      <div className="text-2xl flex gap-3">Inspect with ease at {projectName}</div>
       <p className="text-xs font-inter">
         Created with ❤️ by{" "}
         <a

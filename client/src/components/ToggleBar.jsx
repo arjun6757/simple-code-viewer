@@ -31,9 +31,9 @@ export default function ToggleBar({
           tabIndex={hide ? 0 : -1}
         >
           {isExplorerOpen ? (
-            <TbLayoutSidebarFilled className="rounded-full" />
+            <TbLayoutSidebarFilled className="rounded-full text-lg" />
           ) : (
-            <TbLayoutSidebar className="rounded-full" />
+            <TbLayoutSidebar className="rounded-full text-lg" />
           )}
         </button>
         <button
@@ -43,9 +43,9 @@ export default function ToggleBar({
           tabIndex={hide ? 0 : -1}
         >
           {isDark ? (
-            <MdDarkMode className="rounded-full" />
+            <MdDarkMode className="rounded-full text-lg" />
           ) : (
-            <MdOutlineDarkMode className="rounded-full" />
+            <MdOutlineDarkMode className="rounded-full text-lg" />
           )}
         </button>
         <button
@@ -54,7 +54,7 @@ export default function ToggleBar({
           className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 hover:scale-110 focus:scale-110 active:scale-90 transition-transform duration-300"
           tabIndex={hide ? 0 : -1}
         >
-          <AiOutlineGlobal className="rounded-full" />
+          <AiOutlineGlobal className="rounded-full text-lg" />
         </button>
       </div>
       <button
@@ -63,9 +63,9 @@ export default function ToggleBar({
         className="rounded-full dark:bg-[#222] bg-gray-200 text-xl text-[#555] dark:text-[#888] p-2 hover:scale-110 focus:scale-110 active:scale-90 transition-transform duration-300"
       >
         {hide ? (
-          <FaAngleDown className="rounded-full" />
+          <FaAngleDown className="rounded-full text-lg" />
         ) : (
-          <FaAngleUp className="rounded-full" />
+          <FaAngleUp className="rounded-full text-lg" />
         )}
       </button>
     </div>

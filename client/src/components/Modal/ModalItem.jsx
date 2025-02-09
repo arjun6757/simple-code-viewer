@@ -1,12 +1,18 @@
 export default function ModalItem({ data, url, itemPress }) {
 
-  const handleClick = (e, data) => {
-    e.preventDefault()
-    itemPress(data)
-  }
-
   return (
-    <a onClick={(e) => handleClick(e, data)} tabIndex={-1} href={url} className="block w-full h-full">
+    <a 
+    onKeyDown={(k) => {
+      if(k.key==='Enter'){
+        itemPress(data)
+      }
+      return
+    }}
+    onClick={(c) => {
+      c.preventDefault()
+      itemPress(data)
+    }}
+     tabIndex={0} className="block px-4 py-2 w-full h-full">
       {data}
     </a>
   );

@@ -47,8 +47,9 @@ export default function Sidebar(props) {
       }
     };
 
-    if(repoData.length !== 0) return;
-    fetchRepoData(); // Call the fetch function when component mounts
+    if (repoData.length === 0) {
+      fetchRepoData(); // Call the fetch function when component mounts
+    }
   }, []); // Empty dependency array to run only once
 
   const hasDot = (name) => {
@@ -130,7 +131,7 @@ export default function Sidebar(props) {
         className="absolute top-0 right-0 w-[2px] min-h-full opacity-0 h-auto cursor-ew-resize hover:bg-gray-500 hover:opacity-100 transition-opacity delay-300"
       ></div>
 
-      <div className="overflow-scroll w-full p-4 pt-8 overflow-x-hidden scrollbar-thin">
+      <div className="overflow-scroll w-full p-4 overflow-x-hidden scrollbar-thin">
         {loading
           ? spinner
           : repoData.map((file, index) =>
