@@ -1,12 +1,8 @@
-import ClockSpin from "./Spinner/ClockSpin";
 import { Loader } from "./Spinner/Loader";
-import { PulsingDots } from "./Spinner/PulsingDots";
 import hljs from "highlight.js";
 import { useEffect, useRef } from "react";
 export default function Highlight({ loading, raw, ext, night }) {
   const codeRef = useRef(null);
-
-  const time = new Date().getFullYear();
 
   useEffect(() => {
     const loadTheme = () => {
@@ -29,20 +25,31 @@ export default function Highlight({ loading, raw, ext, night }) {
     }
   }, [raw]);
 
-  // const spinner = (
-  //   <ClockSpin sx2="h-[5rem] w-[5rem] border-t-[2rem] border-l-[2rem] border-b-[2rem]" />
-  // );
-
   const spinner = (
     <div className="w-full h-full flex justify-center">
       <Loader size="lg" />
     </div>
   );
 
-  const emoji = (
-    <span className="select-none text-7xl text-[#888] flex h-screen place-content-center items-center">
-      (┬┬﹏┬┬)
+  const projectName = (
+    <span className=" border-l-2 py-0 rounded-md rounded-l-none border-l-gray-500 dark:border-l-gray-300 bg-slate-200 dark:bg-slate-700 dark:text-gray-400 pr-2">
+      simple-code-viewer
     </span>
+  );
+
+  const emoji = (
+    <div className="select-none font-code gap-3 text-[#888] flex flex-col h-screen place-content-center items-center">
+      <div className="text-2xl flex gap-3">View with ease in {projectName}</div>
+      <p className="text-xs font-inter">
+        Created with ❤️ by{" "}
+        <a
+          href="https://github.com/arjun6757"
+          className="hover:underline"
+        >
+          arjun6757
+        </a>
+      </p>
+    </div>
   );
 
   const extension = (ext) => {

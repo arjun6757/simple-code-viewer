@@ -3,7 +3,7 @@ import { Loader } from "../Spinner/Loader";
 import ModalItem from "./ModalItem";
 import { useEffect } from "react";
 
-export default function ModalItems({ query, selectedIndex, length }) {
+export default function ModalItems({ query, selectedIndex, length, repoPress }) {
   const { pinnedRepos, loading, error } = usePinnedRepos();
 
   if (error) {
@@ -33,7 +33,7 @@ export default function ModalItems({ query, selectedIndex, length }) {
           tabIndex={0}
           className={`${selectedIndex === index ? "selected": ""} px-4 py-2 hover:bg-blue-500 hover:dark:bg-green-500 hover:text-gray-100 hover:dark:text-gray-100 rounded-md cursor-pointer`}
         >
-          <ModalItem data={item.node.name} url={item.node.url} />
+          <ModalItem itemPress={repoPress} data={item.node.name} url={item.node.url} />
         </li>
       ))}
     </ul>

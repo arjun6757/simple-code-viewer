@@ -15,9 +15,14 @@
   @apply bg-blue-500 dark:bg-green-500 text-gray-100;
 }
 
+
+[data-testid="flowbite-tooltip"] {
+  @apply !py-1.5 !px-1.5;
+}
+
 [data-testid="flowbite-tooltip"],
 [data-testid="flowbite-tooltip-arrow"] {
-  @apply !bg-[#171717] !text-gray-100 select-none;
+  @apply !bg-[#171717] !text-gray-100 select-none !text-xs;
 }
 
 .dark [data-testid="flowbite-tooltip"], .dark [data-testid="flowbite-tooltip-arrow"] {

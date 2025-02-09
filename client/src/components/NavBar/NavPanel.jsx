@@ -19,7 +19,7 @@ export default function NavPanel(props) {
       }}
       collapsed="true"
       aria-label="Sidebar"
-      className="fixed bottom-0 left-0 right-0 sm:relative sm:h-screen sm:w-14 bg-white dark:bg-[#171717] border-t sm:border-t-0 sm:border-r border-[#ddd] dark:border-[#333] p-2 sm:py-3"
+      className="text-sm relative h-screen w-14 bg-white dark:bg-[#171717] border-r border-[#ddd] dark:border-[#333] p-2 py-3"
     >
       <SidebarItems className="w-full">
         <SidebarItemGroup className="flex justify-center sm:flex-col gap-4 sm:gap-2 border-0">
@@ -27,10 +27,7 @@ export default function NavPanel(props) {
             as="button"
             onClick={() => toggleExplorer()}
             icon={() => <Files className="text-gray-600 dark:text-gray-300" />}
-            className={`${
-              isExplorerOpen &&
-              "border-l-2 border-blue-500 rounded-none rounded-r-lg"
-            } cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424]`}
+            className={`cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424] !rounded`}
           >
             Explorer
           </SidebarItem>
@@ -39,7 +36,7 @@ export default function NavPanel(props) {
             as="button"
             onClick={() => toggleModal()}
             icon={() => <Search className="text-gray-600 dark:text-gray-300" />}
-            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424]"
+            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424] !rounded"
           >
             Search
           </SidebarItem>
@@ -49,7 +46,7 @@ export default function NavPanel(props) {
             icon={() => (
               <PinIcon className="text-gray-600 dark:text-gray-300" />
             )}
-            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424]"
+            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424] !rounded"
           >
             Pinned
           </SidebarItem>
@@ -59,7 +56,7 @@ export default function NavPanel(props) {
             icon={() => (
               <Settings className="text-gray-600 dark:text-gray-300" />
             )}
-            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424]"
+            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424] !rounded"
           >
             Settings
           </SidebarItem>

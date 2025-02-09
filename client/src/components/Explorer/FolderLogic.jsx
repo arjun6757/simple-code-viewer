@@ -21,8 +21,8 @@ export default function FolderLogic(props) {
     // add this ?
     try {
       const url = path
-        ? `http://localhost:3000/api/code/repo/query?path=${path}`
-        : `http://localhost:3000/api/code/repo/query?path=${name}`;
+        ? `/api/query?path=${path}`
+        : `/api/query?path=${name}`;
       const result = await fetch(url);
       const data = await result.json();
       if (data.status === 404) {
@@ -87,15 +87,11 @@ export default function FolderLogic(props) {
     </div>
   );
 
-  const clock = (
-    <Spin sx2="border-r-[6px] border-t-[6px] border-l-[6px] h-[20px] w-[20px]" />
-  );
-
   const renderChilds = (name, path, type, url) => {
     return (
       <div>
         <div
-          className={`p-2 rounded-lg flex gap-2 place-content-between hover:bg-[#f0f0f0] dark:hover:bg-[#242424] cursor-pointer pr-3`}
+          className={`py-1.5 px-2 rounded flex gap-2 place-content-between hover:bg-[#f0f0f0] dark:hover:bg-[#242424] cursor-pointer pr-3`}
           onClick={() => handlerForClicks(name, path, url, type)}
         >
           <div className="flex gap-2 items-center">

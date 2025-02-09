@@ -6,7 +6,7 @@ import ModalItems from "./Modal/ModalItems";
 export default function PinnedRepos() {
   const [pinnedRepos, setPinnedRepos] = useState(null);
   const { data, loading, error } = useFetch(
-    "http://localhost:3000/api/code/repo/usr/pinned"
+    "/api/user/pinned"
   );
 
   useEffect(() => {

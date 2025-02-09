@@ -27,7 +27,7 @@ export default function ToggleBar({
         <button
           title="Toggle Explorer"
           onClick={() => toggleExplorer()}
-          className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2"
+          className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 hover:scale-110 focus:scale-110 active:scale-90 transition-transform duration-300"
           tabIndex={hide ? 0 : -1}
         >
           {isExplorerOpen ? (
@@ -39,7 +39,7 @@ export default function ToggleBar({
         <button
           title="Toggle Darkmode"
           onClick={() => toggleTheme()}
-          className={`rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2`}
+          className={`rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 hover:scale-110 focus:scale-110 active:scale-90 transition-transform duration-300`}
           tabIndex={hide ? 0 : -1}
         >
           {isDark ? (
@@ -51,7 +51,7 @@ export default function ToggleBar({
         <button
           onClick={() => toggleIsLive()}
           title="Iframe"
-          className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2"
+          className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 hover:scale-110 focus:scale-110 active:scale-90 transition-transform duration-300"
           tabIndex={hide ? 0 : -1}
         >
           <AiOutlineGlobal className="rounded-full" />
@@ -60,7 +60,7 @@ export default function ToggleBar({
       <button
         title={hide ? "Collapse" : "Expand"}
         onClick={() => setHide((prev) => !prev)}
-        className="rounded-full dark:bg-[#222] bg-gray-200 text-xl text-[#555] dark:text-[#888] p-2"
+        className="rounded-full dark:bg-[#222] bg-gray-200 text-xl text-[#555] dark:text-[#888] p-2 hover:scale-110 focus:scale-110 active:scale-90 transition-transform duration-300"
       >
         {hide ? (
           <FaAngleDown className="rounded-full" />

@@ -6,7 +6,7 @@ export default function LivePreview({ live, toggleIsLive }) {
   if (!live) return;
 
   const { data, loading, error } = useFetch(
-    "http://localhost:3000/api/code/repo/get/homepage_url"
+    "/api/current/homepage_url"
   );
 
   if (error) {

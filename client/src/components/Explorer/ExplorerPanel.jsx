@@ -1,10 +1,12 @@
-import { useState, useEffect } from "react";;
+import { useState, useEffect } from "react";
 import FolderLogic from "./FolderLogic.jsx";
 import Icon from "../Icon.jsx";
 import { Loader } from "../Spinner/Loader.jsx";
+import { useLocalStorage } from "../../useLocalStorage.js";
 
 export default function Sidebar(props) {
-  const [repoData, setRepoData] = useState([{}]);
+  // const [repoData, setRepoData] = useState([{}]);
+  const [repoData, setRepoData] = useLocalStorage("scv-repo-data", [{}]);
   const [loading, setLoading] = useState(false);
   const { isExplorerOpen } = props;
 
@@ -13,9 +15,7 @@ export default function Sidebar(props) {
       setLoading(true);
       try {
         const selectedRepo = props.reposelect;
-        const result = await fetch(
-          `http://localhost:3000/api/code/repo/select/${selectedRepo}`
-        );
+        const result = await fetch(`/api/user/select/${selectedRepo}`);
         const data = await result.json();
         setRepoData(data);
         props.success(true);
@@ -36,7 +36,7 @@ export default function Sidebar(props) {
     const fetchRepoData = async () => {
       setLoading(true);
       try {
-        const result = await fetch("http://localhost:3000/api/code/repo");
+        const result = await fetch("/api/default");
         const data = await result.json();
         setRepoData(data);
       } catch (error) {
@@ -47,6 +47,7 @@ export default function Sidebar(props) {
       }
     };
 
+    if(repoData.length !== 0) return;
     fetchRepoData(); // Call the fetch function when component mounts
   }, []); // Empty dependency array to run only once
 
@@ -109,19 +110,18 @@ export default function Sidebar(props) {
 
   const spinner = (
     <div className="w-full h-full flex justify-center">
-    <Loader size="md" />
-  </div>
+      <Loader size="md" />
+    </div>
   );
 
   // prev spinner --> // <ClockSpin sx2="w-[30px] h-[30px] border-r-[9px] border-t-[9px] border-l-[9px]" />
-          
 
   return (
     <div
       id="code-tree"
       className={`
       ${isExplorerOpen ? "flex" : "hidden"}
-       fixed min-w-[75vw] max-w-[75vw] bg-white dark:bg-[#171717] sm:relative w-[75vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[30vw] border-r-[1px] border-[#ddd] dark:border-[#555] text-black dark:text-white font-sans select-none `}
+      min-w-[75vw] max-w-[75vw] bg-white dark:bg-[#171717] relative w-[50vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[30vw] border-r-[1px] border-[#ddd] dark:border-[#555] text-black dark:text-white text-sm select-none`}
     >
       <div
         id="dragger"
@@ -130,38 +130,38 @@ export default function Sidebar(props) {
         className="absolute top-0 right-0 w-[2px] min-h-full opacity-0 h-auto cursor-ew-resize hover:bg-gray-500 hover:opacity-100 transition-opacity delay-300"
       ></div>
 
-      <div className="overflow-scroll w-full p-4 overflow-x-hidden scrollbar-thin">
-        {loading ? spinner : (
-          repoData.map((file, index) =>
-            file.type === "dir" ? (
-              // reminder have to use li and ul combo here to fix the tab to navigate behaviour
-              <FolderLogic
-                key={index}
-                index={index}
-                file={file}
-                press={props.press}
-                folderType={"root"}
-              />
-            ) : file.type === "url" ? null : (
-              <div
-                key={index}
-                onClick={() =>
-                  handleClick(file.type, file.url, index, file.name)
-                }
-                className={`p-2 flex gap-2 place-items-center hover:bg-[#f0f0f0] dark:hover:bg-[#242424] rounded-lg cursor-pointer`}
-              >
-                <Icon name={file.name} type={file.type} />
-                <a
-                  onClick={(e) => e.preventDefault()}
-                  href={file.url}
-                  referrerPolicy="no-referrer"
+      <div className="overflow-scroll w-full p-4 pt-8 overflow-x-hidden scrollbar-thin">
+        {loading
+          ? spinner
+          : repoData.map((file, index) =>
+              file.type === "dir" ? (
+                // reminder have to use li and ul combo here to fix the tab to navigate behaviour
+                <FolderLogic
+                  key={index}
+                  index={index}
+                  file={file}
+                  press={props.press}
+                  folderType={"root"}
+                />
+              ) : file.type === "url" ? null : (
+                <div
+                  key={index}
+                  onClick={() =>
+                    handleClick(file.type, file.url, index, file.name)
+                  }
+                  className={`py-1.5 px-2 rounded flex gap-2 place-items-center hover:bg-[#f0f0f0] dark:hover:bg-[#242424] cursor-pointer`}
                 >
-                  {file.name}
-                </a>
-              </div>
-            )
-          )
-        )}
+                  <Icon name={file.name} type={file.type} />
+                  <a
+                    onClick={(e) => e.preventDefault()}
+                    href={file.url}
+                    referrerPolicy="no-referrer"
+                  >
+                    {file.name}
+                  </a>
+                </div>
+              )
+            )}
       </div>
     </div>
   );
