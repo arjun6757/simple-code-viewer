@@ -2,11 +2,9 @@ import { useState, useEffect } from "react";
 import FolderLogic from "./FolderLogic.jsx";
 import Icon from "../Icon.jsx";
 import { Loader } from "../Spinner/Loader.jsx";
-import { useLocalStorage } from "../../useLocalStorage.js";
 
 export default function Sidebar(props) {
-  // const [repoData, setRepoData] = useState([{}]);
-  const [repoData, setRepoData] = useLocalStorage("scv-repo-data", [{}]);
+  const [repoData, setRepoData] = useState([{}]);
   const [loading, setLoading] = useState(false);
   const { isExplorerOpen } = props;
 
@@ -47,9 +45,7 @@ export default function Sidebar(props) {
       }
     };
 
-    if (repoData.length === 0) {
-      fetchRepoData(); // Call the fetch function when component mounts
-    }
+    fetchRepoData();
   }, []); // Empty dependency array to run only once
 
   const hasDot = (name) => {

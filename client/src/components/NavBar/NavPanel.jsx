@@ -5,7 +5,7 @@ import {
   SidebarItem,
 } from "flowbite-react";
 
-import { Files, Search, PinIcon, Settings } from "lucide-react";
+import { Files, Search, PinIcon } from "lucide-react";
 
 export default function NavPanel(props) {
   const { isExplorerOpen, toggleExplorer, toggleModal } = props;
@@ -49,16 +49,6 @@ export default function NavPanel(props) {
             className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424] !rounded"
           >
             Pinned
-          </SidebarItem>
-          <SidebarItem
-            as="button"
-            onClick={() => toggleModal()}
-            icon={() => (
-              <Settings className="text-gray-600 dark:text-gray-300" />
-            )}
-            className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424] !rounded"
-          >
-            Settings
           </SidebarItem>
         </SidebarItemGroup>
       </SidebarItems>

@@ -1,11 +1,9 @@
 import { useState } from "react";
-import Spin from "../Spinner/ClockSpin";
 import Icon from "../Icon";
 import { Loader } from "../Spinner/Loader";
 
 export default function FolderLogic(props) {
   const { name, path, type } = props.file;
-
   const [FolderStructure, setFolderStructure] = useState([]);
   const [loading, setLoading] = useState(false);
   const [gettingChildFor, setGettingChildFor] = useState("");
