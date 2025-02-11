@@ -10,8 +10,7 @@ export default function Highlight({ loading, raw, ext, night }) {
       link.rel = "stylesheet";
       link.href = night
         ? "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.11.1/styles/base16/circus.min.css"
-        : // "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/atom-one-dark.min.css"
-          "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/intellij-light.min.css";
+        : "https://cdnjs.cloudflare.com/ajax/libs/highlight.js/11.8.0/styles/intellij-light.min.css";
 
       document.head.appendChild(link);
     };
@@ -39,13 +38,12 @@ export default function Highlight({ loading, raw, ext, night }) {
 
   const emoji = (
     <div className="select-none font-code gap-3 text-[#888] flex flex-col h-screen place-content-center items-center">
-      <div className="text-2xl flex gap-3">Inspect with ease at {projectName}</div>
+      <div className="text-2xl flex gap-3">
+        Inspect with ease at {projectName}
+      </div>
       <p className="text-xs font-inter">
         Created with ❤️ by{" "}
-        <a
-          href="https://github.com/arjun6757"
-          className="hover:underline"
-        >
+        <a href="https://github.com/arjun6757" className="hover:underline">
           arjun6757
         </a>
       </p>

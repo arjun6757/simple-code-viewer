@@ -6,10 +6,13 @@ import {
 } from "flowbite-react";
 
 import { Files, Search, PinIcon } from "lucide-react";
+import { useContext } from "react";
+import { ModalContext } from "../../context/ModalContext";
 
 export default function NavPanel(props) {
-  const { isExplorerOpen, toggleExplorer, toggleModal } = props;
-
+  const { toggleExplorer } = props;
+  const { switchTo } = useContext(ModalContext);
+  
   return (
     <Sidebar
       theme={{
@@ -34,7 +37,7 @@ export default function NavPanel(props) {
 
           <SidebarItem
             as="button"
-            onClick={() => toggleModal()}
+            onClick={() => switchTo("SearchItems")}
             icon={() => <Search className="text-gray-600 dark:text-gray-300" />}
             className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424] !rounded"
           >
@@ -42,7 +45,7 @@ export default function NavPanel(props) {
           </SidebarItem>
           <SidebarItem
             as="button"
-            onClick={() => toggleModal()}
+            onClick={() => switchTo("PinnedItems")}
             icon={() => (
               <PinIcon className="text-gray-600 dark:text-gray-300" />
             )}

@@ -1,5 +1,6 @@
 import express from "express";
-import api from "./routes/api.js";
+// import api from "./routes/api.js";
+import v2 from "./routes/v2.js";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
 
@@ -31,7 +32,7 @@ app.use((req, res, next) => {
   next();
 });
 
-app.use("/api", api);
+app.use("/api", v2);
 // all routes defined on api.js will be prefixed with /api => /api/code/repo
 
 app.listen(port, () => {

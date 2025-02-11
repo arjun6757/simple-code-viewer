@@ -2,51 +2,65 @@ import { useState, useEffect } from "react";
 import FolderLogic from "./FolderLogic.jsx";
 import Icon from "../Icon.jsx";
 import { Loader } from "../Spinner/Loader.jsx";
+import { useRepo } from "../../store/repo.js";
 
 export default function Sidebar(props) {
-  const [repoData, setRepoData] = useState([{}]);
-  const [loading, setLoading] = useState(false);
+  // const [repoData, setRepoData] = useState([{}]);
+  // const [loading, setLoading] = useState(false);
   const { isExplorerOpen } = props;
+  // const { actions, files: repoData } = useRepo();
+  // const { fetchDefault } = actions;
+
+  const { fetchFile, fetchDefault, files, loading, error, fetchSelected } = useRepo();
+
+  // useEffect(() => {
+  //   const fetchRepoData = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const selectedRepo = props.reposelect;
+  //       const result = await fetch(`/api/user/select/${selectedRepo}`);
+  //       const data = await result.json();
+  //       setRepoData(data);
+  //       props.success(true);
+  //     } catch (error) {
+  //       console.error("Error fetching repo data:", error);
+  //       setRepoData([{}]);
+  //       props.success(false);
+  //     } finally {
+  //       setLoading(false); // Set loading to false regardless of success or error
+  //     }
+  //   };
+
+  //   if (props.reposelect === "") return;
+  //   fetchRepoData();
+  // }, [props.reposelect]);
+
+  // useEffect(() => {
+  //   if (props.reposelect === "") return;
+  //   fetchSelected(props.reposelect);
+  // }, [props.reposelect])
+
+  // useEffect(() => {
+  //   const fetchRepoData = async () => {
+  //     setLoading(true);
+  //     try {
+  //       const result = await fetch("/api/default");
+  //       const data = await result.json();
+  //       setRepoData(data);
+  //     } catch (error) {
+  //       console.error("Error fetching repo data:", error);
+  //       setRepoData([{}]);
+  //     } finally {
+  //       setLoading(false); // Set loading to false regardless of success or error
+  //     }
+  //   };
+
+  //   fetchRepoData();
+  // }, []); // Empty dependency array to run only once
 
   useEffect(() => {
-    const fetchRepoData = async () => {
-      setLoading(true);
-      try {
-        const selectedRepo = props.reposelect;
-        const result = await fetch(`/api/user/select/${selectedRepo}`);
-        const data = await result.json();
-        setRepoData(data);
-        props.success(true);
-      } catch (error) {
-        console.error("Error fetching repo data:", error);
-        setRepoData([{}]);
-        props.success(false);
-      } finally {
-        setLoading(false); // Set loading to false regardless of success or error
-      }
-    };
-
-    if (props.reposelect === "") return;
-    fetchRepoData();
-  }, [props.reposelect]);
-
-  useEffect(() => {
-    const fetchRepoData = async () => {
-      setLoading(true);
-      try {
-        const result = await fetch("/api/default");
-        const data = await result.json();
-        setRepoData(data);
-      } catch (error) {
-        console.error("Error fetching repo data:", error);
-        setRepoData([{}]);
-      } finally {
-        setLoading(false); // Set loading to false regardless of success or error
-      }
-    };
-
-    fetchRepoData();
-  }, []); // Empty dependency array to run only once
+    fetchDefault();
+  }, [])
 
   const hasDot = (name) => {
     const regex = /\./;
@@ -59,7 +73,9 @@ export default function Sidebar(props) {
     }
 
     const ext = hasDot(name) ? String(name).split(".").pop() : "plaintext";
-    props.press(url, ext);
+    // props.press(url, ext);
+    console.log('should be a downloadable link but lets see' + url);
+    fetchFile(url);
   };
 
   const handleDrag = (e) => {
@@ -128,37 +144,39 @@ export default function Sidebar(props) {
       ></div>
 
       <div className="overflow-scroll w-full p-4 overflow-x-hidden scrollbar-thin">
+        {error && <p>{error}</p>}
+
         {loading
           ? spinner
-          : repoData.map((file, index) =>
-              file.type === "dir" ? (
-                // reminder have to use li and ul combo here to fix the tab to navigate behaviour
-                <FolderLogic
-                  key={index}
-                  index={index}
-                  file={file}
-                  press={props.press}
-                  folderType={"root"}
-                />
-              ) : file.type === "url" ? null : (
-                <div
-                  key={index}
-                  onClick={() =>
-                    handleClick(file.type, file.url, index, file.name)
-                  }
-                  className={`py-1.5 px-2 rounded flex gap-2 place-items-center hover:bg-[#f0f0f0] dark:hover:bg-[#242424] cursor-pointer`}
+          : files.map((file, index) =>
+            file.type === "dir" ? (
+              // reminder have to use li and ul combo here to fix the tab to navigate behaviour
+              <FolderLogic
+                key={index}
+                index={index}
+                file={file}
+                press={props.press}
+                folderType={"root"}
+              />
+            ) : file.type === "url" ? null : (
+              <div
+                key={index}
+                onClick={() =>
+                  handleClick(file.type, file.url, index, file.name)
+                }
+                className={`py-1.5 px-2 rounded flex gap-2 place-items-center hover:bg-[#f0f0f0] dark:hover:bg-[#242424] cursor-pointer`}
+              >
+                <Icon name={file.name} type={file.type} />
+                <a
+                  onClick={(e) => e.preventDefault()}
+                  href={file.url}
+                  referrerPolicy="no-referrer"
                 >
-                  <Icon name={file.name} type={file.type} />
-                  <a
-                    onClick={(e) => e.preventDefault()}
-                    href={file.url}
-                    referrerPolicy="no-referrer"
-                  >
-                    {file.name}
-                  </a>
-                </div>
-              )
-            )}
+                  {file.name}
+                </a>
+              </div>
+            )
+          )}
       </div>
     </div>
   );

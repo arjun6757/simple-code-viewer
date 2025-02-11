@@ -1,12 +1,14 @@
 import { useState } from "react";
 import Icon from "../Icon";
 import { Loader } from "../Spinner/Loader";
+import { useRepo } from "../../store/repo";
 
 export default function FolderLogic(props) {
   const { name, path, type } = props.file;
   const [FolderStructure, setFolderStructure] = useState([]);
   const [loading, setLoading] = useState(false);
   const [gettingChildFor, setGettingChildFor] = useState("");
+  const { owner, reponame } = useRepo();
 
   const handleFileClick = (url, name) => {
     const ext = String(name).split(".").pop();
@@ -19,8 +21,8 @@ export default function FolderLogic(props) {
     // add this ?
     try {
       const url = path
-        ? `/api/query?path=${path}`
-        : `/api/query?path=${name}`;
+                ? `/api/contents?owner=${owner}&repo=${reponame}&path=${path}`
+                : `/api/contents?owner=${owner}&repo=${reponame}&path=${name}`;
       const result = await fetch(url);
       const data = await result.json();
       if (data.status === 404) {
@@ -89,7 +91,7 @@ export default function FolderLogic(props) {
     return (
       <div>
         <div
-          className={`py-1.5 px-2 rounded flex gap-2 place-content-between hover:bg-[#f0f0f0] dark:hover:bg-[#242424] cursor-pointer pr-3`}
+          className={`scroll-smooth py-1.5 px-2 rounded flex gap-2 place-content-between hover:bg-[#f0f0f0] dark:hover:bg-[#242424] cursor-pointer pr-3`}
           onClick={() => handlerForClicks(name, path, url, type)}
         >
           <div className="flex gap-2 items-center">

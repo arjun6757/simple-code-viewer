@@ -7,23 +7,18 @@ import {
 } from "flowbite-react";
 
 import { Search } from "lucide-react";
-import { useState } from "react";
-import ModalItems from "./ModalItems";
+import { useContext, useState } from "react";
+import PinnedItems from "./PinnedItems";
+import { ModalContext } from "../../context/ModalContext";
+import SearchItems from "./SearchItems";
 
 export default function SearchComponent({
-  isModalOpen,
-  toggleModal,
   repoSelected,
 }) {
+  const { mode, isModalOpen, toggleModal } = useContext(ModalContext);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [itemsLength, setItemsLength] = useState(0);
-  const [mode, setMode] = useState({
-    activeMode: "",
-    pinned: { enabled: false },
-    query: { enabled: false },
-  });
-
   const [items, setItems] = useState(null);
 
   const handleRepoPress = (name) => {
@@ -43,7 +38,7 @@ export default function SearchComponent({
     }
 
     if (e.key === "Enter" && items) {
-      e.preventDefault()
+      e.preventDefault();
       const name = items[selectedIndex].node.name;
       toggleModal();
       repoSelected(name);
@@ -100,18 +95,33 @@ export default function SearchComponent({
       </ModalHeader>
 
       <ModalBody className={styles.body}>
-        <ModalItems
-          query={query}
-          length={(value) => setItemsLength(value)}
-          selectedIndex={selectedIndex}
-          repoPress={handleRepoPress}
-          items={(items) => setItems(items)}
-        />
+        {mode === "PinnedItems" && (
+          <PinnedItems
+            query={query}
+            length={(value) => setItemsLength(value)}
+            selectedIndex={selectedIndex}
+            repoPress={handleRepoPress}
+            items={(items) => setItems(items)}
+          />
+        )}
+
+        {mode === "SearchItems" && (
+          <SearchItems
+            query={query}
+            length={(value) => setItemsLength(value)}
+            selectedIndex={selectedIndex}
+            repoPress={handleRepoPress}
+            items={(items) => setItems(items)}
+          />
+        )}
+
       </ModalBody>
 
-      <ModalFooter className={styles.footer}>
-        Created with flowbite if you are wondering.
-      </ModalFooter>
+      {mode === "PinnedItems" && (
+        <ModalFooter className={styles.footer}>
+          Created with flowbite if you are wondering.
+        </ModalFooter>
+      )}
     </Modal>
   );
 }
