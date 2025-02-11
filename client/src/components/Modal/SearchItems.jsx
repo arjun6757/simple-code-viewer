@@ -45,10 +45,6 @@ export default function SearchItems({
         return <p>Error: {error}</p>;
     }
 
-    if(query.trim()==='') {
-        return <p>Type username or reponame to get started.</p>
-    }
-
     const spinner = (
         <div className="flex flex-col justify-center items-center w-full h-full">
             <Loader size="md" />
@@ -72,18 +68,8 @@ export default function SearchItems({
                         } hover:bg-blue-500 hover:dark:bg-green-500 hover:text-gray-100 hover:dark:text-gray-100 rounded-md cursor-pointer`}
                 >
                     <a
-                        // onKeyDown={(k) => {
-                        //     if (k.key === "Enter") {
-                        //         // k.preventDefault();
-                        //         // repoPress(item.name);
-                        //         fetchSelected({ user: item.owner, selected: item.name });
-                        //         toggleModal();
-                        //     }
-                        //     return;
-                        // }}
                         onClick={(c) => {
                             c.preventDefault();
-                            // repoPress(item.name);
                             fetchSelected({ user: item.owner, selected: item.name });
                             toggleModal();
                         }}

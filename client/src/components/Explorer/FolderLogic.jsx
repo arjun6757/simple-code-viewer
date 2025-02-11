@@ -8,11 +8,12 @@ export default function FolderLogic(props) {
   const [FolderStructure, setFolderStructure] = useState([]);
   const [loading, setLoading] = useState(false);
   const [gettingChildFor, setGettingChildFor] = useState("");
-  const { owner, reponame, fetchFile } = useRepo();
+  const { owner, reponame, fetchFile, setExt } = useRepo();
 
   const handleFileClick = (url, name) => {
     const ext = String(name).split(".").pop();
-    props.press(url, ext);
+    setExt(ext);
+    fetchFile(url);
   };
 
   const getChilds = async (name, path) => {
@@ -21,8 +22,8 @@ export default function FolderLogic(props) {
     // add this ?
     try {
       const url = path
-                ? `/api/contents?owner=${owner}&repo=${reponame}&path=${path}`
-                : `/api/contents?owner=${owner}&repo=${reponame}&path=${name}`;
+        ? `/api/contents?owner=${owner}&repo=${reponame}&path=${path}`
+        : `/api/contents?owner=${owner}&repo=${reponame}&path=${name}`;
       const result = await fetch(url);
       const data = await result.json();
       if (data.status === 404) {
@@ -46,8 +47,6 @@ export default function FolderLogic(props) {
     if (exist !== -1) {
       FolderStructure[exist].expanded = !FolderStructure[exist].expanded;
       setFolderStructure([...FolderStructure]);
-      document.getElementById("dragger").style.height =
-        `${document.getElementById("code-tree").offsetHeight}px`;
       return;
     }
 
@@ -75,8 +74,7 @@ export default function FolderLogic(props) {
 
   const handlerForClicks = (name, path, url, type) => {
     if (type === "file") {
-      // handleFileClick(url, name);
-      fetchFile(url);
+      handleFileClick(url, name);
     } else {
       handleFoldersClick(name, path);
     }

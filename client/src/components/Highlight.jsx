@@ -53,11 +53,23 @@ export default function Highlight({ loading, raw, night }) {
     </div>
   );
 
+  const purify = (extension) => {
+    switch (extension) {
+      case 'gitignore':
+      case 'env':
+      case 'bashrc':
+      case 'npmrc':
+        return "plaintext";
+      default:
+        return extension;
+    }
+  }
+
   const highlighted = (
-    <pre className={`language-${ext || "plaintext"}`}>
+    <pre className={`language-${purify(ext)}`}>
       <code
         ref={codeRef}
-        className={`language-${ext || "plaintext"} scrollbar-thin text-sm font-code`}
+        className={`language-${purify(ext)} scrollbar-thin text-sm font-code`}
       >
         {raw}
       </code>

@@ -17,26 +17,16 @@ import Alert from "../Alert";
 export default function SearchComponent({
   repoSelected,
 }) {
-  const { mode, isModalOpen, toggleModal } = useContext(ModalContext);
+  const { mode, isModalOpen, toggleModal, setModalOpen } = useContext(ModalContext);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [itemsLength, setItemsLength] = useState(0);
   const [items, setItems] = useState(null);
-  const { fetchSelected, error, } = useRepo();
+  const { fetchSelected, error, owner: currentUser } = useRepo();
 
   if (error) {
     <Alert error={error} />
   }
-
-  useEffect(() => {
-    setQuery("");
-    setSelectedIndex(0);
-  }, [mode])
-
-  const handleRepoPress = (name) => {
-    toggleModal();
-    repoSelected(name);
-  };
 
   const handleKeyDown = (e) => {
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
@@ -51,18 +41,20 @@ export default function SearchComponent({
     }
 
     if (e.key === "Enter") {
+      e.stopPropagation();
+      e.preventDefault();
       let name = '';
       let owner = '';
       if (mode === "PinnedItems") {
         name = items[selectedIndex].node.name;
-        owner = items[selectedIndex].node.owner;
+        owner = currentUser;
       } else if (mode === "SearchItems") {
         name = items[selectedIndex].name;
         owner = items[selectedIndex].owner;
       }
-
+      
       fetchSelected({ user: owner, selected: name });
-      toggleModal();
+      setModalOpen(false);
     }
   };
 
@@ -102,7 +94,7 @@ export default function SearchComponent({
           type="text"
           onKeyDown={handleKeyDown}
           placeholder="Type here to search"
-          // autoFocus
+          autoFocus
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           theme={{
@@ -121,7 +113,6 @@ export default function SearchComponent({
             query={query}
             length={(value) => setItemsLength(value)}
             selectedIndex={selectedIndex}
-            repoPress={handleRepoPress}
             items={(items) => setItems(items)}
           />
         ) : mode === "SearchItems" && (
@@ -129,7 +120,6 @@ export default function SearchComponent({
             query={query}
             length={(value) => setItemsLength(value)}
             selectedIndex={selectedIndex}
-            repoPress={handleRepoPress}
             items={(items) => setItems(items)}
           />
         )}

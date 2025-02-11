@@ -14,9 +14,6 @@ import { useRepo } from "./store/repo.js";
 import Alert from "./components/Alert.jsx";
 
 export default function App() {
-  const [ext, setExt] = useState("");
-  // const [raw, setRaw] = useState("");
-  // const [loading, setLoading] = useState(false);
   const [selectedRepo, setSelectedRepo] = useState("");
   const [success, setSuccess] = useState(false);
   const { toggleTogglebar, isTogglebarEnabled } = useTogglebar();
@@ -24,20 +21,6 @@ export default function App() {
   const { toggleTheme, isDark } = useTheme();
   const { toggleIsLive, isLive } = useFrame();
   const { loadingInnerText: loading, errorInnerText: error, innerText: raw } = useRepo();
-
-  // Check if an element is focused
-  if (document.activeElement) {
-    console.log("Currently focused element:", document.activeElement);
-
-    // You can then access properties of the focused element
-    if (document.activeElement.tagName === 'INPUT') {
-      console.log("It's an input field. Value:", document.activeElement.value);
-    } else if (document.activeElement.tagName === 'BUTTON') {
-      console.log("It's a button. Text:", document.activeElement.textContent)
-    }
-  } else {
-    console.log("No element is currently focused.");
-  }
 
   if (error) {
     <Alert error={error} />
@@ -53,30 +36,6 @@ export default function App() {
       html.style.colorScheme = "light";
     }
   }, [isDark]);
-
-  // const getData = async (url) => {
-  //   setLoading(true);
-  //   try {
-  //     // fetch raw text
-  //     const response = await fetch(url, { method: "GET" });
-  //     const textData = await response.text();
-  //     return textData;
-  //   } catch (error) {
-  //     console.log("Error fetching data:", error);
-  //     return `Error: ${error.message}`;
-  //   } finally {
-  //     setLoading(false);
-  //   }
-  // };
-
-  // const handleFilePress = async (url, ext) => {
-  //   setRaw("");
-  //   setLoading(true);
-  //   const fetchedData = await getData(url);
-  //   setExt(ext);
-  //   setRaw(fetchedData);
-  //   setLoading(false);
-  // };
 
   const handleRepoSelect = (name) => {
     if (!name) return
@@ -126,7 +85,6 @@ export default function App() {
 
         <div className="flex bg-white overflow-hidden flex-1 dark:bg-[#191919] h-full gap-4">
           <ExplorerPanel
-            // press={handleFilePress}
             reposelect={selectedRepo}
             success={onSuccessfullFetch}
             isExplorerOpen={isExplorerOpen}
@@ -134,7 +92,7 @@ export default function App() {
 
           <div className="overflow-y-scroll scrollbar-thin flex-1 bg-white dark:bg-[#191919]"
           >
-            <Highlight loading={loading} raw={raw} ext={ext} night={isDark} />
+            <Highlight loading={loading} raw={raw} night={isDark} />
           </div>
         </div>
       </div>

@@ -15,14 +15,11 @@ export default function ModalProvider({ children }) {
     }
 
     const toggleModal = () => {
-        // if(isModalOpen) {
-            document.body.focus(); // set focus to body again
-        // }
-        setModalOpen(prev => !prev);
+        setModalOpen(prev => !prev);          
     }
 
     return (
-        <ModalContext.Provider value={{ mode, switchTo, isModalOpen, toggleModal }}>
+        <ModalContext.Provider value={{ mode, switchTo, isModalOpen, toggleModal, setModalOpen }}>
             {children}
         </ModalContext.Provider>
     )

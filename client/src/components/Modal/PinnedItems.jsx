@@ -1,18 +1,22 @@
-import usePinnedRepos from "../hooks/usePinnedRepos";
 import { Loader } from "../Spinner/Loader";
 import { useEffect } from "react";
 import { useRepo } from "../../store/repo";
 import { ModalContext } from "../../context/ModalContext";
 import { useContext } from "react";
+
 export default function ModalItems({
   query,
   selectedIndex,
   length,
-  repoPress,
   items,
 }) {
-  // const { pinnedRepos, loading, error } = usePinnedRepos();
-  const { loadingPinned: loading, errorPinned: error, repos: pinnedRepos, fetchPinned, fetchSelected, owner } = useRepo();
+
+  const { loadingPinned: loading,
+    errorPinned: error,
+    repos: pinnedRepos,
+    fetchPinned,
+    fetchSelected,
+    owner } = useRepo();
   const { toggleModal } = useContext(ModalContext);
 
   useEffect(() => {
@@ -24,8 +28,8 @@ export default function ModalItems({
   }
 
   const filterItems = pinnedRepos?.filter((item) =>
-      item.node.name.toLowerCase().includes(query.toLowerCase())
-    ) || [];
+    item.node.name.toLowerCase().includes(query.toLowerCase())
+  ) || [];
 
   const spinner = (
     <div className="flex flex-col justify-center items-center w-full h-full">
@@ -46,25 +50,13 @@ export default function ModalItems({
         <li
           key={item.node.name}
           tabIndex={-1}
-          className={`${
-            selectedIndex === index ? "selected" : ""
-          } hover:bg-blue-500 hover:dark:bg-green-500 hover:text-gray-100 hover:dark:text-gray-100 rounded-md cursor-pointer`}
+          className={`${selectedIndex === index ? "selected" : ""
+            } hover:bg-blue-500 hover:dark:bg-green-500 hover:text-gray-100 hover:dark:text-gray-100 rounded-md cursor-pointer`}
         >
           <a
-            // onKeyDown={(k) => {
-            //   if (k.key === "Enter") {
-            //     // k.preventDefault();
-            //     k.stopPropagation();
-            //     // repoPress(item.node.name);
-            //     fetchSelected({user: owner, selected: item.node.name});
-            //     toggleModal();
-            //   }
-            //   return;
-            // }}
             onClick={(c) => {
               c.preventDefault();
-              // repoPress(item.node.name);
-              fetchSelected({user: owner, selected: item.node.name});
+              fetchSelected({ user: owner, selected: item.node.name });
               toggleModal();
             }}
             tabIndex={0}
@@ -76,12 +68,4 @@ export default function ModalItems({
       ))}
     </ul>
   );
-}
-
-{
-  /* <ModalItem
-  itemPress={repoPress}
-  data={item.node.name}
-  url={item.node.url}
-/> */
 }

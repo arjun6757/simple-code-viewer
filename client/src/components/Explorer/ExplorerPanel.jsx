@@ -5,59 +5,10 @@ import { Loader } from "../Spinner/Loader.jsx";
 import { useRepo } from "../../store/repo.js";
 import Alert from "../Alert.jsx";
 
-export default function Sidebar(props) {
-  // const [repoData, setRepoData] = useState([{}]);
-  // const [loading, setLoading] = useState(false);
+export default function ExplorerPanel(props) {
   const { isExplorerOpen } = props;
-  // const { actions, files: repoData } = useRepo();
-  // const { fetchDefault } = actions;
-
+  
   const { fetchFile, fetchDefault, files, loading, error, setExt } = useRepo();
-
-  // useEffect(() => {
-  //   const fetchRepoData = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const selectedRepo = props.reposelect;
-  //       const result = await fetch(`/api/user/select/${selectedRepo}`);
-  //       const data = await result.json();
-  //       setRepoData(data);
-  //       props.success(true);
-  //     } catch (error) {
-  //       console.error("Error fetching repo data:", error);
-  //       setRepoData([{}]);
-  //       props.success(false);
-  //     } finally {
-  //       setLoading(false); // Set loading to false regardless of success or error
-  //     }
-  //   };
-
-  //   if (props.reposelect === "") return;
-  //   fetchRepoData();
-  // }, [props.reposelect]);
-
-  // useEffect(() => {
-  //   if (props.reposelect === "") return;
-  //   fetchSelected(props.reposelect);
-  // }, [props.reposelect])
-
-  // useEffect(() => {
-  //   const fetchRepoData = async () => {
-  //     setLoading(true);
-  //     try {
-  //       const result = await fetch("/api/default");
-  //       const data = await result.json();
-  //       setRepoData(data);
-  //     } catch (error) {
-  //       console.error("Error fetching repo data:", error);
-  //       setRepoData([{}]);
-  //     } finally {
-  //       setLoading(false); // Set loading to false regardless of success or error
-  //     }
-  //   };
-
-  //   fetchRepoData();
-  // }, []); // Empty dependency array to run only once
 
   useEffect(() => {
     fetchDefault();
@@ -74,7 +25,6 @@ export default function Sidebar(props) {
     }
 
     const ext = hasDot(name) ? String(name).split(".").pop() : "plaintext";
-    // props.press(url, ext);
     setExt(ext);
     fetchFile(url);
   };
@@ -128,8 +78,6 @@ export default function Sidebar(props) {
     </div>
   );
 
-  // prev spinner --> // <ClockSpin sx2="w-[30px] h-[30px] border-r-[9px] border-t-[9px] border-l-[9px]" />
-
   return (
     <div
       id="code-tree"
@@ -151,17 +99,13 @@ export default function Sidebar(props) {
           ? spinner
           : files.map((file, index) =>
             file.type === "dir" ? (
-              // reminder have to use li and ul combo here to fix the tab to navigate behaviour
-
                 <FolderLogic
                   key={index}
                   index={index}
                   file={file}
-                  press={props.press}
                   folderType={"root"}
                 />
             ) : (
-            // file.type === "url" ? null :
               <div
                 key={index}
                 onClick={() => handleClick(file.type, file.download_url, index, file.name)}
@@ -170,8 +114,7 @@ export default function Sidebar(props) {
                 <Icon name={file.name} type={file.type} />
                 <a
                   onClick={(e) => e.preventDefault()}
-                  href={file.url}
-                  referrerPolicy="no-referrer"
+                  className="select-none"
                 >
                   {file.name}
                 </a>
