@@ -8,7 +8,7 @@ export default function FolderLogic(props) {
   const [FolderStructure, setFolderStructure] = useState([]);
   const [loading, setLoading] = useState(false);
   const [gettingChildFor, setGettingChildFor] = useState("");
-  const { owner, reponame } = useRepo();
+  const { owner, reponame, fetchFile } = useRepo();
 
   const handleFileClick = (url, name) => {
     const ext = String(name).split(".").pop();
@@ -75,7 +75,8 @@ export default function FolderLogic(props) {
 
   const handlerForClicks = (name, path, url, type) => {
     if (type === "file") {
-      handleFileClick(url, name);
+      // handleFileClick(url, name);
+      fetchFile(url);
     } else {
       handleFoldersClick(name, path);
     }

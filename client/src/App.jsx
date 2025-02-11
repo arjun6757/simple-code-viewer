@@ -25,7 +25,21 @@ export default function App() {
   const { toggleIsLive, isLive } = useFrame();
   const { loadingInnerText: loading, errorInnerText: error, innerText: raw } = useRepo();
 
-  if(error) {
+  // Check if an element is focused
+  if (document.activeElement) {
+    console.log("Currently focused element:", document.activeElement);
+
+    // You can then access properties of the focused element
+    if (document.activeElement.tagName === 'INPUT') {
+      console.log("It's an input field. Value:", document.activeElement.value);
+    } else if (document.activeElement.tagName === 'BUTTON') {
+      console.log("It's a button. Text:", document.activeElement.textContent)
+    }
+  } else {
+    console.log("No element is currently focused.");
+  }
+
+  if (error) {
     <Alert error={error} />
   }
 

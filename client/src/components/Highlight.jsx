@@ -1,8 +1,11 @@
 import { Loader } from "./Spinner/Loader";
 import hljs from "highlight.js";
 import { useEffect, useRef } from "react";
-export default function Highlight({ loading, raw, ext, night }) {
+import { useRepo } from "../store/repo";
+
+export default function Highlight({ loading, raw, night }) {
   const codeRef = useRef(null);
+  const { ext } = useRepo();
 
   useEffect(() => {
     const loadTheme = () => {
@@ -36,7 +39,7 @@ export default function Highlight({ loading, raw, ext, night }) {
     </span>
   );
 
-  const emoji = (
+  const Intro = (
     <div className="select-none font-code gap-3 text-[#888] flex flex-col h-screen place-content-center items-center">
       <div className="text-2xl flex gap-3">
         Inspect with ease at {projectName}
@@ -50,24 +53,11 @@ export default function Highlight({ loading, raw, ext, night }) {
     </div>
   );
 
-  const extension = (ext) => {
-    switch (ext) {
-      case "gitignore":
-      case "env":
-      case "npmrc":
-        return "plaintext";
-      default:
-        return ext;
-    }
-  };
-
   const highlighted = (
-    <pre className={`language-${extension(ext)}`}>
+    <pre className={`language-${ext || "plaintext"}`}>
       <code
         ref={codeRef}
-        className={`language-${extension(
-          ext
-        )} scrollbar-thin text-sm font-code`}
+        className={`language-${ext || "plaintext"} scrollbar-thin text-sm font-code`}
       >
         {raw}
       </code>
@@ -76,5 +66,5 @@ export default function Highlight({ loading, raw, ext, night }) {
 
   const empty = raw.length === 0;
 
-  return loading ? spinner : empty ? emoji : highlighted;
+  return loading ? spinner : empty ? Intro : highlighted;
 }

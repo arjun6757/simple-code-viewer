@@ -1,6 +1,6 @@
 const GITHUB_API = "https://api.github.com";
 
-const githubFetch = async (url, token, method="GET", body=null) => {
+const githubFetch = async (url, token, method = "GET", body = null) => {
     const options = {
         method,
         headers: {
@@ -15,7 +15,6 @@ const githubFetch = async (url, token, method="GET", body=null) => {
         if (!response.ok) {
             throw new Error(`GitHub API Error! status: ${response.status} ${response.statusText}`);
         }
-
         return await response.json(); // returns promise made from response
     } catch (error) {
         console.error(`Error fetching from GitHub: ${error.message}`);
@@ -25,35 +24,37 @@ const githubFetch = async (url, token, method="GET", body=null) => {
 
 export const getDirectoryContent = async (req, res) => {
     const token = process.env.GITHUB_TOKEN;
-    const { repo, owner, path="" } = req.query; //default value for path so that it works even if it isn't there
+    const { repo, owner, path = "" } = req.query; //default value for path so that it works even if it isn't there
     const url = `${GITHUB_API}/repos/${owner}/${repo}/contents/${path}`;
+    console.log(url);
     const data = await githubFetch(url, token);
     res.json(data);
 }
 
 
-export const fetchText = async (req, res) => {
-    const token = process.env.GITHUB_TOKEN;
-    const { link: downloadLink } = req.query;
-    try {
-        const response = await fetch(downloadLink);
-        const textContent = response.text();
-        console.log(textContent)
-        res.json({ text: textContent });
-    } catch (error) {
-        res.status(500).json({ error: error.message });
-    }
-}
+// export const fetchText = async (req, res) => {
+//     const { link: downloadLink } = req.query;
+//     try {
+//         const response = await fetch(downloadLink);
+//         console.log(response);
+//         res.json(response);
+//     } catch (error) {
+//         res.status(500).json({ error: error.message });
+//     }
+// }
 
 
 export const searchForQuery = async (req, res) => {
     const token = process.env.GITHUB_TOKEN;
     const query = req.query.q;
-    const url = `https://api.github.com/search/repositories?q=${query}&sort=stars&order=asc&per_page=6`;
+    const url = `https://api.github.com/search/repositories?q=${query}&sort=stars&order=asc&per_page=8`;
     const data = await githubFetch(url, token);
+    console.log(data);
 
     const files = data.items.map((file) => ({
-        name: file.full_name,
+        owner: file.owner.login,
+        name: file.name,
+        full_name: file.full_name,
         url: file.url
     }));
 
@@ -64,6 +65,8 @@ export const searchForQuery = async (req, res) => {
 export const getPinnedRepos = async (req, res) => {
     const token = process.env.GITHUB_TOKEN;
     const { user } = req.query;
+
+    console.log('getting pinned repos for : ', user);
 
     const GraphQLquery = `
     query {
@@ -84,6 +87,7 @@ export const getPinnedRepos = async (req, res) => {
     try {
         const url = 'https://api.github.com/graphql';
         const responseData = await githubFetch(url, token, "POST", { query: GraphQLquery });
+        console.log(responseData);
         res.json(responseData);
     } catch (error) {
         console.error('Error fetching pinned repos: ', error);

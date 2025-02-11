@@ -5,14 +5,14 @@ import {
     getDirectoryContent,
     getPinnedRepos,
     getHomePageURL,
-    fetchText
+    // fetchText
 } from '../controllers/repoControllerv2.js';
 
 
 const router = express.Router();
 
 
-router.get('/file', fetchText);
+// router.get('/file', fetchText);
 router.get('/search', searchForQuery);
 router.get('/contents', getDirectoryContent);
 router.get('/pinned', getPinnedRepos);

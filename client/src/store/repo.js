@@ -16,13 +16,17 @@ export const useRepo = create((set, get) => ({
     errorInnerText: null,
     loadingPinned: false,
     errorPinned: null,
+    associatedLinkData: null,
+    associatedLinkLoading: false,
+    associatedLinkError: null,
+    ext: null,
+    setExt: (value) => set({ ext: value }),
     setOwner: (owner) => set({ owner }),
     fetchFile: async (downloadLink) => {
         set({ innerText: "", loadingInnerText: true, error: null });
         try {
-            const response = await fetch(`/api/file?link=${downloadLink}`);
+            const response = await fetch(downloadLink);
             const text = await response.text();
-            console.log(text);
             set({ innerText: text });
         } catch (err) {
             set({ errorInnerText: err.message || "Failed to fetch file" });
@@ -88,8 +92,9 @@ export const useRepo = create((set, get) => ({
         }
     },
 
-    fetchSelected: async (selected) => {
-        set({ files: [], loading: true, error: null });
+    fetchSelected: async ({ user, selected }) => {
+        set({ owner: user, files: [], loading: true, error: null, reponame: selected });
+
         try {
             const { owner } = get();
             const response = await fetch(
@@ -106,6 +111,25 @@ export const useRepo = create((set, get) => ({
         }
 
     },
+
+    fetchAssociatedLink: async () => {
+        set({ associatedLink: null, associatedLinkLoading: true });
+        try {
+            const { owner, reponame } = get();
+            const response = await fetch(
+                `/api/homepage?repo=${reponame}&owner=${owner}`,
+            );
+            const result = await response.json();
+            set({ associatedLinkData: result });
+
+        } catch (err) {
+            set({
+                associatedLinkError: err.message || "Failed to fetch selected repository",
+            });
+        } finally {
+            set({ associatedLinkLoading: false });
+        }
+    }
 }));
 
 /* 

@@ -14,7 +14,7 @@ export default function ToggleBar({
   const [hide, setHide] = useState(false);
 
   return (
-    <div className="fixed right-5 bottom-5 sm:right-8 sm:bottom-5 bg-transparent flex flex-col gap-4 items-center transition-transform ease-in-out duration-500 w-14">
+    <div className="fixed right-5 bottom-5 sm:right-8 sm:bottom-5 bg-transparent flex flex-col gap-3 items-center transition-transform ease-in-out duration-500 w-14">
       <div
         className={`flex flex-col items-center gap-4 transition-opacity duration-500 w-full p-1 ${
           hide

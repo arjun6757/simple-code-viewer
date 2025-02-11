@@ -15,6 +15,9 @@ export default function ModalProvider({ children }) {
     }
 
     const toggleModal = () => {
+        // if(isModalOpen) {
+            document.body.focus(); // set focus to body again
+        // }
         setModalOpen(prev => !prev);
     }
 

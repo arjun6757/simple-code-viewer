@@ -3,6 +3,7 @@ import FolderLogic from "./FolderLogic.jsx";
 import Icon from "../Icon.jsx";
 import { Loader } from "../Spinner/Loader.jsx";
 import { useRepo } from "../../store/repo.js";
+import Alert from "../Alert.jsx";
 
 export default function Sidebar(props) {
   // const [repoData, setRepoData] = useState([{}]);
@@ -11,7 +12,7 @@ export default function Sidebar(props) {
   // const { actions, files: repoData } = useRepo();
   // const { fetchDefault } = actions;
 
-  const { fetchFile, fetchDefault, files, loading, error, fetchSelected } = useRepo();
+  const { fetchFile, fetchDefault, files, loading, error, setExt } = useRepo();
 
   // useEffect(() => {
   //   const fetchRepoData = async () => {
@@ -74,7 +75,7 @@ export default function Sidebar(props) {
 
     const ext = hasDot(name) ? String(name).split(".").pop() : "plaintext";
     // props.press(url, ext);
-    console.log('should be a downloadable link but lets see' + url);
+    setExt(ext);
     fetchFile(url);
   };
 
@@ -144,26 +145,26 @@ export default function Sidebar(props) {
       ></div>
 
       <div className="overflow-scroll w-full p-4 overflow-x-hidden scrollbar-thin">
-        {error && <p>{error}</p>}
+        {error && <Alert error={error} />}
 
         {loading
           ? spinner
           : files.map((file, index) =>
             file.type === "dir" ? (
               // reminder have to use li and ul combo here to fix the tab to navigate behaviour
-              <FolderLogic
-                key={index}
-                index={index}
-                file={file}
-                press={props.press}
-                folderType={"root"}
-              />
-            ) : file.type === "url" ? null : (
+
+                <FolderLogic
+                  key={index}
+                  index={index}
+                  file={file}
+                  press={props.press}
+                  folderType={"root"}
+                />
+            ) : (
+            // file.type === "url" ? null :
               <div
                 key={index}
-                onClick={() =>
-                  handleClick(file.type, file.url, index, file.name)
-                }
+                onClick={() => handleClick(file.type, file.download_url, index, file.name)}
                 className={`py-1.5 px-2 rounded flex gap-2 place-items-center hover:bg-[#f0f0f0] dark:hover:bg-[#242424] cursor-pointer`}
               >
                 <Icon name={file.name} type={file.type} />
@@ -178,6 +179,6 @@ export default function Sidebar(props) {
             )
           )}
       </div>
-    </div>
+    </div >
   );
 }

@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
 import { Loader } from "../Spinner/Loader";
 import { useEffect } from "react";
+import { useRepo } from '../../store/repo';
+import { useContext } from 'react';
+import { ModalContext } from '../../context/ModalContext';
 
 export default function SearchItems({
     query,
     selectedIndex,
     length,
-    repoPress,
     items,
 }) {
-
+    const { fetchSelected, error } = useRepo();
     const [files, setFiles] = useState([]);
-    const [error, setError] = useState(null);
     const [loading, setLoading] = useState(false);
+    const { toggleModal } = useContext(ModalContext);
 
     useEffect(() => {
         const search = async (trimmedQuery) => {
@@ -33,20 +35,19 @@ export default function SearchItems({
             const trimmedQuery = query.trim()
             if (!trimmedQuery) return;
             search(trimmedQuery);
-        }, 500);
+        }, 700);
 
         return () => clearTimeout(delay);
 
     }, [query])
 
     if (error) {
-        return <p>Error: {error.message}</p>;
+        return <p>Error: {error}</p>;
     }
 
-    const filterItems =
-        files?.filter((file) =>
-            file.name.toLowerCase().includes(query.toLowerCase())
-        ) || [];
+    if(query.trim()==='') {
+        return <p>Type username or reponame to get started.</p>
+    }
 
     const spinner = (
         <div className="flex flex-col justify-center items-center w-full h-full">
@@ -55,15 +56,15 @@ export default function SearchItems({
     );
 
     useEffect(() => {
-        length(filterItems.length);
-        items(filterItems);
-    }, [filterItems.length]);
+        length(files.length);
+        items(files);
+    }, [files]);
 
     return loading ? (
         spinner
     ) : (
         <ul className="flex flex-col gap-2 w-full">
-            {filterItems.map((item, index) => (
+            {files.map((item, index) => (
                 <li
                     key={index}
                     tabIndex={-1}
@@ -71,20 +72,25 @@ export default function SearchItems({
                         } hover:bg-blue-500 hover:dark:bg-green-500 hover:text-gray-100 hover:dark:text-gray-100 rounded-md cursor-pointer`}
                 >
                     <a
-                        onKeyDown={(k) => {
-                            if (k.key === "Enter") {
-                                repoPress(item.name);
-                            }
-                            return;
-                        }}
+                        // onKeyDown={(k) => {
+                        //     if (k.key === "Enter") {
+                        //         // k.preventDefault();
+                        //         // repoPress(item.name);
+                        //         fetchSelected({ user: item.owner, selected: item.name });
+                        //         toggleModal();
+                        //     }
+                        //     return;
+                        // }}
                         onClick={(c) => {
                             c.preventDefault();
-                            repoPress(item.name);
+                            // repoPress(item.name);
+                            fetchSelected({ user: item.owner, selected: item.name });
+                            toggleModal();
                         }}
                         tabIndex={0}
                         className="block px-4 py-2 w-full h-full"
                     >
-                        {item.name}
+                        {item.full_name}
                     </a>
                 </li>
             ))}

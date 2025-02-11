@@ -7,10 +7,12 @@ import {
 } from "flowbite-react";
 
 import { Search } from "lucide-react";
-import { useContext, useState } from "react";
+import { useContext, useEffect, useState } from "react";
 import PinnedItems from "./PinnedItems";
 import { ModalContext } from "../../context/ModalContext";
 import SearchItems from "./SearchItems";
+import { useRepo } from "../../store/repo";
+import Alert from "../Alert";
 
 export default function SearchComponent({
   repoSelected,
@@ -20,6 +22,16 @@ export default function SearchComponent({
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [itemsLength, setItemsLength] = useState(0);
   const [items, setItems] = useState(null);
+  const { fetchSelected, error, } = useRepo();
+
+  if (error) {
+    <Alert error={error} />
+  }
+
+  useEffect(() => {
+    setQuery("");
+    setSelectedIndex(0);
+  }, [mode])
 
   const handleRepoPress = (name) => {
     toggleModal();
@@ -28,6 +40,7 @@ export default function SearchComponent({
 
   const handleKeyDown = (e) => {
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
+      e.preventDefault();
       setSelectedIndex((prev) => {
         if (e.key === "ArrowDown") {
           return (prev + 1) % itemsLength;
@@ -37,11 +50,19 @@ export default function SearchComponent({
       });
     }
 
-    if (e.key === "Enter" && items) {
-      e.preventDefault();
-      const name = items[selectedIndex].node.name;
+    if (e.key === "Enter") {
+      let name = '';
+      let owner = '';
+      if (mode === "PinnedItems") {
+        name = items[selectedIndex].node.name;
+        owner = items[selectedIndex].node.owner;
+      } else if (mode === "SearchItems") {
+        name = items[selectedIndex].name;
+        owner = items[selectedIndex].owner;
+      }
+
+      fetchSelected({ user: owner, selected: name });
       toggleModal();
-      repoSelected(name);
     }
   };
 
@@ -80,8 +101,8 @@ export default function SearchComponent({
           icon={Search}
           type="text"
           onKeyDown={handleKeyDown}
-          placeholder="Search commands"
-          autoFocus
+          placeholder="Type here to search"
+          // autoFocus
           value={query}
           onChange={(e) => setQuery(e.target.value)}
           theme={{
@@ -95,7 +116,7 @@ export default function SearchComponent({
       </ModalHeader>
 
       <ModalBody className={styles.body}>
-        {mode === "PinnedItems" && (
+        {mode === "PinnedItems" ? (
           <PinnedItems
             query={query}
             length={(value) => setItemsLength(value)}
@@ -103,9 +124,7 @@ export default function SearchComponent({
             repoPress={handleRepoPress}
             items={(items) => setItems(items)}
           />
-        )}
-
-        {mode === "SearchItems" && (
+        ) : mode === "SearchItems" && (
           <SearchItems
             query={query}
             length={(value) => setItemsLength(value)}
