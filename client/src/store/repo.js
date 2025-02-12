@@ -1,13 +1,10 @@
 import { create } from "zustand";
 
 export const useRepo = create((set, get) => ({
-    // currentlyFocusing: '',
-    reponame: "todoappinreact",
-    owner: "arjun6757", // by default these two values will be passed from the frontend
+    reponame: "todoappinreact", // default owner
+    owner: "arjun6757", // default user
     files: [],
     repos: [],
-    FolderStructure: [],
-    setFolderStructure: (FolderStructure) => set({ FolderStructure: FolderStructure }),
     loading: false,
     error: null,
     focusingFile: null,
@@ -19,6 +16,7 @@ export const useRepo = create((set, get) => ({
     associatedLinkData: null,
     associatedLinkLoading: false,
     associatedLinkError: null,
+    successfulFetch: false,
     ext: null,
     setExt: (value) => set({ ext: value }),
     setOwner: (owner) => set({ owner }),
@@ -35,6 +33,7 @@ export const useRepo = create((set, get) => ({
         }
     },
 
+    // not in use for now
     fetchDirectoryContent: async (name, path) => {
         set({ loading: true, error: null });
         try {
@@ -93,7 +92,7 @@ export const useRepo = create((set, get) => ({
     },
 
     fetchSelected: async ({ user, selected }) => {
-        set({ owner: user, files: [], loading: true, error: null, reponame: selected });
+        set({ owner: user, files: [], loading: true, error: null, successfulFetch: false });
 
         try {
             const { owner } = get();
@@ -101,13 +100,13 @@ export const useRepo = create((set, get) => ({
                 `/api/contents?repo=${selected}&owner=${owner}`,
             );
             const result = await response.json();
-            set({ files: result });
+            set({ files: result, reponame: selected });
         } catch (err) {
             set({
                 error: err.message || "Failed to fetch selected repository",
             });
         } finally {
-            set({ loading: false });
+            set({ loading: false, successfulFetch: true });
         }
 
     },
@@ -120,6 +119,9 @@ export const useRepo = create((set, get) => ({
                 `/api/homepage?repo=${reponame}&owner=${owner}`,
             );
             const result = await response.json();
+            if (result.homepage_url === "") {
+                return set({ associatedLinkError: "No associated link found in this project!" })
+            }
             set({ associatedLinkData: result });
 
         } catch (err) {

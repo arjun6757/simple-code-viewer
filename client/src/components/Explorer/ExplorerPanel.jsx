@@ -6,9 +6,9 @@ import { useRepo } from "../../store/repo.js";
 import Alert from "../Alert.jsx";
 
 export default function ExplorerPanel(props) {
+
+  const { fetchFile, fetchDefault, files, loading, error, setExt, successfulFetch, reponame } = useRepo();
   const { isExplorerOpen } = props;
-  
-  const { fetchFile, fetchDefault, files, loading, error, setExt } = useRepo();
 
   useEffect(() => {
     fetchDefault();
@@ -99,12 +99,12 @@ export default function ExplorerPanel(props) {
           ? spinner
           : files.map((file, index) =>
             file.type === "dir" ? (
-                <FolderLogic
-                  key={index}
-                  index={index}
-                  file={file}
-                  folderType={"root"}
-                />
+              <FolderLogic
+                key={index}
+                index={index}
+                file={file}
+                folderType={"root"}
+              />
             ) : (
               <div
                 key={index}

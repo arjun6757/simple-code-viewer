@@ -19,7 +19,6 @@ export default function FolderLogic(props) {
   const getChilds = async (name, path) => {
     setLoading(true);
     setGettingChildFor(path ? path : name);
-    // add this ?
     try {
       const url = path
         ? `/api/contents?owner=${owner}&repo=${reponame}&path=${path}`

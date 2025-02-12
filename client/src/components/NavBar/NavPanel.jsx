@@ -12,7 +12,7 @@ import { ModalContext } from "../../context/ModalContext";
 export default function NavPanel(props) {
   const { toggleExplorer } = props;
   const { switchTo } = useContext(ModalContext);
-  
+
   return (
     <Sidebar
       theme={{
@@ -27,7 +27,6 @@ export default function NavPanel(props) {
       <SidebarItems className="w-full">
         <SidebarItemGroup className="flex justify-center sm:flex-col gap-4 sm:gap-2 border-0">
           <SidebarItem
-            as="button"
             onClick={() => toggleExplorer()}
             icon={() => <Files className="text-gray-600 dark:text-gray-300" />}
             className={`cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424] !rounded`}
@@ -36,7 +35,6 @@ export default function NavPanel(props) {
           </SidebarItem>
 
           <SidebarItem
-            as="button"
             onClick={() => switchTo("SearchItems")}
             icon={() => <Search className="text-gray-600 dark:text-gray-300" />}
             className="cursor-pointer hover:bg-[#f0f0f0] dark:hover:bg-[#242424] !rounded"
@@ -44,7 +42,6 @@ export default function NavPanel(props) {
             Search
           </SidebarItem>
           <SidebarItem
-            as="button"
             onClick={() => switchTo("PinnedItems")}
             icon={() => (
               <PinIcon className="text-gray-600 dark:text-gray-300" />
