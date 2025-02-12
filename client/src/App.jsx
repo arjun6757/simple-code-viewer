@@ -14,8 +14,7 @@ import { useRepo } from "./store/repo.js";
 import Alert from "./components/Alert.jsx";
 
 export default function App() {
-  const [selectedRepo, setSelectedRepo] = useState("");
-  const [success, setSuccess] = useState(false);
+  // const [success, setSuccess] = useState(false);
   const { toggleTogglebar, isTogglebarEnabled } = useTogglebar();
   const { toggleExplorer, isExplorerOpen } = useExplorer();
   const { toggleTheme, isDark } = useTheme();
@@ -37,45 +36,41 @@ export default function App() {
     }
   }, [isDark]);
 
-  const handleRepoSelect = (name) => {
-    if (!name) return
-    setSelectedRepo(name);
-  }
+  // const repoFetchedAlert = (
+  //   <div
+  //     className={`fixed z-50 capitalize text-xs py-1 px-2 font-code bottom-5 left-1/2 transform -translate-x-1/2 rounded text-gray-700 dark:text-gray-200 bg-[#f0f0f0] dark:bg-[#1f1f1f] border border-gray-300 dark:border-[#444]
+  //     transition-transform ${success ? "translate-y-0" : "translate-y-[300%]"}`}
+  //   >
+  //     <p className="flex gap-2 justify-center items-center">
+  //       <MdOutlineDone className="text-green-500 rounded-full text-xl" /> repo
+  //       fetched successfully!
+  //     </p>
+  //   </div>
+  // );
 
-  const repoFetchedAlert = (
-    <div
-      className={`fixed z-50 capitalize text-xs py-1 px-2 font-code bottom-5 left-1/2 transform -translate-x-1/2 rounded text-gray-700 dark:text-gray-200 bg-[#f0f0f0] dark:bg-[#1f1f1f] border border-gray-300 dark:border-[#444]
-      transition-transform ${success ? "translate-y-0" : "translate-y-[300%]"}`}
-    >
-      <p className="flex gap-2 justify-center items-center">
-        <MdOutlineDone className="text-green-500 rounded-full text-xl" /> repo
-        fetched successfully!
-      </p>
-    </div>
-  );
+  // useEffect(() => {
+  //   const displayAlert = () => {
+  //     setTimeout(() => {
+  //       setSuccess(false);
+  //     }, 3000);
+  //   };
 
-  useEffect(() => {
-    const displayAlert = () => {
-      setTimeout(() => {
-        setSuccess(false);
-      }, 3000);
-    };
+  //   if (!success) return;
+  //   displayAlert();
+  // }, [success]);
 
-    if (!success) return;
-    displayAlert();
-  }, [success]);
-
-  const onSuccessfullFetch = (boolean) => {
-    setSuccess(boolean);
-  };
+  // const onSuccessfullFetch = (boolean) => {
+  //   setSuccess(boolean);
+  // };
 
   return (
     <div className={`flex flex-col h-screen relative font-inter`}>
-      {repoFetchedAlert}
+      {/* {repoFetchedAlert} */}
 
-      <SearchModal repoSelected={handleRepoSelect} />
+      <SearchModal />
 
       <div className="flex overflow-hidden w-screen h-screen">
+
         <div>
           <NavPanel
             isExplorerOpen={isExplorerOpen}
@@ -85,8 +80,6 @@ export default function App() {
 
         <div className="flex bg-white overflow-hidden flex-1 dark:bg-[#191919] h-full gap-4">
           <ExplorerPanel
-            reposelect={selectedRepo}
-            success={onSuccessfullFetch}
             isExplorerOpen={isExplorerOpen}
           />
 
@@ -95,18 +88,18 @@ export default function App() {
             <Highlight loading={loading} raw={raw} night={isDark} />
           </div>
         </div>
+
       </div>
 
-      {
-        isTogglebarEnabled && (
-          <ToggleBar
-            toggleTheme={toggleTheme}
-            toggleExplorer={toggleExplorer}
-            toggleIsLive={toggleIsLive}
-            isExplorerOpen={isExplorerOpen}
-            isDark={isDark}
-          />
-        )
+      {isTogglebarEnabled && (
+        <ToggleBar
+          toggleTheme={toggleTheme}
+          toggleExplorer={toggleExplorer}
+          toggleIsLive={toggleIsLive}
+          isExplorerOpen={isExplorerOpen}
+          isDark={isDark}
+        />
+      )
       }
 
       <LivePreview live={isLive} toggleIsLive={toggleIsLive} />

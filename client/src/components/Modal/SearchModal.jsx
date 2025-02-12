@@ -14,9 +14,8 @@ import SearchItems from "./SearchItems";
 import { useRepo } from "../../store/repo";
 import Alert from "../Alert";
 
-export default function SearchComponent({
-  repoSelected,
-}) {
+export default function SearchComponent() {
+  
   const { mode, isModalOpen, toggleModal, setModalOpen } = useContext(ModalContext);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
@@ -52,7 +51,7 @@ export default function SearchComponent({
         name = items[selectedIndex].name;
         owner = items[selectedIndex].owner;
       }
-      
+
       fetchSelected({ user: owner, selected: name });
       setModalOpen(false);
     }

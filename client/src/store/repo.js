@@ -16,7 +16,6 @@ export const useRepo = create((set, get) => ({
     associatedLinkData: null,
     associatedLinkLoading: false,
     associatedLinkError: null,
-    successfulFetch: false,
     ext: null,
     setExt: (value) => set({ ext: value }),
     setOwner: (owner) => set({ owner }),
@@ -92,7 +91,7 @@ export const useRepo = create((set, get) => ({
     },
 
     fetchSelected: async ({ user, selected }) => {
-        set({ owner: user, files: [], loading: true, error: null, successfulFetch: false });
+        set({ owner: user, files: [], loading: true, error: null });
 
         try {
             const { owner } = get();
@@ -106,7 +105,7 @@ export const useRepo = create((set, get) => ({
                 error: err.message || "Failed to fetch selected repository",
             });
         } finally {
-            set({ loading: false, successfulFetch: true });
+            set({ loading: false });
         }
 
     },

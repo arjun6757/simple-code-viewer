@@ -5,10 +5,9 @@ import { Loader } from "../Spinner/Loader.jsx";
 import { useRepo } from "../../store/repo.js";
 import Alert from "../Alert.jsx";
 
-export default function ExplorerPanel(props) {
+export default function ExplorerPanel({ isExplorerOpen }) {
 
-  const { fetchFile, fetchDefault, files, loading, error, setExt, successfulFetch, reponame } = useRepo();
-  const { isExplorerOpen } = props;
+  const { fetchFile, fetchDefault, files, loading, error, setExt } = useRepo();
 
   useEffect(() => {
     fetchDefault();
