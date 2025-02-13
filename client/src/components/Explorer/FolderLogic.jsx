@@ -26,10 +26,7 @@ export default function FolderLogic(props) {
       const result = await fetch(url);
       const data = await result.json();
       if (data.status === 404) {
-        console.error(data.message);
-        alert(
-          "error! either the requested resource was not found! or the server encountered an error.",
-        );
+        <Alert message={data.message} />
       }
       return data;
     } catch (error) {
@@ -89,7 +86,7 @@ export default function FolderLogic(props) {
     return (
       <div>
         <div
-          className={`scroll-smooth py-1.5 px-2 rounded flex gap-2 place-content-between hover:bg-[#f0f0f0] dark:hover:bg-[#242424] cursor-pointer pr-3`}
+          className={`py-1.5 px-2 rounded flex gap-2 place-content-between hover:bg-[#f0f0f0] dark:hover:bg-[#242424] active:bg-[#f0f0f0] dark:active:bg-[#242424] cursor-pointer pr-3`}
           onClick={() => handlerForClicks(name, path, url, type)}
         >
           <div className="flex gap-2 items-center">

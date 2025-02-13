@@ -7,6 +7,7 @@ export const useRepo = create((set, get) => ({
     repos: [],
     loading: false,
     error: null,
+    message: null,
     focusingFile: null,
     innerText: "",
     loadingInnerText: false,
@@ -61,6 +62,7 @@ export const useRepo = create((set, get) => ({
             const { owner } = get();
             const response = await fetch(`/api/pinned?user=${owner}`);
             const result = await response.json();
+            if(!result) throw new Error('response not okay');
             const edges = result.data.user.pinnedItems.edges;
             set({ repos: edges });
         } catch (err) {
@@ -91,7 +93,7 @@ export const useRepo = create((set, get) => ({
     },
 
     fetchSelected: async ({ user, selected }) => {
-        set({ owner: user, files: [], loading: true, error: null });
+        set({ owner: user, files: [], loading: true, error: null, message: null });
 
         try {
             const { owner } = get();
@@ -105,7 +107,7 @@ export const useRepo = create((set, get) => ({
                 error: err.message || "Failed to fetch selected repository",
             });
         } finally {
-            set({ loading: false });
+            set({ loading: false, message: `${selected} fetched messagefully!` });
         }
 
     },

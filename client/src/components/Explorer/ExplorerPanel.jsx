@@ -94,7 +94,7 @@ export default function ExplorerPanel() {
       ></div>
 
       <div className="overflow-scroll w-full p-4 overflow-x-hidden scrollbar-thin">
-        {error && <Alert error={error} />}
+        {error && <Alert message={error} />}
 
         {loading
           ? spinner
@@ -110,7 +110,7 @@ export default function ExplorerPanel() {
               <div
                 key={index}
                 onClick={() => handleClick(file.type, file.download_url, file.name)}
-                className={`py-1.5 px-2 rounded flex gap-2 place-items-center hover:bg-[#f0f0f0] dark:hover:bg-[#242424] cursor-pointer`}
+                className={`py-1.5 px-2 rounded flex gap-2 place-items-center hover:bg-[#f0f0f0] active:bg-[#f0f0f0] dark:hover:bg-[#242424] dark:active:bg-[#242424] cursor-pointer`}
               >
                 <Icon name={file.name} type={file.type} />
                 <a

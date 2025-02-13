@@ -9,7 +9,7 @@ export default function Highlight({ loading, text, isDark, error }) {
   const { ext } = useRepo();
 
   if (error) {
-    <Alert error={error} />
+    <Alert message={error} />
   }
 
   useEffect(() => {

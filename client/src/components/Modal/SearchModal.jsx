@@ -25,7 +25,8 @@ export default function SearchComponent() {
   const { fetchSelected, error, owner: currentUser } = useRepo();
 
   if (error) {
-    <Alert error={error} />
+    // console.log(<Alert message={error} />)
+    <Alert message={error} />
   }
 
   const handleKeyDown = (e) => {

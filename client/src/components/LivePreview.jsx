@@ -31,7 +31,7 @@ export default function LivePreview() {
   const framePanel = (
     <div onClick={() => toggleIsLive()} className="w-screen h-dvh fixed backdrop-blur-sm">
       <div className="bg-gray-300 dark:bg-[#222] z-10 relative left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2 w-[90vw] flex justify-center items-center sm:w-[430px] border border-[#ddd] rounded-lg sm:rounded dark:border-[#555] h-[80vh] sm:h-[90vh]">
-        {loading ? spinner : error ? <Alert error={error} /> : frame}
+        {loading ? spinner : error ? <Alert message={error} /> : frame}
       </div>
     </div>
   );

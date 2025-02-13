@@ -6,8 +6,12 @@ import Highlight from "./components/Highlight";
 
 export default function MainView() {
 
-    const { loadingInnerText, innerText, errorInnerText } = useRepo();
+    const { loadingInnerText, innerText, errorInnerText, message } = useRepo();
     const { isDark } = useContext(ThemeContext);
+
+    if(message) {
+        <Alert message={message} />
+    }
 
     return (
         <div className="overflow-y-scroll scrollbar-thin flex-1 bg-white dark:bg-[#191919]">
