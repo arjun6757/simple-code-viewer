@@ -1,10 +1,13 @@
-import ModalProvider from "./context/ModalProvider.jsx";
 import { createRoot } from "react-dom/client";
 import "./index.css";
 import App from "./App.jsx";
+import ActionsProvider from "./context/ActionsProvider.jsx";
+import ThemeProvider from "./context/ThemeProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <ModalProvider>
-    <App />
-  </ModalProvider>,
+  <ActionsProvider>
+    <ThemeProvider>
+      <App />
+    </ThemeProvider>
+  </ActionsProvider>
 );

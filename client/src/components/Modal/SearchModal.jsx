@@ -4,19 +4,20 @@ import {
   ModalBody,
   ModalFooter,
   TextInput,
+  Button,
 } from "flowbite-react";
 
-import { Search } from "lucide-react";
+import { Search, X } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import PinnedItems from "./PinnedItems";
-import { ModalContext } from "../../context/ModalContext";
 import SearchItems from "./SearchItems";
 import { useRepo } from "../../store/repo";
 import Alert from "../Alert";
+import { ActionsContext } from "../../context/ActionsContext";
 
 export default function SearchComponent() {
-  
-  const { mode, isModalOpen, toggleModal, setModalOpen } = useContext(ModalContext);
+
+  const { mode, isModalOpen, toggleModal, setModalOpen } = useContext(ActionsContext);
   const [query, setQuery] = useState("");
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [itemsLength, setItemsLength] = useState(0);
@@ -78,7 +79,11 @@ export default function SearchComponent() {
       size="2xl"
       show={isModalOpen}
       onClose={() => toggleModal()}
+      className="relative"
     >
+      <button onClick={()=> toggleModal()} className="flex md:hidden absolute bottom-20 left-1/2 transform -translate-x-1/2 rounded-full w-12 h-12 shadow-sm bg-white dark:bg-[#222] hover:bg-gray-200 dark:hover:bg-[#272727] active:bg-gray-300 dark:active:bg-[#333] transition-colors text-gray-600 hover:text-gray-700 dark:text-gray-400 dark:hover:text-gray-300">
+        <X className="w-fit mx-auto h-fit self-center" />
+      </button>
       <ModalHeader
         theme={{
           base: "!w-full border-b",

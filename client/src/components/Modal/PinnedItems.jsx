@@ -1,8 +1,8 @@
 import { Loader } from "../Spinner/Loader";
 import { useEffect } from "react";
 import { useRepo } from "../../store/repo";
-import { ModalContext } from "../../context/ModalContext";
 import { useContext } from "react";
+import { ActionsContext } from "../../context/ActionsContext";
 
 export default function ModalItems({
   query,
@@ -17,7 +17,7 @@ export default function ModalItems({
     fetchPinned,
     fetchSelected,
     owner } = useRepo();
-  const { toggleModal } = useContext(ModalContext);
+  const { toggleModal } = useContext(ActionsContext);
 
   if (error) {
     return <p>Error: {error}</p>;

@@ -4,6 +4,7 @@ import { useEffect } from "react";
 import { useRepo } from '../../store/repo';
 import { useContext } from 'react';
 import { ModalContext } from '../../context/ModalContext';
+import { ActionsContext } from '../../context/ActionsContext';
 
 export default function SearchItems({
     query,
@@ -14,7 +15,7 @@ export default function SearchItems({
     const { fetchSelected, error } = useRepo();
     const [files, setFiles] = useState([]);
     const [loading, setLoading] = useState(false);
-    const { toggleModal } = useContext(ModalContext);
+    const { toggleModal } = useContext(ActionsContext);
 
     useEffect(() => {
         const search = async (trimmedQuery) => {

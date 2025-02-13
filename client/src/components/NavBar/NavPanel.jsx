@@ -7,11 +7,11 @@ import {
 
 import { Files, Search, PinIcon } from "lucide-react";
 import { useContext } from "react";
-import { ModalContext } from "../../context/ModalContext";
+import { ActionsContext } from "../../context/ActionsContext";
 
-export default function NavPanel(props) {
-  const { toggleExplorer } = props;
-  const { switchTo } = useContext(ModalContext);
+export default function NavPanel() {
+
+  const { switchTo, toggleExplorer } = useContext(ActionsContext);
 
   return (
     <Sidebar
@@ -25,7 +25,7 @@ export default function NavPanel(props) {
       className="text-sm relative h-screen w-14 bg-white dark:bg-[#171717] border-r border-[#ddd] dark:border-[#333] p-2 py-3"
     >
       <SidebarItems className="w-full">
-        <SidebarItemGroup className="flex justify-center sm:flex-col gap-4 sm:gap-2 border-0">
+        <SidebarItemGroup className="flex justify-center flex-col gap-4 sm:gap-2 border-0">
           <SidebarItem
             onClick={() => toggleExplorer()}
             icon={() => <Files className="text-gray-600 dark:text-gray-300" />}

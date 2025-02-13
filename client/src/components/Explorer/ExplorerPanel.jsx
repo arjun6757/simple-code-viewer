@@ -1,13 +1,15 @@
-import { useState, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import FolderLogic from "./FolderLogic.jsx";
 import Icon from "../Icon.jsx";
 import { Loader } from "../Spinner/Loader.jsx";
 import { useRepo } from "../../store/repo.js";
 import Alert from "../Alert.jsx";
+import { ActionsContext } from "../../context/ActionsContext.js";
 
-export default function ExplorerPanel({ isExplorerOpen }) {
+export default function ExplorerPanel() {
 
   const { fetchFile, fetchDefault, files, loading, error, setExt } = useRepo();
+  const { isExplorerOpen } = useContext(ActionsContext);
 
   useEffect(() => {
     fetchDefault();
@@ -18,7 +20,7 @@ export default function ExplorerPanel({ isExplorerOpen }) {
     return regex.test(name);
   };
 
-  const handleClick = (type, url, index, name) => {
+  const handleClick = (type, url, name) => {
     if (type === "dir") {
       return;
     }
@@ -82,13 +84,13 @@ export default function ExplorerPanel({ isExplorerOpen }) {
       id="code-tree"
       className={`
       ${isExplorerOpen ? "flex" : "hidden"}
-      min-w-[75vw] max-w-[75vw] bg-white dark:bg-[#171717] relative w-[50vw] sm:min-w-[18vw] sm:w-[20vw] sm:max-w-[30vw] border-r-[1px] border-[#ddd] dark:border-[#555] text-black dark:text-white text-sm select-none`}
+      bg-white dark:bg-[#171717] relative min-w-[10vw] sm:min-w-[18vw] lg:w-[20vw] max-w-[80vw] sm:max-w-[40vw] border-r-[1px] border-[#ddd] dark:border-[#555] text-black dark:text-white text-xs sm:text-sm select-none text-nowrap`}
     >
       <div
         id="dragger"
         onMouseDown={handleDrag}
         onTouchStart={handleTouchDrag}
-        className="absolute top-0 right-0 w-[2px] min-h-full opacity-0 h-auto cursor-ew-resize hover:bg-gray-500 hover:opacity-100 transition-opacity delay-300"
+        className="absolute top-0 right-0 w-[2px] h-full bg-gray-500 bg-opacity-0 cursor-ew-resize  hover:bg-opacity-100 active:bg-opacity-100 transition-colors"
       ></div>
 
       <div className="overflow-scroll w-full p-4 overflow-x-hidden scrollbar-thin">
@@ -107,7 +109,7 @@ export default function ExplorerPanel({ isExplorerOpen }) {
             ) : (
               <div
                 key={index}
-                onClick={() => handleClick(file.type, file.download_url, index, file.name)}
+                onClick={() => handleClick(file.type, file.download_url, file.name)}
                 className={`py-1.5 px-2 rounded flex gap-2 place-items-center hover:bg-[#f0f0f0] dark:hover:bg-[#242424] cursor-pointer`}
               >
                 <Icon name={file.name} type={file.type} />
