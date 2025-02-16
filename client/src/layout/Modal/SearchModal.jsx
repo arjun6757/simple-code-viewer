@@ -12,7 +12,7 @@ import { useContext, useEffect, useState } from "react";
 import PinnedItems from "./PinnedItems";
 import SearchItems from "./SearchItems";
 import { useRepo } from "../../store/repo";
-import Alert from "../Alert";
+import Alert from "../../components/Alert";
 import { ActionsContext } from "../../context/ActionsContext";
 
 export default function SearchComponent() {

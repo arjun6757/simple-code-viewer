@@ -1,10 +1,10 @@
 import { useContext, useEffect } from "react";
 import FolderLogic from "./FolderLogic.jsx";
-import Icon from "../Icon.jsx";
-import { Loader } from "../Spinner/Loader.jsx";
-import { useRepo } from "../../store/repo.js";
-import Alert from "../Alert.jsx";
-import { ActionsContext } from "../../context/ActionsContext.js";
+import Icon from "@/components/Icon.jsx";
+import { Loader } from "@/components/Loader.jsx";
+import Alert from "@/components/Alert.jsx";
+import { useRepo } from "@/store/repo.js";
+import { ActionsContext } from "@/context/ActionsContext.js";
 
 export default function ExplorerPanel() {
 

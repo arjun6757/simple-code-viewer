@@ -1,6 +1,6 @@
 import { useState } from "react";
-import Icon from "../Icon";
-import { Loader } from "../Spinner/Loader";
+import Icon from "../../components/Icon";
+import { Loader } from "../../components/Loader";
 import { useRepo } from "../../store/repo";
 
 export default function FolderLogic(props) {

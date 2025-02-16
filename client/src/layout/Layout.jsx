@@ -1,5 +1,5 @@
-import NavPanel from "./components/NavBar/NavPanel";
-import ExplorerPanel from "./components/Explorer/ExplorerPanel";
+import NavPanel from "./NavBar/NavPanel";
+import ExplorerPanel from "./Explorer/ExplorerPanel";
 import MainView from "./MainView";
 
 export default function Layout() {

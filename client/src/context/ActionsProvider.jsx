@@ -1,29 +1,22 @@
-import { useLocalStorage } from "../components/hooks/useLocalStorage";
+import { useLocalStorage } from "@/hooks/useLocalStorage.js";
 import { useState } from "react";
 import { ActionsContext } from "./ActionsContext";
 
 export default function ActionsProvider({ children }) {
 
     const [isExplorerOpen, setIsExplorerOpen] = useState(true);
+    const [isLive, setIsLive] = useState(false);
+    const [isTogglebarEnabled, setIsTogglebarEnabled] = useLocalStorage('simple-code-viewer-wants-togglebar', true);
+    const [mode, setMode] = useState("");
+    const [isModalOpen, setModalOpen] = useState(false);
 
     const toggleExplorer = () => {
         setIsExplorerOpen(prev => !prev);
     }
 
-    const [isLive, setIsLive] = useState(false);
-
     const toggleIsLive = () => setIsLive(prev => !prev);
 
-    const [isDark, setIsDark] = useLocalStorage("simple-code-viewer-wants-dark-theme", true);
-
-    const toggleTheme = () => setIsDark(prev => !prev);
-
-    const [isTogglebarEnabled, setIsTogglebarEnabled] = useLocalStorage('simple-code-viewer-wants-togglebar', true);
-
     const toggleTogglebar = () => setIsTogglebarEnabled(prev => !prev)
-
-    const [mode, setMode] = useState("");
-    const [isModalOpen, setModalOpen] = useState(false);
 
     const switchTo = (mode) => {
         if (typeof (mode) !== "string") {
@@ -45,8 +38,6 @@ export default function ActionsProvider({ children }) {
                 toggleExplorer,
                 isLive,
                 toggleIsLive,
-                isDark,
-                toggleTheme,
                 isTogglebarEnabled,
                 toggleTogglebar,
                 mode,

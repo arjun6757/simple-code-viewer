@@ -1,7 +1,7 @@
 import { create } from "zustand";
 
 export const useRepo = create((set, get) => ({
-    reponame: "todoappinreact", // default owner
+    reponame: "image-carousel", // default owner
     owner: "arjun6757", // default user
     files: [],
     repos: [],

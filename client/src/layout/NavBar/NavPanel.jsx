@@ -7,7 +7,7 @@ import {
 
 import { Files, Search, PinIcon } from "lucide-react";
 import { useContext } from "react";
-import { ActionsContext } from "../../context/ActionsContext";
+import { ActionsContext } from "@/context/ActionsContext";
 
 export default function NavPanel() {
 

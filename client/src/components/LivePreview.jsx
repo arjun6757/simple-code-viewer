@@ -1,5 +1,5 @@
 import React, { useContext, useEffect } from "react";
-import { Loader } from "./Spinner/Loader.jsx";
+import { Loader } from "./Loader.jsx";
 import { useRepo } from "../store/repo.js";
 import Alert from "./Alert.jsx";
 import { ActionsContext } from "../context/ActionsContext.js";

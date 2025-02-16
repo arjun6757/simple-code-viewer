@@ -1,4 +1,4 @@
-import { Loader } from "../Spinner/Loader";
+import { Loader } from "../../components/Loader";
 import { useEffect } from "react";
 import { useRepo } from "../../store/repo";
 import { useContext } from "react";

@@ -1,8 +1,8 @@
-import Alert from "./components/Alert";
-import { useRepo } from "./store/repo";
+import Alert from "../components/Alert";
+import { useRepo } from "../store/repo";
 import { useContext } from "react";
-import { ThemeContext } from "./context/ThemeProvider";
-import Highlight from "./components/Highlight";
+import { ThemeContext } from "../context/ThemeProvider";
+import Highlight from "../components/Highlight";
 
 export default function MainView() {
 

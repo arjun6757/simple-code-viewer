@@ -1,9 +1,8 @@
 import React, { useState } from 'react';
-import { Loader } from "../Spinner/Loader";
+import { Loader } from "../../components/Loader";
 import { useEffect } from "react";
 import { useRepo } from '../../store/repo';
 import { useContext } from 'react';
-import { ModalContext } from '../../context/ModalContext';
 import { ActionsContext } from '../../context/ActionsContext';
 
 export default function SearchItems({

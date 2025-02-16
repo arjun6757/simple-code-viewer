@@ -1,4 +1,4 @@
-import { Loader } from "./Spinner/Loader";
+import { Loader } from "./Loader";
 import hljs from "highlight.js";
 import { useEffect, useRef } from "react";
 import { useRepo } from "../store/repo";
