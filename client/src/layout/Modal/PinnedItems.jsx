@@ -1,8 +1,7 @@
-import { Loader } from "../../components/Loader";
-import { useEffect } from "react";
-import { useRepo } from "../../store/repo";
-import { useContext } from "react";
-import { ActionsContext } from "../../context/ActionsContext";
+import { useEffect, useContext } from "react";
+import { useRepo } from "@/store/repo";
+import { Loader } from "@/components/Loader";
+import { ActionsContext } from "@/context/ActionsContext";
 
 export default function PinnedItems({
   query,
@@ -19,12 +18,13 @@ export default function PinnedItems({
     owner } = useRepo();
   const { toggleModal } = useContext(ActionsContext);
 
+  
   useEffect(() => {
     fetchPinned();
   }, [])
-
+  
   if (error) {
-    return <p>Error: {error.message}</p>;
+    return <p>Error: {error}</p>;
   }
 
   const filterItems = pinnedRepos?.filter((item) =>

@@ -1,5 +1,4 @@
 import express from "express";
-// import api from "./routes/api.js";
 import v2 from "./routes/v2.js";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
@@ -9,7 +8,6 @@ dotenv.config();
 const app = express();
 const port = process.env.PORT || 3000;
 
-//middleware to parse json bodies
 app.use(express.json());
 
 const limiter = rateLimit({
@@ -22,8 +20,8 @@ app.use(limiter);
 
 app.use((req, res, next) => {
   const allowedOrigin = process.env.FRONTEND_URL;
-  res.setHeader("Access-Control-Allow-Origin", allowedOrigin); // allow all origins for now
-  res.setHeader("Access-Control-Allow-Methods", "GET"); //only get req
+  res.setHeader("Access-Control-Allow-Origin", allowedOrigin); 
+  res.setHeader("Access-Control-Allow-Methods", "GET");
 
   if (req.method === "OPTIONS") {
     return res.status(200).end();
@@ -33,7 +31,6 @@ app.use((req, res, next) => {
 });
 
 app.use("/api", v2);
-// all routes defined on api.js will be prefixed with /api => /api/code/repo
 
 app.listen(port, () => {
   console.log(`Server listening on port ${port}`);

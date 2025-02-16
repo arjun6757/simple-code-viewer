@@ -4,18 +4,17 @@ import {
   ModalBody,
   ModalFooter,
   TextInput,
-  Button,
 } from "flowbite-react";
 
 import { Search, X } from "lucide-react";
 import { useContext, useEffect, useState } from "react";
 import PinnedItems from "./PinnedItems";
 import SearchItems from "./SearchItems";
-import { useRepo } from "../../store/repo";
-import Alert from "../../components/Alert";
-import { ActionsContext } from "../../context/ActionsContext";
+import { useRepo } from "@/store/repo";
+import Alert from "@/components/Alert";
+import { ActionsContext } from "@/context/ActionsContext";
 
-export default function SearchComponent() {
+export default function SearchModal() {
 
   const { mode, isModalOpen, toggleModal, setModalOpen } = useContext(ActionsContext);
   const [query, setQuery] = useState("");
@@ -28,6 +27,10 @@ export default function SearchComponent() {
     // console.log(<Alert message={error} />)
     <Alert message={error} />
   }
+
+  useEffect(() => {
+    setQuery("");
+  }, [mode])
 
   const handleKeyDown = (e) => {
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {

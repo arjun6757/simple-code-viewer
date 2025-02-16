@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
-import { Loader } from "../../components/Loader";
-import { useEffect } from "react";
-import { useRepo } from '../../store/repo';
-import { useContext } from 'react';
-import { ActionsContext } from '../../context/ActionsContext';
+import { useState, useEffect, useContext } from 'react';
+import { Loader } from "@/components/Loader";
+import { useRepo } from '@/store/repo';
+import { ActionsContext } from '@/context/ActionsContext';
+import { API } from '@/api';
 
 export default function SearchItems({
     query,
@@ -11,7 +10,7 @@ export default function SearchItems({
     length,
     items,
 }) {
-    const { fetchSelected, error } = useRepo();
+    const { fetchSelected, error, setError } = useRepo();
     const [files, setFiles] = useState([]);
     const [loading, setLoading] = useState(false);
     const { toggleModal } = useContext(ActionsContext);
@@ -20,11 +19,11 @@ export default function SearchItems({
         const search = async (trimmedQuery) => {
             setLoading(true);
             try {
-                const response = await fetch(`/api/search?q=${trimmedQuery}`)
+                const response = await fetch(`${API}/search?q=${trimmedQuery}`)
                 const result = await response.json();
                 setFiles(result);
             } catch (error) {
-                setError(error);
+                setError(error.message);
             } finally {
                 setLoading(false);
             }

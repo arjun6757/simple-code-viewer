@@ -1,7 +1,8 @@
 import { useState } from "react";
-import Icon from "../../components/Icon";
-import { Loader } from "../../components/Loader";
-import { useRepo } from "../../store/repo";
+import Icon from "@/components/Icon";
+import { Loader } from "@/components/Loader";
+import { useRepo } from "@/store/repo";
+import { API } from "@/api";
 
 export default function FolderLogic(props) {
   const { name, path, type } = props.file;
@@ -21,8 +22,8 @@ export default function FolderLogic(props) {
     setGettingChildFor(path ? path : name);
     try {
       const url = path
-        ? `/api/contents?owner=${owner}&repo=${reponame}&path=${path}`
-        : `/api/contents?owner=${owner}&repo=${reponame}&path=${name}`;
+        ? `${API}/contents?owner=${owner}&repo=${reponame}&path=${path}`
+        : `${API}/contents?owner=${owner}&repo=${reponame}&path=${name}`;
       const result = await fetch(url);
       const data = await result.json();
       if (data.status === 404) {

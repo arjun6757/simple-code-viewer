@@ -1,5 +1,5 @@
-import ToggleBar from "./components/ToggleBar";
-import LivePreview from "./components/LivePreview";
+import ToggleBar from "./components/ToggleBar.jsx";
+import LivePreview from "./components/LivePreview.jsx";
 import SearchModal from "./layout/Modal/SearchModal.jsx";
 import Layout from "./layout/Layout.jsx";
 

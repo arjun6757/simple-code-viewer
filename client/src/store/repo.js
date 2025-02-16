@@ -1,4 +1,5 @@
 import { create } from "zustand";
+import { API } from "@/api";
 
 export const useRepo = create((set, get) => ({
     reponame: "image-carousel", // default owner
@@ -18,6 +19,7 @@ export const useRepo = create((set, get) => ({
     associatedLinkLoading: false,
     associatedLinkError: null,
     ext: null,
+    setError: (message) => set({ error: message }),
     setExt: (value) => set({ ext: value }),
     setOwner: (owner) => set({ owner }),
     fetchFile: async (downloadLink) => {
@@ -41,8 +43,8 @@ export const useRepo = create((set, get) => ({
             // the logic is that only childrens has path but the root directory
             // is not a child of any other directory so
             const url = path
-                ? `/api/contents?owner=${owner}&repo=${reponame}&path=${path}`
-                : `/api/contents?owner=${owner}&repo=${reponame}&path=${name}`;
+                ? `${API}/contents?owner=${owner}&repo=${reponame}&path=${path}`
+                : `${API}/contents?owner=${owner}&repo=${reponame}&path=${name}`;
 
             const response = await fetch(url);
             const result = await response.json();
@@ -60,9 +62,12 @@ export const useRepo = create((set, get) => ({
         set({ repos: [], loadingPinned: true, error: null });
         try {
             const { owner } = get();
-            const response = await fetch(`/api/pinned?user=${owner}`);
+            const response = await fetch(`${API}/pinned?user=${owner}`);
+            if (!response.ok) {
+                set({ error: response.statusText })
+                return;
+            }
             const result = await response.json();
-            if(!result) throw new Error('response not okay');
             const edges = result.data.user.pinnedItems.edges;
             set({ repos: edges });
         } catch (err) {
@@ -79,7 +84,7 @@ export const useRepo = create((set, get) => ({
         try {
             const { owner, reponame } = get();
             const response = await fetch(
-                `/api/contents?owner=${owner}&repo=${reponame}`,
+                `${API}/contents?owner=${owner}&repo=${reponame}`,
             );
             const result = await response.json();
             set({ files: result });
@@ -98,7 +103,7 @@ export const useRepo = create((set, get) => ({
         try {
             const { owner } = get();
             const response = await fetch(
-                `/api/contents?repo=${selected}&owner=${owner}`,
+                `${API}/contents?repo=${selected}&owner=${owner}`,
             );
             const result = await response.json();
             set({ files: result, reponame: selected });
@@ -117,7 +122,7 @@ export const useRepo = create((set, get) => ({
         try {
             const { owner, reponame } = get();
             const response = await fetch(
-                `/api/homepage?repo=${reponame}&owner=${owner}`,
+                `${API}/homepage?repo=${reponame}&owner=${owner}`,
             );
             const result = await response.json();
             if (result.homepage_url === "") {

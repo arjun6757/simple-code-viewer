@@ -1,7 +1,7 @@
 import { Loader } from "./Loader";
 import hljs from "highlight.js";
 import { useEffect, useRef } from "react";
-import { useRepo } from "../store/repo";
+import { useRepo } from "@/store/repo";
 
 export default function Highlight({ loading, text, isDark, error }) {
 
