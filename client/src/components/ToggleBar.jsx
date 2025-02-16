@@ -1,26 +1,24 @@
-import { useState } from "react";
+import { useState, useContext } from "react";
 import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { TbLayoutSidebarFilled, TbLayoutSidebar } from "react-icons/tb";
+import { ThemeContext } from "../context/ThemeProvider";
+import { ActionsContext } from "../context/ActionsContext";
 
-export default function ToggleBar({
-  isDark,
-  toggleExplorer,
-  toggleTheme,
-  isExplorerOpen,
-  toggleIsLive,
-}) {
+export default function ToggleBar() {
+
+  const { toggleExplorer, isExplorerOpen, toggleIsLive } = useContext(ActionsContext);
   const [hide, setHide] = useState(false);
+  const { isDark, toggleTheme } = useContext(ThemeContext);
 
   return (
-    <div className="fixed right-5 bottom-5 sm:right-8 sm:bottom-5 bg-transparent flex flex-col gap-4 items-center transition-transform ease-in-out duration-500 w-14">
+    <div className="fixed right-5 bottom-5 sm:right-8 sm:bottom-5 bg-transparent flex flex-col gap-3 items-center transition-transform ease-in-out duration-500 w-14">
       <div
-        className={`flex flex-col items-center gap-4 transition-opacity duration-500 w-full p-1 ${
-          hide
-            ? " opacity-100 pointer-events-auto"
-            : " opacity-0 pointer-events-none"
-        }`}
+        className={`flex flex-col items-center gap-4 transition-opacity duration-500 w-full p-1 ${hide
+          ? " opacity-100 pointer-events-auto"
+          : " opacity-0 pointer-events-none"
+          }`}
         aria-hidden={!hide}
         tabIndex={hide ? 0 : -1}
       >

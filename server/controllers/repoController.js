@@ -80,6 +80,7 @@ const searchForQuery = async (req, res) => {
         name: file.full_name,
         url: file.url
     }));
+
     res.json(files);
 }
 

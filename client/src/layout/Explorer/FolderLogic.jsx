@@ -1,33 +1,32 @@
 import { useState } from "react";
-import Icon from "../Icon";
-import { Loader } from "../Spinner/Loader";
+import Icon from "../../components/Icon";
+import { Loader } from "../../components/Loader";
+import { useRepo } from "../../store/repo";
 
 export default function FolderLogic(props) {
   const { name, path, type } = props.file;
   const [FolderStructure, setFolderStructure] = useState([]);
   const [loading, setLoading] = useState(false);
   const [gettingChildFor, setGettingChildFor] = useState("");
+  const { owner, reponame, fetchFile, setExt } = useRepo();
 
   const handleFileClick = (url, name) => {
     const ext = String(name).split(".").pop();
-    props.press(url, ext);
+    setExt(ext);
+    fetchFile(url);
   };
 
   const getChilds = async (name, path) => {
     setLoading(true);
     setGettingChildFor(path ? path : name);
-    // add this ?
     try {
       const url = path
-        ? `/api/query?path=${path}`
-        : `/api/query?path=${name}`;
+        ? `/api/contents?owner=${owner}&repo=${reponame}&path=${path}`
+        : `/api/contents?owner=${owner}&repo=${reponame}&path=${name}`;
       const result = await fetch(url);
       const data = await result.json();
       if (data.status === 404) {
-        console.error(data.message);
-        alert(
-          "error! either the requested resource was not found! or the server encountered an error.",
-        );
+        <Alert message={data.message} />
       }
       return data;
     } catch (error) {
@@ -44,8 +43,6 @@ export default function FolderLogic(props) {
     if (exist !== -1) {
       FolderStructure[exist].expanded = !FolderStructure[exist].expanded;
       setFolderStructure([...FolderStructure]);
-      document.getElementById("dragger").style.height =
-        `${document.getElementById("code-tree").offsetHeight}px`;
       return;
     }
 
@@ -89,7 +86,7 @@ export default function FolderLogic(props) {
     return (
       <div>
         <div
-          className={`py-1.5 px-2 rounded flex gap-2 place-content-between hover:bg-[#f0f0f0] dark:hover:bg-[#242424] cursor-pointer pr-3`}
+          className={`py-1.5 px-2 rounded flex gap-2 place-content-between hover:bg-[#f0f0f0] dark:hover:bg-[#242424] active:bg-[#f0f0f0] dark:active:bg-[#242424] cursor-pointer pr-3`}
           onClick={() => handlerForClicks(name, path, url, type)}
         >
           <div className="flex gap-2 items-center">
