@@ -1,34 +1,33 @@
 import { useState } from "react";
-import Spin from "./ClockSpin";
-import Icon from "./Icon";
+import Icon from "@/components/Icon";
+import { Loader } from "@/components/Loader";
+import { useRepo } from "@/store/repo";
+import { API } from "@/api";
 
 export default function FolderLogic(props) {
   const { name, path, type } = props.file;
-
   const [FolderStructure, setFolderStructure] = useState([]);
   const [loading, setLoading] = useState(false);
   const [gettingChildFor, setGettingChildFor] = useState("");
+  const { owner, reponame, fetchFile, setExt } = useRepo();
 
   const handleFileClick = (url, name) => {
     const ext = String(name).split(".").pop();
-    props.press(url, ext);
+    setExt(ext);
+    fetchFile(url);
   };
 
   const getChilds = async (name, path) => {
     setLoading(true);
     setGettingChildFor(path ? path : name);
-    // add this ?
     try {
       const url = path
-        ? `https://simple-code-viewer.onrender.com/api/code/repo/query?path=${path}`
-        : `https://simple-code-viewer.onrender.com/api/code/repo/query?path=${name}`;
+        ? `${API}/contents?owner=${owner}&repo=${reponame}&path=${path}`
+        : `${API}/contents?owner=${owner}&repo=${reponame}&path=${name}`;
       const result = await fetch(url);
       const data = await result.json();
       if (data.status === 404) {
-        console.error(data.message);
-        alert(
-          "error! either the requested resource was not found! or the server encountered an error.",
-        );
+        <Alert message={data.message} />
       }
       return data;
     } catch (error) {
@@ -45,8 +44,6 @@ export default function FolderLogic(props) {
     if (exist !== -1) {
       FolderStructure[exist].expanded = !FolderStructure[exist].expanded;
       setFolderStructure([...FolderStructure]);
-      document.getElementById("dragger").style.height =
-        `${document.getElementById("code-tree").offsetHeight}px`;
       return;
     }
 
@@ -80,15 +77,17 @@ export default function FolderLogic(props) {
     }
   };
 
-  const clock = (
-    <Spin sx2="border-r-[6px] border-t-[6px] border-l-[6px] h-[20px] w-[20px]" />
+  const spinner = (
+    <div className="w-fit h-full flex items-center">
+      <Loader size="sm" />
+    </div>
   );
 
   const renderChilds = (name, path, type, url) => {
     return (
       <div>
         <div
-          className={`p-2 rounded-lg flex gap-2 place-content-between hover:bg-[#f0f0f0] dark:hover:bg-[#242424] cursor-pointer pr-3`}
+          className={`py-1.5 px-2 rounded flex gap-2 place-content-between hover:bg-[#f0f0f0] dark:hover:bg-[#242424] active:bg-[#f0f0f0] dark:active:bg-[#242424] cursor-pointer pr-3`}
           onClick={() => handlerForClicks(name, path, url, type)}
         >
           <div className="flex gap-2 items-center">
@@ -96,10 +95,10 @@ export default function FolderLogic(props) {
             {name}
           </div>
 
-          <div className={`pt-1`}>
+          <div>
             {loading &&
               (gettingChildFor === path || gettingChildFor === name) &&
-              clock}
+              spinner}
           </div>
         </div>
 

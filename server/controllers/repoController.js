@@ -70,6 +70,20 @@ const getQueryData = async (req, res) => {
     res.json(data);
 }
 
+const searchForQuery = async (req, res) => {
+    const token = process.env.GITHUB_TOKEN;
+    const query = req.query.q;
+    const url = `https://api.github.com/search/repositories?q=${query}&sort=stars&order=asc&per_page=6`;
+    const data = await githubFetch(url, token);
+
+    const files = data.items.map((file) => ({
+        name: file.full_name,
+        url: file.url
+    }));
+
+    res.json(files);
+}
+
 const getPinnedRepos = async (req, res) => {
     const token = process.env.GITHUB_TOKEN;
     const username = process.env.REPO_OWNER;
@@ -109,7 +123,7 @@ const getSelectedRepoData = async (req, res) => {
     // here we want to req github to access repo code
     const githubUrl = `https://api.github.com/repos/${owner}/${repo}/contents`;
     const data = await githubFetch(githubUrl, token);
-    
+
     const files = data.map((file) => ({
         name: file.name,
         type: file.type,
@@ -128,4 +142,4 @@ const getHomePageURL = async (req, res) => {
     res.json({ homepage_url: data.homepage })
 }
 
-export { getRepoUrl, getDirData, getQueryData, getPinnedRepos, getSelectedRepoData, getHomePageURL };
+export { getRepoUrl, getDirData, getQueryData, getPinnedRepos, getSelectedRepoData, getHomePageURL, searchForQuery };
