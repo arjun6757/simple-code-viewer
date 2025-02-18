@@ -14,26 +14,3 @@
 .selected {
   @apply bg-blue-500 dark:bg-green-500 text-gray-100;
 }
-
-
-[data-testid="flowbite-tooltip"] {
-  @apply !py-1.5 !px-1.5;
-}
-
-[data-testid="flowbite-tooltip"],
-[data-testid="flowbite-tooltip-arrow"] {
-  @apply !bg-[#171717] !text-gray-100 select-none !text-xs;
-}
-
-.dark [data-testid="flowbite-tooltip"], .dark [data-testid="flowbite-tooltip-arrow"] {
-  @apply !bg-gray-100 !text-gray-900;
-}
-
-/*focus:bg-blue-500 focus:dark:bg-green-500 focus:text-gray-100 focus:outline-0 px-4 py-2 hover:bg-blue-500 hover:dark:bg-green-500 hover:text-gray-100 hover:dark:text-gray-100 rounded-md cursor-pointer*/
-
-/*/*.selected {
-  background-color: yellowgreen;
-  /*  background-color: #e2b714;*/
-/*  color: #333;*/
-/*}*/
-/* scrollbar help for nightmode ---> https://stackoverflow.com/questions/65940522/how-do-i-switch-to-chromes-dark-scrollbar-like-github-does */
