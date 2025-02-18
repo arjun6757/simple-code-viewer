@@ -1,8 +1,8 @@
-import React, { useContext, useEffect } from "react";
+import { useContext, useEffect } from "react";
 import { Loader } from "./Loader.jsx";
-import { useRepo } from "../store/repo.js";
+import { useRepo } from "@/store/repo.js";
 import Alert from "./Alert.jsx";
-import { ActionsContext } from "../context/ActionsContext.js";
+import { ActionsContext } from "@/context/ActionsContext.js";
 
 export default function LivePreview() {
 
@@ -16,7 +16,7 @@ export default function LivePreview() {
 
   useEffect(() => {
     fetchAssociatedLink();
-  }, [isLive]);
+  }, [isLive, fetchAssociatedLink]);
 
   const spinner = <Loader size="md" />
 

@@ -13,7 +13,7 @@ export default function ExplorerPanel() {
 
   useEffect(() => {
     fetchDefault();
-  }, [])
+  }, [fetchDefault])
 
   const hasDot = (name) => {
     const regex = /\./;

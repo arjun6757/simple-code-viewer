@@ -21,7 +21,7 @@ export default function PinnedItems({
   
   useEffect(() => {
     fetchPinned();
-  }, [])
+  }, [fetchPinned])
   
   if (error) {
     return <p>Error: {error}</p>;

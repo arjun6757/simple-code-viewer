@@ -3,6 +3,7 @@ import Icon from "@/components/Icon";
 import { Loader } from "@/components/Loader";
 import { useRepo } from "@/store/repo";
 import { API } from "@/api";
+import Alert from "@/components/Alert";
 
 export default function FolderLogic(props) {
   const { name, path, type } = props.file;

@@ -53,7 +53,7 @@ export default function SearchItems({
     useEffect(() => {
         length(files.length);
         items(files);
-    }, [files]);
+    }, [length, items, files]);
 
     return loading ? (
         spinner
