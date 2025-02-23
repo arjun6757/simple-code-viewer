@@ -19,7 +19,7 @@ const limiter = rateLimit({
 app.use(limiter);
 
 app.use((req, res, next) => {
-  const allowedOrigin = process.env.FRONTEND_URL;
+  const allowedOrigin = process.env.FRONTEND_URL || 'http://localhost:5173';
   res.setHeader("Access-Control-Allow-Origin", allowedOrigin); 
   res.setHeader("Access-Control-Allow-Methods", "GET");
 

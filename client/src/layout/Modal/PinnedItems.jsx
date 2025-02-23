@@ -20,8 +20,9 @@ export default function PinnedItems({
 
   
   useEffect(() => {
+    // if owner is not changed then i shouldn't actually fetch
     fetchPinned();
-  }, [fetchPinned])
+  }, [owner])
   
   if (error) {
     return <p>Error: {error}</p>;

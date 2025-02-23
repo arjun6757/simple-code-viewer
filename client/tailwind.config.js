@@ -13,7 +13,6 @@ export default {
     extend: {
       fontFamily: {
         code: ["Fira Code", "Consolas", "Courier New", "monospace"],
-        noto: ["Noto Sans", "Arial", "Helvetica", "sans-serif"],
         inter: ["Inter", "Arial", "Helvetica", "serif"],
       },
     },
