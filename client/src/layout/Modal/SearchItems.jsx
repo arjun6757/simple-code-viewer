@@ -23,7 +23,7 @@ export default function SearchItems({
                 const result = await response.json();
                 setFiles(result);
             } catch (error) {
-                setError(error.message);
+                setError(error.message || 'Failed to fetch SearchItems!');
             } finally {
                 setLoading(false);
             }
@@ -40,9 +40,7 @@ export default function SearchItems({
 
     }, [query])
 
-    if (error) {
-        return <p>Error: {error}</p>;
-    }
+    const errText = <p>Error: {error}</p>;
 
     const spinner = (
         <div className="flex flex-col justify-center items-center w-full h-full">
@@ -55,9 +53,7 @@ export default function SearchItems({
         items(files);
     }, [length, items, files]);
 
-    return loading ? (
-        spinner
-    ) : (
+    const searchULItems = (
         <ul className="flex flex-col gap-2 w-full">
             {files.map((item, index) => (
                 <li
@@ -88,4 +84,6 @@ export default function SearchItems({
             ))}
         </ul>
     );
+
+    return error ? errText : loading ? spinner : searchULItems;
 }

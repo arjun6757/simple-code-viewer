@@ -31,7 +31,6 @@ export const useRepo = create((set, get) => ({
         const { prevDownloadLink } = get();
 
         if (prevDownloadLink === downloadLink) {
-            console.log('prev: '+ prevDownloadLink + 'download: ', downloadLink)
             return;
         } else {
             set({ prevDownloadLink: downloadLink });
@@ -73,9 +72,9 @@ export const useRepo = create((set, get) => ({
     },
 
     fetchPinned: async () => {
-        const { owner, prevUser } = get();
 
-        // this block of if-else code should actually allow fetching only one time
+        const { owner, prevUser } = get();
+        
         if (owner === prevUser) {
             return;
         } else {
@@ -85,7 +84,6 @@ export const useRepo = create((set, get) => ({
         set({ repos: [], loadingPinned: true, error: null });
 
         try {
-            // const { owner } = get();
             const response = await fetch(`${API}/pinned?user=${owner}`);
             if (!response.ok) {
                 set({ error: response.statusText })
@@ -126,7 +124,6 @@ export const useRepo = create((set, get) => ({
         set({ owner: user, files: [], loading: true, error: null, message: null });
 
         try {
-            // const { owner } = get();
             const response = await fetch(
                 `${API}/contents?repo=${selected}&owner=${user}`,
             );

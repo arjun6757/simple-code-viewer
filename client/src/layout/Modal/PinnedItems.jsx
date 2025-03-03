@@ -10,23 +10,24 @@ export default function PinnedItems({
   items,
 }) {
 
-  const { loadingPinned: loading,
-    errorPinned: error,
-    repos: pinnedRepos,
-    fetchPinned,
-    fetchSelected,
-    owner } = useRepo();
+  const
+    {
+      loadingPinned: loading,
+      errorPinned: error,
+      repos: pinnedRepos,
+      fetchPinned,
+      fetchSelected,
+      owner
+    }
+      = useRepo();
+
   const { toggleModal } = useContext(ActionsContext);
 
-  
+  const errText = <p>Error: {error}</p>;
+
   useEffect(() => {
-    // if owner is not changed then i shouldn't actually fetch
     fetchPinned();
   }, [owner])
-  
-  if (error) {
-    return <p>Error: {error}</p>;
-  }
 
   const filterItems = pinnedRepos?.filter((item) =>
     item.node.name.toLowerCase().includes(query.toLowerCase())
@@ -43,9 +44,7 @@ export default function PinnedItems({
     items(filterItems);
   }, [filterItems.length]);
 
-  return loading ? (
-    spinner
-  ) : (
+  const ulistItems = (
     <ul className="flex flex-col gap-2 w-full">
       {filterItems.map((item, index) => (
         <li
@@ -75,4 +74,6 @@ export default function PinnedItems({
       ))}
     </ul>
   );
+
+  return error ? errText : loading ? spinner : ulistItems;
 }
