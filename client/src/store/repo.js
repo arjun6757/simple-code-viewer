@@ -4,7 +4,6 @@ import { API } from "@/api";
 export const useRepo = create((set, get) => ({
     prevUser: '',
     prevRepo: '',
-    prevLink: '',
     prevDownloadLink: '',
     reponame: "image-carousel", // default owner
     owner: "arjun6757", // default user
@@ -74,7 +73,7 @@ export const useRepo = create((set, get) => ({
     fetchPinned: async () => {
 
         const { owner, prevUser } = get();
-        
+
         if (owner === prevUser) {
             return;
         } else {
@@ -140,13 +139,7 @@ export const useRepo = create((set, get) => ({
     },
 
     fetchAssociatedLink: async () => {
-        const { owner, reponame, prevLink, associatedLink } = get();
-
-        if (prevLink === associatedLink) {
-            return;
-        } else {
-            set({ prevLink: associatedLink });
-        }
+        const { owner, reponame } = get();
 
         set({ associatedLink: null, associatedLinkLoading: true });
         try {
@@ -158,7 +151,6 @@ export const useRepo = create((set, get) => ({
                 return set({ associatedLinkError: "No associated link found in this project!" })
             }
             set({ associatedLinkData: result });
-
         } catch (err) {
             set({
                 associatedLinkError: err.message || "Failed to fetch selected repository",
