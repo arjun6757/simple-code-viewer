@@ -2,6 +2,10 @@ import { create } from "zustand";
 import { API } from "@/api";
 
 export const useRepo = create((set, get) => ({
+    prevUser: '',
+    prevRepo: '',
+    prevLink: '',
+    prevDownloadLink: '',
     reponame: "image-carousel", // default owner
     owner: "arjun6757", // default user
     files: [],
@@ -22,7 +26,17 @@ export const useRepo = create((set, get) => ({
     setError: (message) => set({ error: message }),
     setExt: (value) => set({ ext: value }),
     setOwner: (owner) => set({ owner }),
+
     fetchFile: async (downloadLink) => {
+        const { prevDownloadLink } = get();
+
+        if (prevDownloadLink === downloadLink) {
+            console.log('prev: '+ prevDownloadLink + 'download: ', downloadLink)
+            return;
+        } else {
+            set({ prevDownloadLink: downloadLink });
+        }
+
         set({ innerText: "", loadingInnerText: true, error: null });
         try {
             const response = await fetch(downloadLink);
@@ -59,9 +73,19 @@ export const useRepo = create((set, get) => ({
     },
 
     fetchPinned: async () => {
+        const { owner, prevUser } = get();
+
+        // this block of if-else code should actually allow fetching only one time
+        if (owner === prevUser) {
+            return;
+        } else {
+            set({ prevUser: owner });
+        }
+
         set({ repos: [], loadingPinned: true, error: null });
+
         try {
-            const { owner } = get();
+            // const { owner } = get();
             const response = await fetch(`${API}/pinned?user=${owner}`);
             if (!response.ok) {
                 set({ error: response.statusText })
@@ -98,12 +122,13 @@ export const useRepo = create((set, get) => ({
     },
 
     fetchSelected: async ({ user, selected }) => {
+
         set({ owner: user, files: [], loading: true, error: null, message: null });
 
         try {
-            const { owner } = get();
+            // const { owner } = get();
             const response = await fetch(
-                `${API}/contents?repo=${selected}&owner=${owner}`,
+                `${API}/contents?repo=${selected}&owner=${user}`,
             );
             const result = await response.json();
             set({ files: result, reponame: selected });
@@ -118,9 +143,16 @@ export const useRepo = create((set, get) => ({
     },
 
     fetchAssociatedLink: async () => {
+        const { owner, reponame, prevLink, associatedLink } = get();
+
+        if (prevLink === associatedLink) {
+            return;
+        } else {
+            set({ prevLink: associatedLink });
+        }
+
         set({ associatedLink: null, associatedLinkLoading: true });
         try {
-            const { owner, reponame } = get();
             const response = await fetch(
                 `${API}/homepage?repo=${reponame}&owner=${owner}`,
             );
