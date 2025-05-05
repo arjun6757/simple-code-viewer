@@ -36,22 +36,11 @@ GITHUB_TOKEN=YOUR_GITHUB_TOKEN
 Install dependencies
 
 ```bash
-pnpm i
+pnpm install
 ```
 
-Start the server
+Start the dev server
 ```bash
 pnpm dev
 ```
-
-Now go to client directory in another instance
-
-```bash
-cd client
-```
-
-Start the client and you should be able to to see the app running on http://localhost:5173
-
-```bash
-pnpm dev
-```
+Note: this will run the dev server of both client and server (via concurrently)
