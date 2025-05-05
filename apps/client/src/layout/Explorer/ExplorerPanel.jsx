@@ -1,15 +1,15 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import FolderLogic from "./FolderLogic.jsx";
 import Icon from "@/components/Icon.jsx";
 import { Loader } from "@/components/Loader.jsx";
 import Alert from "@/components/Alert.jsx";
-import { useRepo } from "@/store/repo.js";
-import { ActionsContext } from "@/context/ActionsContext.js";
+import { useRepo } from "@/store/repo.store.js";
+import { useUI } from "@/store/ui.store.js";
 
 export default function ExplorerPanel() {
 
   const { fetchFile, fetchDefault, files, loading, error, setExt } = useRepo();
-  const { isExplorerOpen } = useContext(ActionsContext);
+  const { explorer: isExplorerOpen } = useUI();
 
   useEffect(() => {
     fetchDefault();

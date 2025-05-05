@@ -1,20 +1,28 @@
 {
-  "name": "codeviewer",
+  "name": "simple-code-viewer",
   "version": "1.0.0",
-  "main": "server/index.js",
-  "type": "module",
+  "private": true,
+  "description": "![image](https://github.com/user-attachments/assets/1422e890-ca61-44b2-afff-26e04c8fdea5)",
+  "main": "index.js",
+  "workspaces": [
+    "apps/*"
+  ],
   "scripts": {
-    "dev": "nodemon server/index.js",
-    "start": "node server/index.js"
+    "dev": "concurrently \"pnpm --filter client dev\" \"pnpm --filter server dev\""
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/arjun6757/simple-code-viewer.git"
   },
   "keywords": [],
   "author": "",
   "license": "ISC",
-  "description": "",
+  "type": "commonjs",
+  "bugs": {
+    "url": "https://github.com/arjun6757/simple-code-viewer/issues"
+  },
+  "homepage": "https://github.com/arjun6757/simple-code-viewer#readme",
   "dependencies": {
-    "dotenv": "^16.4.5",
-    "express": "^4.21.1",
-    "express-rate-limit": "^7.4.1",
-    "nodemon": "^3.1.7"
+    "concurrently": "^9.1.2"
   }
 }

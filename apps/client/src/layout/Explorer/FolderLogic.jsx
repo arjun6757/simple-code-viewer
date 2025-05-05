@@ -1,7 +1,7 @@
 import { useState } from "react";
 import Icon from "@/components/Icon";
 import { Loader } from "@/components/Loader";
-import { useRepo } from "@/store/repo";
+import { useRepo } from "@/store/repo.store";
 import { API } from "@/api";
 import Alert from "@/components/Alert";
 

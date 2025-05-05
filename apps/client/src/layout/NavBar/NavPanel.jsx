@@ -1,10 +1,9 @@
 import { Files, Search, PinIcon } from "lucide-react";
-import { useContext } from "react";
-import { ActionsContext } from "@/context/ActionsContext";
+import { useUI } from "@/store/ui.store";
 
 export default function NavPanel() {
 
-  const { switchTo, toggleExplorer } = useContext(ActionsContext);
+  const { switchTo, toggleExplorer } = useUI();
 
   return (
     <div

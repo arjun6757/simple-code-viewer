@@ -3,22 +3,22 @@ import { MdDarkMode, MdOutlineDarkMode } from "react-icons/md";
 import { FaAngleDown, FaAngleUp } from "react-icons/fa6";
 import { AiOutlineGlobal } from "react-icons/ai";
 import { TbLayoutSidebarFilled, TbLayoutSidebar } from "react-icons/tb";
-import { ThemeContext } from "../context/ThemeProvider";
-import { ActionsContext } from "../context/ActionsContext";
+import { useTheme } from "../context/ThemeProvider";
+import { useUI } from "@/store/ui.store";
 
 export default function ToggleBar() {
-
-  const { toggleExplorer, isExplorerOpen, toggleIsLive } = useContext(ActionsContext);
+  const { toggleExplorer, explorer, toggleLive } = useUI();
   const [hide, setHide] = useState(false);
-  const { isDark, toggleTheme } = useContext(ThemeContext);
+  const { isDark, toggleTheme } = useTheme();
 
   return (
     <div className="fixed right-5 bottom-5 sm:right-8 sm:bottom-5 bg-transparent flex flex-col gap-3 items-center transition-transform ease-in-out duration-500 w-14">
       <div
-        className={`flex flex-col items-center gap-4 transition-opacity duration-500 w-full p-1 ${hide
-          ? " opacity-100 pointer-events-auto"
-          : " opacity-0 pointer-events-none"
-          }`}
+        className={`flex flex-col items-center gap-4 transition-opacity duration-500 w-full p-1 ${
+          hide
+            ? " opacity-100 pointer-events-auto"
+            : " opacity-0 pointer-events-none"
+        }`}
         aria-hidden={!hide}
         tabIndex={hide ? 0 : -1}
       >
@@ -28,7 +28,7 @@ export default function ToggleBar() {
           className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 hover:scale-110 active:scale-90 transition-transform duration-300"
           tabIndex={hide ? 0 : -1}
         >
-          {isExplorerOpen ? (
+          {explorer ? (
             <TbLayoutSidebarFilled className="rounded-full text-lg" />
           ) : (
             <TbLayoutSidebar className="rounded-full text-lg" />
@@ -47,7 +47,7 @@ export default function ToggleBar() {
           )}
         </button>
         <button
-          onClick={() => toggleIsLive()}
+          onClick={() => toggleLive()}
           title="Iframe"
           className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 hover:scale-110 active:scale-90 transition-transform duration-300"
           tabIndex={hide ? 0 : -1}

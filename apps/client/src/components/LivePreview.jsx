@@ -1,12 +1,12 @@
-import { useContext, useEffect } from "react";
+import { useEffect } from "react";
 import { Loader } from "./Loader.jsx";
-import { useRepo } from "@/store/repo.js";
+import { useRepo } from "@/store/repo.store.js";
 import Alert from "./Alert.jsx";
-import { ActionsContext } from "@/context/ActionsContext.js";
+import { useUI } from "@/store/ui.store.js";
 
 export default function LivePreview() {
 
-  const { isLive, toggleIsLive } = useContext(ActionsContext);
+  const { live: isLive, toggleLive: toggleIsLive } = useUI();
 
   const {
     associatedLinkData: data,

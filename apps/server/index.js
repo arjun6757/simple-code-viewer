@@ -2,6 +2,7 @@ import express from "express";
 import v2 from "./routes/v2.js";
 import dotenv from "dotenv";
 import rateLimit from "express-rate-limit";
+import logger from './middlewares/logger.js';
 
 dotenv.config();
 
@@ -15,6 +16,8 @@ const limiter = rateLimit({
   max: 100,
   message: "Too many requests from this IP, please try again after an hour",
 });
+
+app.use(logger);
 
 app.use(limiter);
 

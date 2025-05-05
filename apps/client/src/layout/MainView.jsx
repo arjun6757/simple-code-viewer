@@ -1,13 +1,12 @@
-import { useContext } from "react";
 import Alert from "@/components/Alert";
 import Highlight from "@/components/Highlight";
-import { useRepo } from "@/store/repo";
-import { ThemeContext } from "@/context/ThemeProvider";
+import { useRepo } from "@/store/repo.store";
+import { useTheme } from "@/context/ThemeProvider";
 
 export default function MainView() {
 
     const { loadingInnerText, innerText, errorInnerText, message } = useRepo();
-    const { isDark } = useContext(ThemeContext);
+    const { isDark } = useTheme();
 
     if (message) {
         <Alert message={message} />
