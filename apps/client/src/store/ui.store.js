@@ -3,8 +3,6 @@ import { create } from "zustand";
 export const useUI = create((set, get) => ({
 	explorer: true,
 	live: false,
-	// togglebar:
-	// 	localStorage.getItem("simple-code-viewer-wants-togglebar") || true,
 	modal: false,
 	activeModal: "",
 	toggleExplorer: () => set((state) => ({ explorer: !state.explorer })),

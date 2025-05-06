@@ -48,27 +48,27 @@ export const useRepo = create((set, get) => ({
     },
 
     // not in use for now
-    fetchDirectoryContent: async (name, path) => {
-        set({ loading: true, error: null });
-        try {
-            const { owner, reponame } = get();
-            // the logic is that only childrens has path but the root directory
-            // is not a child of any other directory so
-            const url = path
-                ? `${API}/contents?owner=${owner}&repo=${reponame}&path=${path}`
-                : `${API}/contents?owner=${owner}&repo=${reponame}&path=${name}`;
+    // fetchDirectoryContent: async (name, path) => {
+    //     set({ loading: true, error: null });
+    //     try {
+    //         const { owner, reponame } = get();
+    //         // the logic is that only childrens has path but the root directory
+    //         // is not a child of any other directory so
+    //         const url = path
+    //             ? `${API}/contents?owner=${owner}&repo=${reponame}&path=${path}`
+    //             : `${API}/contents?owner=${owner}&repo=${reponame}&path=${name}`;
 
-            const response = await fetch(url);
-            const result = await response.json();
-            set((state) => [...state.FolderStructure, result]);
-        } catch (err) {
-            set({
-                error: err.message || "Failed to fetch directory content",
-            });
-        } finally {
-            set({ loading: false });
-        }
-    },
+    //         const response = await fetch(url);
+    //         const result = await response.json();
+    //         set((state) => [...state.FolderStructure, result]);
+    //     } catch (err) {
+    //         set({
+    //             error: err.message || "Failed to fetch directory content",
+    //         });
+    //     } finally {
+    //         set({ loading: false });
+    //     }
+    // },
 
     fetchPinned: async () => {
 
@@ -89,7 +89,7 @@ export const useRepo = create((set, get) => ({
                 return;
             }
             const result = await response.json();
-            const edges = result.data.user.pinnedItems.edges;
+            const edges = result.data.data.user.pinnedItems.edges;
             set({ repos: edges });
         } catch (err) {
             set({
@@ -107,8 +107,13 @@ export const useRepo = create((set, get) => ({
             const response = await fetch(
                 `${API}/contents?owner=${owner}&repo=${reponame}`,
             );
+
+            if(!response.ok) {
+                throw new Error("Error while fetching default repo")
+            }
+
             const result = await response.json();
-            set({ files: result });
+            set({ files: result.data });
         } catch (err) {
             set({
                 error: err.message || "Failed to fetch default repository",
@@ -126,8 +131,13 @@ export const useRepo = create((set, get) => ({
             const response = await fetch(
                 `${API}/contents?repo=${selected}&owner=${user}`,
             );
+
+            if(!response.ok) {
+                throw new Error("Error while fetching selected repo")
+            }
+
             const result = await response.json();
-            set({ files: result, reponame: selected });
+            set({ files: result.data, reponame: selected });
         } catch (err) {
             set({
                 error: err.message || "Failed to fetch selected repository",
@@ -146,11 +156,16 @@ export const useRepo = create((set, get) => ({
             const response = await fetch(
                 `${API}/homepage?repo=${reponame}&owner=${owner}`,
             );
+
+            if(!response.ok) {
+                throw new Error("Error while fetching associated link")
+            }
+
             const result = await response.json();
-            if (result.homepage_url === "") {
+            if (result.data.homepage_url === "") {
                 return set({ associatedLinkError: "No associated link found in this project!" })
             }
-            set({ associatedLinkData: result });
+            set({ associatedLinkData: result.data });
         } catch (err) {
             set({
                 associatedLinkError: err.message || "Failed to fetch selected repository",

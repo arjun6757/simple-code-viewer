@@ -15,8 +15,11 @@ export default function SearchItems({ query, selectedIndex, length, items, empty
             setLoading(true);
             try {
                 const response = await fetch(`${API}/search?q=${trimmedQuery}`);
+                if(!response.ok) {
+                    throw new Error("Error while fetching query")
+                }
                 const result = await response.json();
-                setFiles(result);
+                setFiles(result.data);
             } catch (error) {
                 setError(error.message || "Failed to fetch SearchItems!");
             } finally {

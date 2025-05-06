@@ -25,12 +25,17 @@ export default function FolderLogic(props) {
       const url = path
         ? `${API}/contents?owner=${owner}&repo=${reponame}&path=${path}`
         : `${API}/contents?owner=${owner}&repo=${reponame}&path=${name}`;
-      const result = await fetch(url);
-      const data = await result.json();
-      if (data.status === 404) {
-        <Alert message={data.message} />
+      const response = await fetch(url);
+
+      if (!response.ok) {
+        throw new Error("Something went wrong");
       }
-      return data;
+
+      const result = await response.json();
+      if (result.status === 404) {
+        <Alert message={result.message} />;
+      }
+      return result.data;
     } catch (error) {
       console.log(error);
       return [];
