@@ -43,4 +43,4 @@ Start the dev server
 ```bash
 pnpm dev
 ```
-Note: this will run the dev server of both client and server (via concurrently)
+Note: this will run the dev server of both client and server at the same time (via concurrently)
