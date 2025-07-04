@@ -1,0 +1,28 @@
+@import "tailwindcss";
+
+@custom-variant dark (&:where(.dark, .dark *));
+
+:root {
+  --scrollbar-color: #ccc;
+}
+
+.dark {
+  --scrollbar-color: #555;
+}
+
+@theme inline {
+  --font-inter: var(--font-inter);
+  --font-code: var(--font-code);
+}
+
+.overflow-scroll, .overflow-x-scroll, .overflow-y-scroll {
+  scrollbar-color: var(--scrollbar-color) transparent;
+}
+
+.hljs {
+  font-variant-ligatures: none;
+}
+
+.selected {
+  @apply bg-purple-500 dark:bg-[#018749] text-white dark:text-gray-200;
+}

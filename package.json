@@ -1,28 +1,34 @@
 {
-  "name": "simple-code-viewer",
-  "version": "1.0.0",
+  "name": "simple-code-viewer-next",
+  "version": "0.1.0",
   "private": true,
-  "description": "![image](https://github.com/user-attachments/assets/1422e890-ca61-44b2-afff-26e04c8fdea5)",
-  "main": "index.js",
-  "workspaces": [
-    "apps/*"
-  ],
   "scripts": {
-    "dev": "concurrently \"pnpm --filter client dev\" \"pnpm --filter server dev\""
+    "dev": "next dev --turbopack",
+    "build": "next build",
+    "start": "next start",
+    "lint": "next lint"
   },
-  "repository": {
-    "type": "git",
-    "url": "git+https://github.com/arjun6757/simple-code-viewer.git"
-  },
-  "keywords": [],
-  "author": "",
-  "license": "ISC",
-  "type": "commonjs",
-  "bugs": {
-    "url": "https://github.com/arjun6757/simple-code-viewer/issues"
-  },
-  "homepage": "https://github.com/arjun6757/simple-code-viewer#readme",
   "dependencies": {
-    "concurrently": "^9.1.2"
+    "clsx": "^2.1.1",
+    "highlight.js": "^11.11.1",
+    "lucide-react": "^0.518.0",
+    "next": "15.3.4",
+    "react": "^19.0.0",
+    "react-dom": "^19.0.0",
+    "react-icons": "^5.5.0",
+    "tailwind-merge": "^3.3.1",
+    "zod": "^3.25.67",
+    "zustand": "^5.0.5"
+  },
+  "devDependencies": {
+    "@eslint/eslintrc": "^3",
+    "@tailwindcss/postcss": "^4",
+    "@types/node": "^20",
+    "@types/react": "^19",
+    "@types/react-dom": "^19",
+    "eslint": "^9",
+    "eslint-config-next": "15.3.4",
+    "tailwindcss": "^4",
+    "typescript": "^5"
   }
 }
