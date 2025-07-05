@@ -1,5 +1,4 @@
 import ToggleBar from "@/components/ToggleBar.jsx";
-import LivePreview from "@/components/LivePreview.jsx";
 import SearchModal from "@/layout/Modal/SearchModal.jsx";
 import Layout from "@/layout/Layout.jsx";
 
@@ -9,7 +8,6 @@ export default function Index() {
       <SearchModal />
       <Layout />
       <ToggleBar />
-      <LivePreview />
     </div >
   );
 }

@@ -4,7 +4,7 @@ import { TouchEvent, useRef } from "react";
 import { useUI } from "@/store/ui.store.js";
 import FileTree from "./FileTree";
 
-export default function ExplorerPanel() {
+export default function Panel() {
   const { explorer: isExplorerOpen } = useUI();
   const treeRef = useRef<HTMLDivElement | null>(null);
 
