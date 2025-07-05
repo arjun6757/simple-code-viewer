@@ -5,7 +5,7 @@ import { Loader } from "@/components/Loader";
 
 export default function FileTree() {
 
-  const { fetchContents, fetchDefault, fetchFile, setExt, repo, focusingFile } = useRepo();
+  const { fetchContents, fetchDefault, fetchFile, setExt, repo, focusingFile, loading } = useRepo();
 
   useEffect(() => {
     fetchDefault();
@@ -28,7 +28,7 @@ export default function FileTree() {
 
   function renderFiles(node?: Repo) {
 
-    if (!node) {
+    if (!node || loading) {
       return <Loader center="xy" size="md" className="w-full h-full" />;
     }
 

@@ -1,4 +1,3 @@
-import { FileType } from "@/types/types";
 import {
   CiFileOn as FileIcon,
   CiFolderOn as FolderIcon

@@ -7,11 +7,22 @@ import { AiOutlineGlobal } from "react-icons/ai";
 import { TbLayoutSidebarFilled, TbLayoutSidebar } from "react-icons/tb";
 import { useTheme } from "../context/ThemeProvider";
 import { useUI } from "@/store/ui.store";
+import { useRepo } from "@/store/repo";
+import { Loader } from "./Loader";
 
 export default function ToggleBar() {
-  const { toggleExplorer, explorer, toggleLive } = useUI();
+  const { toggleExplorer, explorer } = useUI();
+  const { fetchAssociatedLink } = useRepo();
   const [hide, setHide] = useState(false);
   const { isDark, toggleTheme } = useTheme();
+  const [loading, setLoading] = useState(false);
+
+  async function handleClickLive() {
+    setLoading(true);
+    const url = await fetchAssociatedLink();
+    setLoading(false);
+    if(url) window.open(url, '_blank');
+  }
 
   return (
     <div className="fixed right-5 bottom-5 sm:right-8 sm:bottom-5 bg-transparent flex flex-col gap-3 items-center transition-transform ease-in-out duration-500 w-14">
@@ -49,12 +60,12 @@ export default function ToggleBar() {
           )}
         </button>
         <button
-          onClick={() => toggleLive()}
+          onClick={() => handleClickLive()}
           title="Live"
           className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 hover:scale-110 active:scale-90 transition-transform duration-300"
           tabIndex={hide ? 0 : -1}
         >
-          <AiOutlineGlobal className="rounded-full text-lg" />
+          {loading ? <Loader className="w-full h-full" center="xy" size="sm" /> : <AiOutlineGlobal className="rounded-full text-lg" />}
         </button>
       </div>
       <button

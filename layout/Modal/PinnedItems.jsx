@@ -1,6 +1,6 @@
 import { useEffect } from "react";
 import { Loader } from "@/components/Loader";
-import { useRepo } from "@/store/repo.store";
+import { useRepo } from "@/store/repo";
 import { useUI } from "@/store/ui.store";
 
 export default function PinnedItems({ query, selectedIndex, length, items, emptyTxt }) {
@@ -20,8 +20,6 @@ export default function PinnedItems({ query, selectedIndex, length, items, empty
   useEffect(() => {
     fetchPinned();
   }, [owner]);
-
-  console.log(pinnedRepos)
 
   const filterItems = pinnedRepos?.filter((item) =>
       item.node.name.toLowerCase().includes(query.toLowerCase()),
@@ -51,13 +49,15 @@ export default function PinnedItems({ query, selectedIndex, length, items, empty
                 <a
                   onKeyDown={(k) => {
                     if (k.key === "Enter") {
-                      fetchSelected({ user: owner, selected: item.node.name });
+                      // TODO: clear or improve this part as it doesn't seems to work
+                      console.log('enter detected');
+                      fetchSelected(owner, item.node.name);
                       toggleModal();
                     }
                   }}
                   onClick={(c) => {
                     c.preventDefault();
-                    fetchSelected({ user: owner, selected: item.node.name });
+                    fetchSelected(owner, item.node.name);
                     toggleModal();
                   }}
                   tabIndex={0}

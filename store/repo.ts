@@ -78,7 +78,7 @@ export interface store {
     errorInnerText: string | null;
     loadingPinned: boolean;
     errorPinned: string | null;
-    associatedLinkData: object | null;
+    associatedLinkData: string | null;
     associatedLinkLoading: boolean;
     associatedLinkError: string | null;
     ext: string | undefined;
@@ -88,7 +88,7 @@ export interface store {
     fetchFile: (path: string, download_link: string) => Promise<void>;
     fetchPinned: () => Promise<void>;
     fetchDefault: () => Promise<void>;
-    fetchAssociatedLink: () => Promise<void>;
+    fetchAssociatedLink: () => Promise<string>;
     fetchSelected: (user: string, selected: string) => Promise<void>;
     fetchContents: (path: string) => Promise<void>;
 }
@@ -97,7 +97,7 @@ export const useRepo = create<store>((set, get) => ({
     prevUser: "",
     prevRepo: "",
     prevDownloadLink: "",
-    reponame: "flowmo", // default repo
+    reponame: "carousel", // default repo
     owner: "arjun6757", // default user
     repo: undefined,
     focusingFile: undefined,
@@ -183,7 +183,7 @@ export const useRepo = create<store>((set, get) => ({
     fetchDefault: async () => {
         const { fetchFile, setExt } = get();
 
-        set({ files: [], loading: true, error: null });
+        set({ loading: true, error: null });
         try {
             const { owner, reponame } = get();
             const response = await fetch(
@@ -226,13 +226,18 @@ export const useRepo = create<store>((set, get) => ({
     },
 
     fetchSelected: async (user, selected) => {
+
+        console.log(`im in fetchSelected function with these values user: ${user} selected: ${selected}`)
+
         set({
             owner: user,
-            files: [],
             loading: true,
             error: null,
             message: null,
         });
+
+        const { setExt, fetchFile } = get();
+        const root = new RepoNode(selected, "dir", "~", null);
 
         try {
             const response = await fetch(
@@ -244,7 +249,27 @@ export const useRepo = create<store>((set, get) => ({
             }
 
             const result = await response.json();
-            set({ files: result.data, reponame: selected });
+            const childs = result.data;
+
+            for (const each of childs) {
+                if (each.name.toLowerCase().includes("readme.md")) {
+                    setTimeout(async () => {
+                        setExt("md");
+                        await fetchFile(each.path, each.download_url)
+                    }, 700);
+                }
+
+                const temp = new RepoNode(
+                    each.name,
+                    each.type,
+                    each.path,
+                    each.download_url,
+                );
+                root.add(temp);
+            }
+
+            set({ repo: root, reponame: selected });
+
         } catch (err: any) {
             set({
                 error: err.message || "Failed to fetch selected repository",
@@ -259,8 +284,6 @@ export const useRepo = create<store>((set, get) => ({
 
     fetchAssociatedLink: async () => {
         const { owner, reponame } = get();
-
-        set({ associatedLinkData: null, associatedLinkLoading: true });
         try {
             const response = await fetch(
                 `/api/homepage?repo=${reponame}&owner=${owner}`,
@@ -271,20 +294,9 @@ export const useRepo = create<store>((set, get) => ({
             }
 
             const result = await response.json();
-            if (result.data.homepage_url === "") {
-                return set({
-                    associatedLinkError:
-                        "No associated link found in this project!",
-                });
-            }
-            set({ associatedLinkData: result.data });
+            return result.data;
         } catch (err: any) {
-            set({
-                associatedLinkError:
-                    err.message || "Failed to fetch selected repository",
-            });
-        } finally {
-            set({ associatedLinkLoading: false });
+            console.error(err.message || "Failed to fetch selected repository")
         }
     },
 

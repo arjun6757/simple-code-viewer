@@ -13,7 +13,8 @@ export default function LivePreview() {
     associatedLinkData: data,
     associatedLinkLoading: loading,
     associatedLinkError: error,
-    fetchAssociatedLink} = useRepo();
+    fetchAssociatedLink
+  } = useRepo();
 
   // useEffect(() => {
   //   fetchAssociatedLink();

@@ -26,7 +26,14 @@ export async function GET(req: Request) {
 
         const result = await response.json();
 
-        const files = result.items.map((file: any) => ({
+        type SearchedRepo = {
+            owner: { login: string },
+            name: string,
+            full_name: string,
+            url: string
+        }
+
+        const files = result.items.map((file: SearchedRepo) => ({
             owner: file.owner.login,
             name: file.name,
             full_name: file.full_name,
@@ -35,8 +42,8 @@ export async function GET(req: Request) {
 
         return Response.json({ message: "Search results fetched successfully!", data: files }, { status: 200 })
 
-    } catch (error: any) {
+    } catch (error) {
         console.error("Error while search for query:", error);
-        return Response.json({ message: error.message || "Failed to search for query" }, { status: 500 });
+        return Response.json({ message: (error as Error).message || "Failed to search for query" }, { status: 500 });
     }
 }

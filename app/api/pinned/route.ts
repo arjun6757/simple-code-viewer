@@ -44,8 +44,8 @@ export async function GET(req: Request) {
 
         return Response.json({ message: "Successfully fetched pinned repositories", data: result?.data?.user?.pinnedItems?.edges }, { status: 200 });
     
-    } catch (error: any) {
+    } catch (error) {
         console.error(error);
-        return Response.json({ message: error.message || "Error while fetching pinned repos" })
+        return Response.json({ message: (error as Error).message || "Error while fetching pinned repos" })
     }
 }

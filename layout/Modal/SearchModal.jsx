@@ -5,7 +5,7 @@ import { useEffect, useRef, useState } from "react";
 import PinnedItems from "./PinnedItems";
 import SearchItems from "./SearchItems";
 import Alert from "@/components/Alert";
-import { useRepo } from "@/store/repo.store";
+import { useRepo } from "@/store/repo";
 import { useUI } from "@/store/ui.store";
 
 export default function SearchModal() {
@@ -65,7 +65,7 @@ export default function SearchModal() {
         owner = items[selectedIndex].owner;
       }
 
-      fetchSelected({ user: owner, selected: name });
+      fetchSelected(owner, name);
       setModalOpen(false);
     }
   };
