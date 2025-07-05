@@ -50,7 +50,7 @@ export default function PinnedItems({ query, selectedIndex, length, items, empty
                   onKeyDown={(k) => {
                     if (k.key === "Enter") {
                       // TODO: clear or improve this part as it doesn't seems to work
-                      console.log('enter detected');
+                      // console.log('enter detected');
                       fetchSelected(owner, item.node.name);
                       toggleModal();
                     }

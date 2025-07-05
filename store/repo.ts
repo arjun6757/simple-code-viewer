@@ -227,8 +227,6 @@ export const useRepo = create<store>((set, get) => ({
 
     fetchSelected: async (user, selected) => {
 
-        console.log(`im in fetchSelected function with these values user: ${user} selected: ${selected}`)
-
         set({
             owner: user,
             loading: true,
