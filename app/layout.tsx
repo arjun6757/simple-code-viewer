@@ -30,22 +30,21 @@ export default function RootLayout({
           dangerouslySetInnerHTML={{
             __html: `
           (function () {
-            const localWantsDark = localStorage.getItem("scv-theme") || 'light';
+            const valid = ['dark', 'light'];
+            const localTheme = localStorage.getItem("scv-theme") || 'light';
             const html = document.documentElement;
 
-          if(localWantsDark) {
-            html.classList.add('dark');
-            html.style.colorScheme='dark';
-          }
+            if (valid.includes(localTheme)) {
+              html.classList.add(localTheme);
+              html.style.colorScheme=localTheme;
+            }
 
           })()
           `,
           }}
         />
       </head>
-      <body
-        className={`${code.variable} ${inter.variable} antialiased`}
-      >
+      <body className={`${code.variable} ${inter.variable} antialiased`}>
         <ThemeProvider>{children}</ThemeProvider>
       </body>
     </html>

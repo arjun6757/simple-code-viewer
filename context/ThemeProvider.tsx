@@ -17,10 +17,10 @@ export default function ThemeProvider({
     const [theme, setTheme] = useState('light');
 
     useEffect(() => {
-        const localWantsDark = localStorage.getItem("scv-theme") || 'light';
-
-        if(localWantsDark) setTheme('dark');
-
+        const valid = ['dark', 'light'];
+        const localTheme = localStorage.getItem("scv-theme") || 'light';
+        if(valid.includes(localTheme)) setTheme(localTheme);
+        // otherwise default is light
     }, []);
 
     const toggleTheme = () => setTheme(p => p === "light" ? "dark" : "light");
