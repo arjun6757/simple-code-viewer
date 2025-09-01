@@ -26,3 +26,7 @@
 .selected {
   @apply bg-purple-500 dark:bg-[#018749] text-white dark:text-gray-200;
 }
+
+button {
+  cursor: pointer;
+}

@@ -1,6 +1,6 @@
-import ToggleBar from "@/components/ToggleBar.jsx";
-import SearchModal from "@/layout/Modal/SearchModal.jsx";
-import Layout from "@/layout/Layout.jsx";
+import ToggleBar from "@/app/components/ToggleBar.jsx";
+import SearchModal from "@/app/layout/Modal/SearchModal.jsx";
+import Layout from "@/app/layout/Layout.jsx";
 
 export default function Index() {
   return (

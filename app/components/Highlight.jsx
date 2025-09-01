@@ -4,22 +4,19 @@ import { Loader } from "./Loader";
 import hljs from "highlight.js";
 import { useEffect, useRef } from "react";
 import { useRepo } from "@/store/repo";
-import Alert from "./Alert";
+import { useTheme } from "@/app/context/ThemeProvider";
 
-export default function Highlight({ loading, text, isDark, error }) {
+export default function Highlight() {
 
   const codeRef = useRef(null);
-  const { ext } = useRepo();
-
-  if (error) {
-    <Alert message={error} />
-  }
+  const { ext, loadingInnerText: loading, innerText: text } = useRepo();
+  const { isDark } = useTheme();
 
   useEffect(() => {
     const loadTheme = () => {
-      
+
       const exist = document.getElementById('highlightjs-cdn');
-      
+
       if (exist) {
         exist.remove();
       }
@@ -66,49 +63,49 @@ export default function Highlight({ loading, text, isDark, error }) {
     </div>
   );
 
-const langExtensions = [
-  "js", "mjs", "cjs",
-  "ts", "tsx",
-  "jsx",
-  "json",
-  "py",
-  "c", "h",
-  "cpp", "cc", "cxx", "hpp",
-  "java",
-  "cs",
-  "rb",
-  "go",
-  "rs",
-  "php",
-  "html", "htm",
-  "css", "scss", "sass",
-  "md",
-  "sh", "bash",
-  "yml", "yaml",
-  "xml",
-  "toml",
-  "ini",
-  "vue",
-  "svelte",
-  "kt", "kts",
-  "swift",
-  "dart",
-  "sql",
-  "r",
-  "lua",
-  "make", "mk",
-  "Dockerfile",
-  "bat", "cmd",
-  "pl",
-  "coffee",
-  "erl", "ex", "exs",
-  "zig",
-  "asm",
-  "lock"
-];
+  const langExtensions = [
+    "js", "mjs", "cjs",
+    "ts", "tsx",
+    "jsx",
+    "json",
+    "py",
+    "c", "h",
+    "cpp", "cc", "cxx", "hpp",
+    "java",
+    "cs",
+    "rb",
+    "go",
+    "rs",
+    "php",
+    "html", "htm",
+    "css", "scss", "sass",
+    "md",
+    "sh", "bash",
+    "yml", "yaml",
+    "xml",
+    "toml",
+    "ini",
+    "vue",
+    "svelte",
+    "kt", "kts",
+    "swift",
+    "dart",
+    "sql",
+    "r",
+    "lua",
+    "make", "mk",
+    "Dockerfile",
+    "bat", "cmd",
+    "pl",
+    "coffee",
+    "erl", "ex", "exs",
+    "zig",
+    "asm",
+    "lock"
+  ];
 
   const purify = (extension) => {
-    if(langExtensions.includes(extension)) {
+    if (langExtensions.includes(extension)) {
       return extension;
     } else {
       return "plaintext";
@@ -117,7 +114,6 @@ const langExtensions = [
   }
 
   const highlighted = (
-    //  TODO: transition-colors
     <pre className={`language-${purify(ext)}`}>
       <code
         ref={codeRef}

@@ -1,27 +1,19 @@
 import { useEffect } from "react";
-import { Loader } from "@/components/Loader";
+import { Loader } from "@/app/components/Loader";
 import { useRepo } from "@/store/repo";
 import { useUI } from "@/store/ui.store";
 
 export default function PinnedItems({ query, selectedIndex, length, items, emptyTxt }) {
   const {
     loadingPinned: loading,
-    errorPinned: error,
     repos: pinnedRepos,
-    fetchPinned,
     fetchSelected,
     owner,
   } = useRepo();
 
   const { toggleModal } = useUI();
 
-  const errText = <p>Error: {error}</p>;
-
-  useEffect(() => {
-    fetchPinned();
-  }, [owner]);
-
-  const filterItems = pinnedRepos?.filter((item) =>
+  const filterItems = pinnedRepos?.data?.filter((item) =>
       item.node.name.toLowerCase().includes(query.toLowerCase()),
     ) || [];
 
@@ -31,7 +23,6 @@ export default function PinnedItems({ query, selectedIndex, length, items, empty
     length(filterItems.length);
     items(filterItems);
   }, [filterItems.length]);
-
 
   const ulistItems = (
     <>

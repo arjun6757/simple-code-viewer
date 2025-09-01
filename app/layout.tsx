@@ -1,7 +1,8 @@
 import type { Metadata } from "next";
 import { Inter, Fira_Code } from "next/font/google";
 import "./globals.css";
-import ThemeProvider from "@/context/ThemeProvider";
+import ThemeProvider from "@/app/context/ThemeProvider";
+import { Toaster } from "react-hot-toast"
 
 const inter = Inter({
   variable: "--font-inter",
@@ -46,6 +47,7 @@ export default function RootLayout({
       </head>
       <body className={`${code.variable} ${inter.variable} antialiased`}>
         <ThemeProvider>{children}</ThemeProvider>
+        <Toaster />
       </body>
     </html>
   );

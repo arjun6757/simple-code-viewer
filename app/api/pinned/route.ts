@@ -27,8 +27,8 @@ export async function GET(req: Request) {
 
     try {
         const response = await fetch(graphqlUrl, { 
-            "method": "POST",
-            "headers": {
+            method: "POST",
+            headers: {
                 "Content-Type": "application/json",
                 "Authorization": `Bearer ${env.GITHUB_TOKEN}`
             },
@@ -46,6 +46,6 @@ export async function GET(req: Request) {
     
     } catch (error) {
         console.error(error);
-        return Response.json({ message: (error as Error).message || "Error while fetching pinned repos" })
+        return Response.json({ message: (error as Error).message || "Error while fetching pinned repos" }, { status: 500 })
     }
 }

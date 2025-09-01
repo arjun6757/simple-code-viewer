@@ -1,10 +1,11 @@
 import { useState, useEffect } from "react";
-import { Loader } from "@/components/Loader";
+import { Loader } from "@/app/components/Loader";
 import { useRepo } from "@/store/repo";
 import { useUI } from "@/store/ui.store";
+import toast from "react-hot-toast";
 
 export default function SearchItems({ query, selectedIndex, length, items, emptyTxt }) {
-    const { fetchSelected, error, setError } = useRepo();
+    const { fetchSelected } = useRepo();
     const [files, setFiles] = useState([]);
     const [loading, setLoading] = useState(false);
     const { toggleModal } = useUI();
@@ -20,7 +21,7 @@ export default function SearchItems({ query, selectedIndex, length, items, empty
                 const result = await response.json();
                 setFiles(result.data);
             } catch (error) {
-                setError(error.message || "Failed to fetch SearchItems!");
+                toast.error(error.message || "Failed to fetch SearchItems!");
             } finally {
                 setLoading(false);
             }
@@ -34,8 +35,6 @@ export default function SearchItems({ query, selectedIndex, length, items, empty
 
         return () => clearTimeout(delay);
     }, [query]);
-
-    const errText = <p>Error: {error}</p>;
 
     const spinner = <Loader className="w-full h-full" center="xy" size="md" />;
 

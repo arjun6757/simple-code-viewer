@@ -1,5 +1,10 @@
-import { RepoFile } from "@/types/types";
 import { create } from "zustand";
+import toast from "react-hot-toast"
+
+interface PinnedRepos {
+    pinnedBy: string;
+    data: []
+}
 
 class RepoNode {
     name: string;
@@ -54,70 +59,49 @@ class RepoNode {
         this.expanded = this.expanded ? false : true;
     }
 
-   toggleLoading() {
+    toggleLoading() {
         this.loading !== undefined &&
             (this.loading = this.loading ? false : true);
     }
 }
 
 export interface store {
-    prevUser: string;
-    prevRepo: string;
     prevDownloadLink: string;
     reponame: string;
     owner: string;
     repo: RepoNode | undefined;
     focusingFile: RepoNode | undefined;
-    files: RepoFile[];
-    repos: [];
+    repos?: PinnedRepos;
     loading: boolean;
-    error: string | null;
-    message: string | null;
     innerText: string;
     loadingInnerText: boolean;
-    errorInnerText: string | null;
     loadingPinned: boolean;
-    errorPinned: string | null;
-    associatedLinkData: string | null;
-    associatedLinkLoading: boolean;
-    associatedLinkError: string | null;
+    homepage?: { uid: string, url: string };
     ext: string | undefined;
-    setError: (message: string) => void;
     setExt: (value?: string) => void;
-    setOwner: (owner: string) => void;
+    
     fetchFile: (path: string, download_link: string) => Promise<void>;
     fetchPinned: () => Promise<void>;
     fetchDefault: () => Promise<void>;
-    fetchAssociatedLink: () => Promise<string>;
+    fetchAssociatedLink: () => Promise<void>;
     fetchSelected: (user: string, selected: string) => Promise<void>;
     fetchContents: (path: string) => Promise<void>;
 }
 
 export const useRepo = create<store>((set, get) => ({
-    prevUser: "",
-    prevRepo: "",
     prevDownloadLink: "",
     reponame: "carousel", // default repo
     owner: "arjun6757", // default user
     repo: undefined,
     focusingFile: undefined,
-    files: [],
-    repos: [],
-    loading: false,
-    error: null,
-    message: null,
+    repos: undefined,
+    loading: true,
     innerText: "",
     loadingInnerText: false,
-    errorInnerText: null,
     loadingPinned: false,
-    errorPinned: null,
-    associatedLinkData: null,
-    associatedLinkLoading: false,
-    associatedLinkError: null,
+    homepage: undefined,
     ext: undefined,
-    setError: (message) => set({ error: message }),
     setExt: (value) => set({ ext: value }),
-    setOwner: (owner) => set({ owner }),
 
     fetchFile: async (path, downloadLink) => {
         const { prevDownloadLink, repo } = get();
@@ -135,46 +119,40 @@ export const useRepo = create<store>((set, get) => ({
             set({ prevDownloadLink: downloadLink });
         }
 
-        set({ innerText: "", loadingInnerText: true, error: null });
+        set({ innerText: "", loadingInnerText: true });
 
         try {
             const response = await fetch(downloadLink);
             const text = await response.text();
             set({ innerText: text, repo });
         } catch (err: any) {
-            set({
-                errorInnerText:
-                    (err.message as string) || "Failed to fetch file",
-            });
+            toast.error((err.message as string) || "Failed to fetch file")
         } finally {
             set({ loadingInnerText: false, focusingFile: file });
         }
     },
 
     fetchPinned: async () => {
-        const { owner, prevUser } = get();
+        const { owner, repos } = get();
 
-        if (owner === prevUser) {
-            return;
-        } else {
-            set({ prevUser: owner });
-        }
+        if (repos?.pinnedBy === owner) return;
 
-        set({ repos: [], loadingPinned: true, error: null });
+        set({ loadingPinned: true });
 
         try {
             const response = await fetch(`/api/pinned?user=${owner}`);
+
             if (!response.ok) {
-                set({ error: response.statusText });
-                return;
+                throw new Error("Error while fetching pinned repositories")
             }
+
             const result = await response.json();
-            set({ repos: result.data });
+
+            if (!result.data) throw new Error("Failed to find pinned repositories for this user")
+
+            set({ repos: { pinnedBy: owner, data: result.data } });
         } catch (err: any) {
-            set({
-                errorPinned:
-                    err.message || "Failed to fetch pinned repositories",
-            });
+            toast.error(err.message || "Failed to fetch pinned repositories")
         } finally {
             set({ loadingPinned: false });
         }
@@ -183,7 +161,7 @@ export const useRepo = create<store>((set, get) => ({
     fetchDefault: async () => {
         const { fetchFile, setExt } = get();
 
-        set({ loading: true, error: null });
+        set({ loading: true });
         try {
             const { owner, reponame } = get();
             const response = await fetch(
@@ -217,9 +195,7 @@ export const useRepo = create<store>((set, get) => ({
 
             set({ repo: root });
         } catch (err: any) {
-            set({
-                error: err.message || "Failed to fetch default repository",
-            });
+            toast.error(err.message || "Failed to fetch default repository");
         } finally {
             set({ loading: false });
         }
@@ -230,8 +206,7 @@ export const useRepo = create<store>((set, get) => ({
         set({
             owner: user,
             loading: true,
-            error: null,
-            message: null,
+            innerText: ""
         });
 
         const { setExt, fetchFile } = get();
@@ -267,34 +242,38 @@ export const useRepo = create<store>((set, get) => ({
             }
 
             set({ repo: root, reponame: selected });
+            toast.success(`${selected} fetched successfully!`)
 
         } catch (err: any) {
-            set({
-                error: err.message || "Failed to fetch selected repository",
-            });
+            toast.error(err.message || "Failed to fetch selected repository");
         } finally {
-            set({
-                loading: false,
-                message: `${selected} fetched messagefully!`,
-            });
+            set({ loading: false });
         }
     },
 
     fetchAssociatedLink: async () => {
-        const { owner, reponame } = get();
+        const { owner, reponame, homepage } = get();
+
+        if (homepage?.uid === `${owner}/${reponame}`) return;
+
+        set({ homepage: undefined })
+
         try {
             const response = await fetch(
                 `/api/homepage?repo=${reponame}&owner=${owner}`,
             );
 
             if (!response.ok) {
-                throw new Error("Error while fetching associated link");
+                throw new Error("Error while fetching live link");
             }
 
             const result = await response.json();
-            return result.data;
+
+            if (!result.data) throw new Error("Failed to find live link for this repo")
+
+            set({ homepage: { uid: `${owner}/${reponame}`, url: result.data as string } })
         } catch (err: any) {
-            console.error(err.message || "Failed to fetch selected repository")
+            toast.error(err.message || "Failed to fetch live link")
         }
     },
 
@@ -313,7 +292,6 @@ export const useRepo = create<store>((set, get) => ({
 
         parent.toggleLoading();
         set({ repo });
-        // set({ loadingFolder: parent });
 
         try {
             const url = `/api/contents?owner=${owner}&repo=${reponame}&path=${path}`;
@@ -340,8 +318,8 @@ export const useRepo = create<store>((set, get) => ({
                 );
                 parent.add(temp);
             }
-        } catch (error) {
-            console.error(error);
+        } catch (error: any) {
+            toast.error(error.message || "Failed to fetch contents");
         }
 
         parent.toggleLoading();

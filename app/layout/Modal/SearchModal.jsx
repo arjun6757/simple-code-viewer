@@ -4,7 +4,6 @@ import { Search, X } from "lucide-react";
 import { useEffect, useRef, useState } from "react";
 import PinnedItems from "./PinnedItems";
 import SearchItems from "./SearchItems";
-import Alert from "@/components/Alert";
 import { useRepo } from "@/store/repo";
 import { useUI } from "@/store/ui.store";
 
@@ -19,7 +18,7 @@ export default function SearchModal() {
   const [selectedIndex, setSelectedIndex] = useState(0);
   const [itemsLength, setItemsLength] = useState(0);
   const [items, setItems] = useState(null);
-  const { fetchSelected, error, owner: currentUser } = useRepo();
+  const { fetchSelected, owner: currentUser } = useRepo();
   const inputRef = useRef(null);
 
   useEffect(() => {
@@ -31,10 +30,6 @@ export default function SearchModal() {
   const emptyTxt = (
     <p className="flex justify-center items-center">It&apos;s empty here</p>
   );
-
-  if (error) {
-    <Alert message={error} />;
-  }
 
   useEffect(() => {
     setQuery("");

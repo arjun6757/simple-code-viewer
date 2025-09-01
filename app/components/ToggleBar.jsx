@@ -8,37 +8,35 @@ import { TbLayoutSidebarFilled, TbLayoutSidebar } from "react-icons/tb";
 import { useTheme } from "../context/ThemeProvider";
 import { useUI } from "@/store/ui.store";
 import { useRepo } from "@/store/repo";
-import { Loader } from "./Loader";
+import toast from "react-hot-toast";
 
 export default function ToggleBar() {
   const { toggleExplorer, explorer } = useUI();
   const { fetchAssociatedLink } = useRepo();
   const [hide, setHide] = useState(false);
   const { isDark, toggleTheme } = useTheme();
-  const [loading, setLoading] = useState(false);
 
   async function handleClickLive() {
-    setLoading(true);
-    const url = await fetchAssociatedLink();
-    setLoading(false);
-    if(url) window.open(url, '_blank');
+    const tid = toast.loading("Fetching live link for this repo")
+    await fetchAssociatedLink();
+    toast.dismiss(tid)
+    if (useRepo.getState().homepage?.url) window.open(useRepo.getState().homepage?.url, '_blank');
   }
 
   return (
     <div className="fixed right-5 bottom-5 sm:right-8 sm:bottom-5 bg-transparent flex flex-col gap-3 items-center transition-transform ease-in-out duration-500 w-14">
       <div
-        className={`flex flex-col items-center gap-4 transition-opacity duration-500 w-full p-1 ${
-          hide
+        className={`flex flex-col items-center gap-4 transition-opacity duration-500 w-full p-1 ${hide
             ? " opacity-100 pointer-events-auto"
             : " opacity-0 pointer-events-none"
-        }`}
+          }`}
         aria-hidden={!hide}
         tabIndex={hide ? 0 : -1}
       >
         <button
           title="Toggle Explorer"
           onClick={() => toggleExplorer()}
-          className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 hover:scale-110 active:scale-90 transition-transform duration-300"
+          className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 active:scale-90 transition-transform duration-300"
           tabIndex={hide ? 0 : -1}
         >
           {explorer ? (
@@ -50,7 +48,7 @@ export default function ToggleBar() {
         <button
           title="Toggle Darkmode"
           onClick={() => toggleTheme()}
-          className={`rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 hover:scale-110 active:scale-90 transition-transform duration-300`}
+          className={`rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 active:scale-90 transition-transform duration-300`}
           tabIndex={hide ? 0 : -1}
         >
           {isDark ? (
@@ -62,16 +60,16 @@ export default function ToggleBar() {
         <button
           onClick={() => handleClickLive()}
           title="Live"
-          className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 hover:scale-110 active:scale-90 transition-transform duration-300"
+          className="rounded-full dark:bg-[#222] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 active:scale-90 transition-transform duration-300"
           tabIndex={hide ? 0 : -1}
         >
-          {loading ? <Loader className="w-full h-full" center="xy" size="sm" /> : <AiOutlineGlobal className="rounded-full text-lg" />}
+          <AiOutlineGlobal className="rounded-full text-lg" />
         </button>
       </div>
       <button
         title={hide ? "Collapse" : "Expand"}
         onClick={() => setHide((prev) => !prev)}
-        className="rounded-full dark:bg-[#222] bg-gray-200 text-xl text-[#555] dark:text-[#888] p-2 hover:scale-110 active:scale-90 transition-transform duration-300"
+        className="rounded-full dark:bg-[#222] bg-gray-200 text-xl text-[#555] dark:text-[#888] p-2 active:scale-90 transition-transform duration-300"
       >
         {hide ? (
           <FaAngleDown className="rounded-full text-lg" />
