@@ -1,6 +1,6 @@
 "use client";
 
-import { TouchEvent, useRef } from "react";
+import React, { useRef } from "react";
 import { useUI } from "@/store/ui.store.js";
 import FileTree from "./FileTree";
 
@@ -8,14 +8,14 @@ export default function Panel() {
   const { explorer: isExplorerOpen } = useUI();
   const treeRef = useRef<HTMLDivElement | null>(null);
 
-  const handleDrag = (e: any) => {
+  const handleDrag = (e: React.MouseEvent<HTMLDivElement>) => {
     e.preventDefault();
     const codeTree = treeRef.current;
     if(!codeTree) return;
     const startWidth = codeTree.offsetWidth;
     const startX = e.clientX;
 
-    const mouseMove = (event: any) => {
+    const mouseMove = (event: MouseEvent) => {
       const newWidth = startWidth + (event.clientX - startX);
       codeTree.style.width = `${newWidth}px`;
     };
@@ -30,14 +30,14 @@ export default function Panel() {
     document.addEventListener("mouseup", mouseUp); //when im releasing the dragging
   };
 
-  const handleTouchDrag = (e: TouchEvent) => {
+  const handleTouchDrag = (e: React.TouchEvent<HTMLDivElement>) => {
     // e.preventDefault();
     const codeTree = treeRef.current;
     if(!codeTree) return;
     const startWidth = codeTree.offsetWidth;
     const startX = e.touches[0].clientX;
 
-    const touchMove = (event: any) => {
+    const touchMove = (event: TouchEvent) => {
       const touch = event.touches[0];
       const newWidth = startWidth + (touch.clientX - startX);
       codeTree.style.width = `${newWidth}px`;
