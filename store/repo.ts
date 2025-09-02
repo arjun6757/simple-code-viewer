@@ -269,7 +269,7 @@ export const useRepo = create<store>((set, get) => ({
 
             const result = await response.json();
 
-            if (!result.data) throw new Error("Failed to find live link for this repo")
+            if (!result.data) throw new Error("Failed to fetch live link for this repo")
 
             set({ homepage: { uid: `${owner}/${reponame}`, url: result.data as string } })
         } catch (err: any) {

@@ -17,7 +17,7 @@ export default function ToggleBar() {
   const { isDark, toggleTheme } = useTheme();
 
   async function handleClickLive() {
-    const tid = toast.loading("Fetching live link for this repo")
+    const tid = toast.loading("Opening live link for this repo")
     await fetchAssociatedLink();
     toast.dismiss(tid)
     if (useRepo.getState().homepage?.url) window.open(useRepo.getState().homepage?.url, '_blank');
