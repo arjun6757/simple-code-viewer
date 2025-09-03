@@ -57,7 +57,7 @@ export default function Panel() {
       id="code-tree"
       ref={treeRef}
       data-open={isExplorerOpen}
-      className="data-[open=true]:flex data-[open=false]:hidden bg-white dark:bg-[#171717] transition-transform duration-700 relative min-w-[10vw] sm:min-w-[18vw] lg:w-[20vw] max-w-[80vw] sm:max-w-[40vw] border-r-[1px] border-[#ddd] dark:border-[#555] text-black dark:text-white text-xs sm:text-sm select-none text-nowrap"
+      className="data-[open=true]:flex data-[open=false]:hidden bg-gray-50 dark:bg-[#171717] transition-transform duration-700 relative min-w-[10vw] sm:min-w-[18vw] lg:w-[20vw] max-w-[80vw] sm:max-w-[40vw] border-r-[1px] border-[#ddd] dark:border-[#555] text-black dark:text-white text-xs sm:text-sm select-none text-nowrap"
     >
       <div
         id="dragger"

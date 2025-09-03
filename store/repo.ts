@@ -150,8 +150,11 @@ export const useRepo = create<store>((set, get) => ({
 
             if (!result.data) throw new Error("Failed to find pinned repositories for this user")
 
+            if(result.data.length === 0) throw new Error("No pinned repositories found for this user")
+
             set({ repos: { pinnedBy: owner, data: result.data } });
         } catch (err: any) {
+            set({ repos: undefined })
             toast.error(err.message || "Failed to fetch pinned repositories")
         } finally {
             set({ loadingPinned: false });
