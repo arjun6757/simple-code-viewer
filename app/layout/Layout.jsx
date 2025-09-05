@@ -11,7 +11,7 @@ export default function Layout() {
                 <NavPanel />
             </div>
 
-            <div className="flex bg-white overflow-hidden flex-1 dark:bg-[#191919] h-full gap-4">
+            <div className="flex bg-[var(--hljs)] overflow-hidden flex-1 dark:bg-[var(--hljs)] h-full gap-4">
                 <Panel />
                 <MainView />
             </div>

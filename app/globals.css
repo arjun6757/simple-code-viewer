@@ -4,10 +4,12 @@
 
 :root {
   --scrollbar-color: #ccc;
+  --hljs: white;
 }
 
 .dark {
   --scrollbar-color: #555;
+  --hljs: #222;
 }
 
 @theme inline {
@@ -21,6 +23,7 @@
 
 .hljs {
   font-variant-ligatures: none;
+  background: var(--hljs) !important;
 }
 
 .selected {
