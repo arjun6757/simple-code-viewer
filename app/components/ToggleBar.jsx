@@ -36,7 +36,7 @@ export default function ToggleBar() {
         <button
           title="Toggle Explorer"
           onClick={() => toggleExplorer()}
-          className="rounded-full dark:bg-[#171717] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 active:scale-90 transition-transform duration-300"
+          className="rounded-full bg-[var(--primary-bg)] text-[#555] text-xl dark:text-[#888] p-2 active:scale-90 transition-transform duration-300 border border-[var(--primary-border)]"
           tabIndex={hide ? 0 : -1}
         >
           {explorer ? (
@@ -48,7 +48,7 @@ export default function ToggleBar() {
         <button
           title="Toggle Darkmode"
           onClick={() => toggleTheme()}
-          className={`rounded-full dark:bg-[#171717] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 active:scale-90 transition-transform duration-300`}
+          className={`rounded-full bg-[var(--primary-bg)] text-[#555] text-xl dark:text-[#888] p-2 active:scale-90 transition-transform duration-300 border border-[var(--primary-border)]`}
           tabIndex={hide ? 0 : -1}
         >
           {isDark ? (
@@ -60,7 +60,7 @@ export default function ToggleBar() {
         <button
           onClick={() => handleClickLive()}
           title="Live"
-          className="rounded-full dark:bg-[#171717] bg-gray-200 text-[#555] text-xl dark:text-[#888] p-2 active:scale-90 transition-transform duration-300"
+          className="rounded-full bg-[var(--primary-bg)] text-[#555] text-xl dark:text-[#888] p-2 active:scale-90 transition-transform duration-300 border border-[var(--primary-border)]"
           tabIndex={hide ? 0 : -1}
         >
           <AiOutlineGlobal className="rounded-full text-lg" />
@@ -69,7 +69,7 @@ export default function ToggleBar() {
       <button
         title={hide ? "Collapse" : "Expand"}
         onClick={() => setHide((prev) => !prev)}
-        className="rounded-full dark:bg-[#171717] bg-gray-200 text-xl text-[#555] dark:text-[#888] p-2 active:scale-90 transition-transform duration-300"
+        className="rounded-full bg-[var(--primary-bg)] text-xl text-[#555] dark:text-[#888] p-2 active:scale-90 transition-transform duration-300 border border-[var(--primary-border)]"
       >
         {hide ? (
           <FaAngleDown className="rounded-full text-lg" />

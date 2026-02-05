@@ -82,7 +82,7 @@ export default function FileTree() {
           )}
         </div>
 
-        <div data-hidden={isRoot} className="data-[hidden=false]:ml-3 data-[hidden=false]:pl-2 data-[hidden=false]:border-l-[1px] border-[#ddd] dark:border-[#555]">
+        <div data-hidden={isRoot} className="data-[hidden=false]:ml-3 data-[hidden=false]:pl-2 data-[hidden=false]:border-l-[1px] border-[var(--primary-border)]">
           {node.childs && node.expanded && node.childs.map((child: Repo | undefined) => renderFiles(child))}
         </div>
 

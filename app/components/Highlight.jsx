@@ -52,7 +52,7 @@ export default function Highlight() {
   const Intro = (
     <div className="select-none font-code gap-1 sm:gap-3 text-[#888] flex flex-col h-screen place-content-center items-center text-nowrap">
       <div className="text-xs sm:text-sm md:text-lg lg:text-2xl flex gap-1 sm:gap-3">
-        Inspect with ease at {styledProjectName}
+        Read code with ease at {styledProjectName}
       </div>
       <p className="text-[10px] sm:text-xs font-inter">
         Created with ❤️ by{" "}

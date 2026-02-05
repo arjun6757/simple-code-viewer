@@ -5,11 +5,15 @@
 :root {
   --scrollbar-color: #ccc;
   --hljs: white;
+  --primary-bg: #fff;
+  --primary-border: #ddd;
 }
 
 .dark {
   --scrollbar-color: #555;
   --hljs: #222;
+  --primary-bg: #202020;
+  --primary-border: #555;
 }
 
 @theme inline {
@@ -23,11 +27,11 @@
 
 .hljs {
   font-variant-ligatures: none;
-  background: var(--hljs) !important;
+  background: var(--primary-bg) !important;
 }
 
 .selected {
-  @apply bg-purple-500 dark:bg-[#018749] text-white dark:text-gray-200;
+  @apply bg-purple-500 dark:bg-[#079251] text-white dark:text-gray-200;
 }
 
 button {

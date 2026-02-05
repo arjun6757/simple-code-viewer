@@ -35,7 +35,7 @@ export default function PinnedItems({ query, selectedIndex, length, items, empty
                 tabIndex={-1}
                 className={`${
                   selectedIndex === index ? "selected" : ""
-                } hover:bg-blue-500 hover:dark:bg-[#018749] hover:text-gray-100 hover:dark:text-gray-200 rounded-md cursor-pointer`}
+                } hover:bg-blue-500 hover:dark:bg-[#079251] hover:text-gray-100 hover:dark:text-gray-200 rounded-md cursor-pointer`}
               >
                 <a
                   onKeyDown={(k) => {

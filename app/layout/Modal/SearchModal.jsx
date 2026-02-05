@@ -25,6 +25,7 @@ export default function SearchModal() {
     if(isModalOpen && inputRef.current) {
       inputRef.current.focus();
     }
+
   }, [isModalOpen])
 
   const emptyTxt = (
@@ -36,6 +37,11 @@ export default function SearchModal() {
   }, [mode]);
 
   const handleKeyDown = (e) => {
+    if(e.key==="Escape") {
+      setModalOpen(false);
+      return;
+    }
+
     if (e.key === "ArrowDown" || e.key === "ArrowUp") {
       e.preventDefault();
       setSelectedIndex((prev) => {
@@ -82,12 +88,12 @@ export default function SearchModal() {
           <X className="w-fit mx-auto h-fit self-center" />
         </button>
 
-        <div className="text-sm p-4 border-b border-[#ddd] dark:border-[#333]">
-          <div tabIndex={0} className="border-none bg-transparent w-full font-inter text-gray-600 dark:text-gray-400 flex gap-4">
-            <Search />
+        <div className="text-sm p-4 border-b border-[var(--primary-border)]">
+          <div tabIndex={0} className="border-none bg-transparent w-full font-inter text-gray-700 dark:text-gray-300 flex gap-4">
+            <Search className="text-gray-500 dark:text-gray-400" />
             <input
               ref={inputRef}
-              className="w-full outline-none placeholder:text-inherit"
+              className="w-full outline-none placeholder:text-gray-500 dark:placeholder:text-gray-400"
               type="text"
               onKeyDown={handleKeyDown}
               placeholder="Type here to search"
@@ -95,6 +101,8 @@ export default function SearchModal() {
               value={query}
               onChange={(e) => setQuery(e.target.value)}
             />
+
+            <code className="border border-[var(--primary-border)] text-gray-500 dark:text-gray-400 rounded-md px-2 flex items-center text-xs">esc</code>
           </div>
         </div>
 
@@ -120,7 +128,7 @@ export default function SearchModal() {
           )}
         </div>
 
-        <div className="p-4 text-sm font-inter text-gray-600 dark:text-gray-400 border-t border-[#ddd] dark:border-[#333]">
+        <div className="p-4 text-sm font-inter text-gray-600 dark:text-gray-400 border-t border-[var(--primary-border)]">
           Copyright &copy; {new Date().getFullYear()} Arjun Banerjee
         </div>
       </div>
