@@ -91,7 +91,7 @@ export interface store {
 export const useRepo = create<store>((set, get) => ({
     prevDownloadLink: "",
     reponame: "carousel", // default repo
-    owner: "arjun6757", // default user
+    owner: "1xarjun", // default user
     repo: undefined,
     focusingFile: undefined,
     repos: undefined,
