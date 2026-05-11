@@ -56,8 +56,8 @@ export default function Highlight() {
       </div>
       <p className="text-[10px] sm:text-xs font-inter">
         Created with ❤️ by{" "}
-        <a href="https://github.com/arjun6757" className="hover:underline">
-          arjun6757
+        <a href="https://github.com/1xarjun" className="hover:underline">
+          1xarjun
         </a>
       </p>
     </div>
